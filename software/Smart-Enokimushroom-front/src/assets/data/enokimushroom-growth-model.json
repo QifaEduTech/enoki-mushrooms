@@ -1,0 +1,203 @@
+{
+  "plantName": "金针菇",
+  "plantType": "fruit",
+  "growthDuration": "70-90天",
+  "description": "从萌芽到休眠期的完整生长过程",
+  "stages": [
+    {
+      "name": "萌芽和开始生长期",
+      "duration": "第1-15天",
+      "icon": "🌱",
+      "color": "#ff6b6b",
+      "image": "growth/seedling1.jpg",
+      "description": "春季地温稳定在2-5℃时，金针菇开始生长。根系比地上部分早7-10天开始生长，根系生长7天后茎叶开始萌芽，先长出新茎，随后出现新叶，老叶逐渐枯萎死亡。",
+      "fertilizer": "此时根系生长旺盛，可追施一次氮肥，不仅能促进营养生长，还能增加顶芽花序数量。",
+      "medicine": null,
+      "conditions": {
+        "地温": "2-5℃",
+        "根系领先": "7-10天",
+        "生长顺序": "根系→新茎→新叶"
+      },
+      "npk": {
+        "n": "15-20 mg/kg",
+        "p": "8-12 mg/kg",
+        "k": "10-15 mg/kg",
+        "ph": "6.0-6.5"
+      },
+      "environment": {
+        "airTemperature": "8-12",
+        "airHumidity": "65-75",
+        "lightLux": "8000-12000",
+        "airCo2": "350-400",
+        "soilTemperature": "5-8",
+        "soilHumidity": "60-70"
+      }
+    },
+    {
+      "name": "现蕾期",
+      "duration": "第16-30天",
+      "icon": "🌿",
+      "color": "#4ecdc4",
+      "image": "growth/anthesis2.png",
+      "description": "金针菇地上部分生长1个月后出现花蕾，标志着从营养生长向生殖生长的转变。",
+      "fertilizer": null,
+      "medicine": "当有20%的植株现蕾时，喷施1-2次浓度为7.5-10ppm的赤霉素溶液，有利于促进生长诱导花芽分化，打破休眠，具有防止植株矮化和提前金针菇上市的作用。",
+      "conditions": {
+        "现蕾标准": "20%植株现蕾",
+        "赤霉素浓度": "7.5-10ppm",
+        "喷施次数": "1-2次"
+      },
+      "npk": {
+        "n": "18-22 mg/kg",
+        "p": "10-15 mg/kg",
+        "k": "12-18 mg/kg",
+        "ph": "6.0-6.5"
+      },
+      "environment": {
+        "airTemperature": "12-18",
+        "airHumidity": "70-80",
+        "lightLux": "10000-15000",
+        "airCo2": "380-450",
+        "soilTemperature": "8-12",
+        "soilHumidity": "65-75"
+      }
+    },
+    {
+      "name": "结果期",
+      "duration": "第31-55天",
+      "icon": "🌸",
+      "color": "#45b7d1",
+      "image": "growth/fruiting3.png",
+      "description": "从花蕾显露到第一朵花开放需15天左右，由开花到果实成熟需30天左右。这是决定产量和品质的关键时期。",
+      "fertilizer": "开花前每亩施氮肥20斤、磷肥10斤、钾肥30斤。果实膨大期施氮肥20斤、磷肥20斤、钾肥30斤；钾肥和磷肥可用三元复合肥代替，用量不超过40斤。",
+      "medicine": "每隔7天喷施一次0.2%-0.5%的尿素和磷酸二氢钾叶面肥。开花前以尿素为主，开花后以磷酸二氢钾为主，可增加单果重和果实品质。",
+      "conditions": {
+        "花蕾到开花": "15天",
+        "开花到成熟": "30天",
+        "叶面肥间隔": "7天"
+      },
+      "npk": {
+        "n": "20-25 mg/kg",
+        "p": "15-20 mg/kg",
+        "k": "25-30 mg/kg",
+        "ph": "6.0-6.8"
+      },
+      "environment": {
+        "airTemperature": "18-25",
+        "airHumidity": "75-85",
+        "lightLux": "12000-18000",
+        "airCo2": "400-500",
+        "soilTemperature": "12-18",
+        "soilHumidity": "70-80"
+      }
+    },
+    {
+      "name": "旺盛生长期",
+      "duration": "第56-70天",
+      "icon": "🍃",
+      "color": "#96ceb4",
+      "image": "growth/exuberant4.png",
+      "description": "浆果采收后，植株进入旺盛生长期。首先腋芽发生大量匍匐茎，新茎分枝加速生长，新茎基部发生不定根，形成新的根系。",
+      "fertilizer": "支持营养生长，促进匍匐茎和根系发育。",
+      "medicine": null,
+      "conditions": {
+        "主要特征": "匍匐茎大量发生",
+        "根系发育": "不定根形成",
+        "生长状态": "新茎分枝加速"
+      },
+      "npk": {
+        "n": "22-28 mg/kg",
+        "p": "18-25 mg/kg",
+        "k": "20-25 mg/kg",
+        "ph": "6.0-6.5"
+      },
+      "environment": {
+        "airTemperature": "22-28",
+        "airHumidity": "80-90",
+        "lightLux": "15000-20000",
+        "airCo2": "450-550",
+        "soilTemperature": "18-25",
+        "soilHumidity": "75-85"
+      }
+    },
+    {
+      "name": "花芽分化期",
+      "duration": "第71-80天",
+      "icon": "🌺",
+      "color": "#ffeaa7",
+      "image": "growth/grow5.png",
+      "description": "金针菇经过旺盛生长期后，在日平均温度15~20℃和短日照10~12小时的条件下开始花芽分化，标志着从营养生长转向生殖生长。",
+      "fertilizer": "在第一腋花芽分化以后进行，选用大量元素水溶肥，同时配合含腐植酸水溶肥料一起冲施。",
+      "medicine": null,
+      "conditions": {
+        "温度条件": "15-20℃",
+        "光照条件": "短日照10-12小时",
+        "生长转变": "营养→生殖"
+      },
+      "npk": {
+        "n": "18-22 mg/kg",
+        "p": "20-25 mg/kg",
+        "k": "22-28 mg/kg",
+        "ph": "6.0-6.5"
+      },
+      "environment": {
+        "airTemperature": "20-26",
+        "airHumidity": "75-85",
+        "lightLux": "12000-16000",
+        "airCo2": "400-480",
+        "soilTemperature": "16-22",
+        "soilHumidity": "70-80"
+      }
+    },
+    {
+      "name": "采摘期",
+      "duration": "第81-90天",
+      "icon": "✂",
+      "color": "#a8a8a8",
+      "image": "growth/ripe6.png",
+      "description": "花芽形成后，气温降低，日照时间缩短，金针菇进入休眠期，呈莲座状，生长缓慢。金针菇在5℃以下进入休眠。",
+      "fertilizer": "减少施肥，维持基本营养需求。",
+      "medicine": null,
+      "conditions": {
+        "休眠温度": "5℃以下",
+        "保温临界": "夜间6-7℃",
+        "生长状态": "莲座状缓慢生长",
+        "扣棚时机": "9月下旬-10月上旬"
+      },
+      "npk": {
+        "n": "15-18 mg/kg",
+        "p": "15-20 mg/kg",
+        "k": "18-22 mg/kg",
+        "ph": "6.0-6.5"
+      },
+      "environment": {
+        "airTemperature": "15-22",
+        "airHumidity": "70-80",
+        "lightLux": "8000-12000",
+        "airCo2": "350-420",
+        "soilTemperature": "12-18",
+        "soilHumidity": "65-75"
+      }
+    }
+  ],
+  "controlSettings": {
+    "fan": {
+      "deviceId": "cclr04",
+      "command": "fan",
+      "speedLevels": 5,
+      "defaultSpeed": 3
+    },
+    "irrigation": {
+      "deviceId": "cclr04",
+      "command": "irrigation",
+      "defaultDuration": 300,
+      "defaultIntensity": 80
+    }
+  },
+  "thresholds": {
+    "temperature": { "min": 18, "max": 26 },
+    "humidity": { "min": 60, "max": 80 },
+    "light": { "min": 8000, "max": 15000 },
+    "soil": { "min": 65, "max": 80 }
+  }
+}

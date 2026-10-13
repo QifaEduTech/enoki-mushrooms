@@ -1,0 +1,10 @@
+node_modules/
+dist/
+static/
+public/
+vue.config.js
+babel.config.js
+*.config.js
+src/assets/icons/
+**/*.js
+**/*.vue

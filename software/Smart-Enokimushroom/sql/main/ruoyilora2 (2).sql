@@ -1,0 +1,3423 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : 本机
+ Source Server Type    : MySQL
+ Source Server Version : 80032
+ Source Host           : localhost:3306
+ Source Schema         : ruoyilora
+
+ Target Server Type    : MySQL
+ Target Server Version : 80032
+ File Encoding         : 65001
+
+ Date: 10/09/2025 14:19:29
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for area_manage
+-- ----------------------------
+DROP TABLE IF EXISTS `area_manage`;
+CREATE TABLE `area_manage`  (
+  `area_id` int NOT NULL AUTO_INCREMENT COMMENT '场地ID',
+  `area_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '场地名称',
+  `area_address` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '场地地址',
+  `area_type` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '场地类型',
+  `area_square` int NULL DEFAULT NULL COMMENT '场地面积（单位：亩）',
+  `area_state` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '场地状态：正常；停用；待建',
+  `area_leader` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '场地户主',
+  `area_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '联系方式',
+  `user_id` int NOT NULL COMMENT '用户id',
+  `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_date` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新人',
+  `del_flag` int NULL DEFAULT NULL COMMENT '是否删除：0，未删除；1，删除',
+  PRIMARY KEY (`area_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of area_manage
+-- ----------------------------
+INSERT INTO `area_manage` VALUES (1, '羊肚菌种植基地', '辽宁省朝阳县波罗赤镇', '企业场地', 200, '正常', '郑松涛', '15389888766', 101, '2023-12-21 00:00:00', 'admin', NULL, NULL, 0);
+INSERT INTO `area_manage` VALUES (2, '草莓种植基地', '吉林省长春市九台区龙嘉街道龙家堡村', '企业场地', 3000, '正常', '曲仁涛', '18943949110', 100, '2024-01-12 00:00:00', 'admin', NULL, NULL, 0);
+INSERT INTO `area_manage` VALUES (3, '测试场地', '东软软件园南路8号', '企业', 15, '正常', '李鑫', '15909858588', 1, '2024-06-08 00:00:00', NULL, '2024-06-09 00:00:00', NULL, 0);
+INSERT INTO `area_manage` VALUES (4, '测试场地1', '东软222222', '企业', 9087, '正常', '班主任222', '134234556', 1, '2024-06-13 00:00:00', NULL, '2024-06-14 00:00:00', NULL, 0);
+INSERT INTO `area_manage` VALUES (6, '示例场地', '北京市朝阳区XX街道XX号', '农业用地', 50, '正常', '张三', '13800138000', 1, '2023-09-15 00:00:00', NULL, '2023-09-16 00:00:00', NULL, 0);
+
+-- ----------------------------
+-- Table structure for d_chat_type_history
+-- ----------------------------
+DROP TABLE IF EXISTS `d_chat_type_history`;
+CREATE TABLE `d_chat_type_history`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `type` int NOT NULL COMMENT '会话类型，详见ChatType枚举',
+  `chat_id` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '会话id',
+  `title` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标题',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `edit_time` datetime NULL DEFAULT NULL COMMENT '编辑时间',
+  `status` tinyint NULL DEFAULT 1 COMMENT '1:正常 0:删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '会话历史表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of d_chat_type_history
+-- ----------------------------
+INSERT INTO `d_chat_type_history` VALUES (9, 4, '1755679362330', NULL, NULL, NULL, NULL);
+INSERT INTO `d_chat_type_history` VALUES (13, 4, 'default', NULL, NULL, NULL, NULL);
+INSERT INTO `d_chat_type_history` VALUES (14, 4, '1755766937023', NULL, NULL, NULL, NULL);
+INSERT INTO `d_chat_type_history` VALUES (15, 4, '1755768579299', NULL, NULL, NULL, NULL);
+INSERT INTO `d_chat_type_history` VALUES (16, 4, '1755781303248', NULL, NULL, NULL, NULL);
+INSERT INTO `d_chat_type_history` VALUES (17, 4, '1755825665325', NULL, NULL, NULL, NULL);
+INSERT INTO `d_chat_type_history` VALUES (18, 4, '1756112692677', NULL, NULL, NULL, NULL);
+INSERT INTO `d_chat_type_history` VALUES (19, 4, '2', NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for device_manage
+-- ----------------------------
+DROP TABLE IF EXISTS `device_manage`;
+CREATE TABLE `device_manage`  (
+  `device_id` int NOT NULL AUTO_INCREMENT COMMENT '设备id',
+  `device_number` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备编号',
+  `device_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备名称',
+  `device_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备类型',
+  `plant_id` int NULL DEFAULT NULL COMMENT '监控植物',
+  `area_id` int NULL DEFAULT NULL COMMENT '所属场地',
+  `device_state` int NULL DEFAULT NULL COMMENT '设备状态：1，正常使用；0，停用',
+  `user_id` int NOT NULL COMMENT '用户id',
+  `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_date` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新人',
+  `del_flag` int NULL DEFAULT NULL COMMENT '是否删除：0，未删除，1删除',
+  PRIMARY KEY (`device_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of device_manage
+-- ----------------------------
+INSERT INTO `device_manage` VALUES (1, '2023001', '数字孪生系统', '监控设备', 1, 1, 1, 101, '2023-12-21 00:00:00', 'admin', NULL, NULL, 0);
+INSERT INTO `device_manage` VALUES (2, '2024001', '智慧农业数据采集系统', '采集设备', 2, 2, 1, 100, '2024-01-21 00:00:00', 'admin', NULL, NULL, 0);
+INSERT INTO `device_manage` VALUES (3, '2024006', '测试设备', '测试设备', 1, 2, 1, 1, '2024-06-09 00:00:00', 'admin', NULL, NULL, 0);
+INSERT INTO `device_manage` VALUES (4, '2024007', '测试设备2', '采集设备', 1, 2, 1, 1, '2024-06-10 00:00:00', NULL, NULL, NULL, 0);
+
+-- ----------------------------
+-- Table structure for gen_table
+-- ----------------------------
+DROP TABLE IF EXISTS `gen_table`;
+CREATE TABLE `gen_table`  (
+  `table_id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `table_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '表名称',
+  `table_comment` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '表描述',
+  `sub_table_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '关联子表的表名',
+  `sub_table_fk_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '子表关联的外键名',
+  `class_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '实体类名称',
+  `tpl_category` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT 'crud' COMMENT '使用的模板（crud单表操作 tree树表操作）',
+  `tpl_web_type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '前端模板类型（element-ui模版 element-plus模版）',
+  `package_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '生成包路径',
+  `module_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '生成模块名',
+  `business_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '生成业务名',
+  `function_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '生成功能名',
+  `function_author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '生成功能作者',
+  `gen_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '生成代码方式（0zip压缩包 1自定义路径）',
+  `gen_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '/' COMMENT '生成路径（不填默认项目路径）',
+  `options` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '其它生成选项',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`table_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of gen_table
+-- ----------------------------
+INSERT INTO `gen_table` VALUES (1, 'area_manage', '', NULL, NULL, 'AreaManage', 'crud', '', 'com.ruoyi.system', 'system', 'manage', NULL, 'ruoyi', '0', '/', NULL, 'admin', '2024-08-27 09:31:35', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (2, 'strawberry_cluster', '草莓产量预期表', NULL, NULL, 'StrawberryCluster', 'crud', 'element-ui', 'com.ruoyi.system', 'system', 'starryCluster', '产量预期', 'yejainfeng', '0', '/', '{\"parentMenuId\":2040}', 'admin', '2025-08-18 10:25:42', '', '2025-08-18 10:27:34', '产量预期');
+INSERT INTO `gen_table` VALUES (3, 'strawberry_pest_disease', '病虫害分析表', NULL, NULL, 'StrawberryPestDisease', 'crud', 'element-ui', 'com.ruoyi.system', 'system', 'disease', '病虫害分析', 'yejianfeng', '0', '/', '{\"parentMenuId\":2040}', 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00', '病虫害分析');
+
+-- ----------------------------
+-- Table structure for gen_table_column
+-- ----------------------------
+DROP TABLE IF EXISTS `gen_table_column`;
+CREATE TABLE `gen_table_column`  (
+  `column_id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `table_id` bigint NULL DEFAULT NULL COMMENT '归属表编号',
+  `column_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '列名称',
+  `column_comment` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '列描述',
+  `column_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '列类型',
+  `java_type` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT 'JAVA类型',
+  `java_field` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT 'JAVA字段名',
+  `is_pk` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '是否主键（1是）',
+  `is_increment` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '是否自增（1是）',
+  `is_required` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '是否必填（1是）',
+  `is_insert` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '是否为插入字段（1是）',
+  `is_edit` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '是否编辑字段（1是）',
+  `is_list` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '是否列表字段（1是）',
+  `is_query` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '是否查询字段（1是）',
+  `query_type` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT 'EQ' COMMENT '查询方式（等于、不等于、大于、小于、范围）',
+  `html_type` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）',
+  `dict_type` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '字典类型',
+  `sort` int NULL DEFAULT NULL COMMENT '排序',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`column_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of gen_table_column
+-- ----------------------------
+INSERT INTO `gen_table_column` VALUES (1, 1, 'area_id', '场地ID', 'int', 'Long', 'areaId', '1', '1', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (2, 1, 'area_name', '场地名称', 'varchar(40)', 'String', 'areaName', '0', '0', '0', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (3, 1, 'area_address', '场地地址', 'varchar(80)', 'String', 'areaAddress', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (4, 1, 'area_type', '场地类型', 'varchar(40)', 'String', 'areaType', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'select', '', 4, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (5, 1, 'area_square', '场地面积（单位：亩）', 'int', 'Long', 'areaSquare', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (6, 1, 'area_state', '场地状态：正常；停用；待建', 'varchar(20)', 'String', 'areaState', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (7, 1, 'area_leader', '场地户主', 'varchar(20)', 'String', 'areaLeader', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (8, 1, 'area_phone', '联系方式', 'varchar(20)', 'String', 'areaPhone', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (9, 1, 'user_id', '用户id', 'int', 'Long', 'userId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (10, 1, 'create_date', '创建时间', 'datetime', 'Date', 'createDate', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'datetime', '', 10, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (11, 1, 'create_by', '创建人', 'varchar(20)', 'String', 'createBy', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 11, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (12, 1, 'update_date', '更新时间', 'datetime', 'Date', 'updateDate', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'datetime', '', 12, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (13, 1, 'update_by', '更新人', 'varchar(20)', 'String', 'updateBy', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'input', '', 13, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (14, 1, 'del_flag', '是否删除：0，未删除；1，删除', 'int', 'Long', 'delFlag', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 14, 'admin', '2024-08-27 09:31:35', '', NULL);
+INSERT INTO `gen_table_column` VALUES (15, 2, 'id', NULL, 'bigint', 'Long', 'id', '1', '1', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-08-18 10:25:42', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (16, 2, 'cluster_id', '草莓簇/区域唯一ID', 'varchar(100)', 'String', 'clusterId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (17, 2, 'cluster_name', '区域/地块名称（例如：温室A北区）', 'varchar(100)', 'String', 'clusterName', '0', '0', '0', '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (18, 2, 'total_count', '簇内草莓总数', 'int', 'Long', 'totalCount', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (19, 2, 'ripe_count', '已成熟数量', 'int', 'Long', 'ripeCount', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (20, 2, 'half_ripe_count', '半成熟数量', 'int', 'Long', 'halfRipeCount', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (21, 2, 'unripe_count', '未成熟数量', 'int', 'Long', 'unripeCount', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (22, 2, 'avg_size_mm', '平均大小（毫米）', 'float', 'Long', 'avgSizeMm', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (23, 2, 'location_area', '区域范围（地块/簇）', 'geometry', 'String', 'locationArea', '0', '0', '0', '1', '1', '1', '1', 'EQ', NULL, '', 9, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (24, 2, 'latitude', '簇中心点纬度', 'double', 'Long', 'latitude', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 10, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (25, 2, 'longitude', '簇中心点经度', 'double', 'Long', 'longitude', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 11, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (26, 2, 'recommendation', '系统生成的采摘建议采摘时间（由AI或定时任务写入）', 'text', 'String', 'recommendation', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'textarea', '', 12, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (27, 2, 'last_update', '最后更新时间', 'timestamp', 'Date', 'lastUpdate', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'datetime', '', 13, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:27:34');
+INSERT INTO `gen_table_column` VALUES (28, 3, 'id', NULL, 'bigint', 'Long', 'id', '1', '1', '0', '0', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (29, 3, 'cluster_id', '对应草莓簇/区域ID', 'varchar(100)', 'String', 'clusterId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (30, 3, 'object_type', '检测对象类型：leaf（叶子）/ fruit（果实）/ stem（茎）', 'varchar(50)', 'String', 'objectType', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'select', '', 3, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (31, 3, 'bbox_x_min', '边界框最小X坐标（目标检测框左上角X）', 'float', 'BigDecimal', 'bboxXMin', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (32, 3, 'bbox_y_min', '边界框最小Y坐标（目标检测框左上角Y）', 'float', 'BigDecimal', 'bboxYMin', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (33, 3, 'bbox_x_max', '边界框最大X坐标（目标检测框右下角X）', 'float', 'BigDecimal', 'bboxXMax', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (34, 3, 'bbox_y_max', '边界框最大Y坐标（目标检测框右下角Y）', 'float', 'BigDecimal', 'bboxYMax', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (35, 3, 'confidence', '检测置信度（0.0 ~ 1.0）', 'float', 'BigDecimal', 'confidence', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (36, 3, 'pest_disease_class', '识别出的病虫害类别（如：白粉病、红蜘蛛等）', 'varchar(100)', 'String', 'pestDiseaseClass', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (37, 3, 'severity_level', '严重程度：low / medium / high', 'varchar(20)', 'String', 'severityLevel', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 10, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (38, 3, 'recommendation', '系统生成的防治或处理建议（由AI或定时任务写入）', 'text', 'String', 'recommendation', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'textarea', '', 11, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+INSERT INTO `gen_table_column` VALUES (39, 3, 'detected_time', '病虫害检测时间', 'timestamp', 'Date', 'detectedTime', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'datetime', '', 12, 'admin', '2025-08-18 10:25:43', '', '2025-08-18 10:33:00');
+
+-- ----------------------------
+-- Table structure for knowledge_base
+-- ----------------------------
+DROP TABLE IF EXISTS `knowledge_base`;
+CREATE TABLE `knowledge_base`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `remark` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `user_id` bigint NULL DEFAULT NULL,
+  `upload_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` tinyint NULL DEFAULT 1,
+  `top_k` int NULL DEFAULT NULL COMMENT '推荐召回topK',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of knowledge_base
+-- ----------------------------
+INSERT INTO `knowledge_base` VALUES (5, '草莓预产量知识库', '测试', '草莓预产量知识库.md', NULL, '2025-08-21 14:36:16', 1, 5);
+INSERT INTO `knowledge_base` VALUES (10, '草莓预产量知识库', '1', '草莓病理与防治知识库.md', NULL, '2025-08-21 20:59:46', 1, 5);
+INSERT INTO `knowledge_base` VALUES (11, '草莓预产量知识库1', '1', '草莓病理与防治知识库.md', NULL, '2025-08-21 21:01:16', 1, 5);
+INSERT INTO `knowledge_base` VALUES (12, '草莓模型', '', '育苗期.md', NULL, '2025-08-22 09:20:47', 1, 5);
+INSERT INTO `knowledge_base` VALUES (13, '草莓预产量知识库', '', '育苗期.md', NULL, '2025-08-22 09:46:55', 1, 5);
+
+-- ----------------------------
+-- Table structure for knowledge_chunk
+-- ----------------------------
+DROP TABLE IF EXISTS `knowledge_chunk`;
+CREATE TABLE `knowledge_chunk`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `kb_id` bigint NOT NULL,
+  `chunk_index` int NULL DEFAULT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `kb_id`(`kb_id`) USING BTREE,
+  CONSTRAINT `knowledge_chunk_ibfk_1` FOREIGN KEY (`kb_id`) REFERENCES `knowledge_base` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 519 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of knowledge_chunk
+-- ----------------------------
+INSERT INTO `knowledge_chunk` VALUES (192, 5, 0, '1. 产量预测逻辑', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (193, 5, 1, '- 产量计算基础：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (194, 5, 2, '   - 产量 ≈ 簇内草莓数量 × 平均大小 × 成熟率系数', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (195, 5, 3, '   - 成熟率系数由「成熟 / 半熟 / 未熟比例」决定。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (196, 5, 4, '- 分阶段产量：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (197, 5, 5, '   - 已成熟果：当前可采收量。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (198, 5, 6, '   - 半成熟果：预计 1–3 天成熟，产量需根据温度、光照条件进行修正。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (199, 5, 7, '   - 未成熟果：预计 3–7 天成熟，产量受营养供给和病虫害影响较大。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (200, 5, 8, '2. 影响因子（产量修正系数）', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (201, 5, 9, '- 环境因子：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (202, 5, 10, '   - 光照不足：果实重量减少 10–20%。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (203, 5, 11, '   - 夜间温度过高（>25℃）：影响糖分积累，果实变小。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (204, 5, 12, '   - 湿度过大：易发生灰霉病，产量减少 15–30%。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (205, 5, 13, '- 养分因子：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (206, 5, 14, '   - 氮肥过量→植株旺长，果实变小，产量下降。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (207, 5, 15, '   - 钾肥、钙肥充足→果实饱满，硬度提高，商品率提升 15–20%。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (208, 5, 16, '- 病虫害因子：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (209, 5, 17, '   - 炭疽病果腐：直接损失产量。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (210, 5, 18, '   - 白粉病：降低光合效率，果实变小。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (211, 5, 19, '   - 灰霉病：采收前果实腐烂，产量损失显著。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (212, 5, 20, '3. 环境与产量关系', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (213, 5, 21, '- 空气温度', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (214, 5, 22, '   - 适宜范围：18–25℃。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (215, 5, 23, '   - <15℃：果实膨大慢，产量下降。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (216, 5, 24, '   - «30℃：光合作用受抑制，果实畸形率上升。»', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (217, 5, 25, '- 空气湿度', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (218, 5, 26, '   - 适宜范围：60–75%。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (219, 5, 27, '   - «85%：灰霉病、白粉病风险高。»', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (220, 5, 28, '   - <40%：花粉活力下降，坐果率低。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (221, 5, 29, '- 光照强度', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (222, 5, 30, '   - 适宜范围：30,000–50,000 Lux。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (223, 5, 31, '   - 光照不足→果实变小、糖度降低。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (224, 5, 32, '- 二氧化碳', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (225, 5, 33, '   - 适宜浓度：800–1200 ppm。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (226, 5, 34, '   - <400 ppm：光合作用不足，产量下降 10–20%。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (227, 5, 35, '4. 土壤与产量关系', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (228, 5, 36, '- 土壤温度', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (229, 5, 37, '   - 适宜范围：15–25℃。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (230, 5, 38, '   - <10℃：根系活力差。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (231, 5, 39, '   - «30℃：根系早衰。»', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (232, 5, 40, '- 土壤湿度', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (233, 5, 41, '   - 适宜范围：60–70%。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (234, 5, 42, '   - «80%：根系缺氧，易烂根。»', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (235, 5, 43, '   - <40%：果实膨大不足。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (236, 5, 44, '- 电导率 (EC)', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (237, 5, 45, '   - 适宜值：0.8–1.2 mS/cm。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (238, 5, 46, '   - 过高：盐害，影响吸收。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (239, 5, 47, '- pH', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (240, 5, 48, '   - 适宜范围：5.5–6.5。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (241, 5, 49, '   - «7.0：铁、锰缺乏。»', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (242, 5, 50, '   - <5.0：根系活力下降。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (243, 5, 51, '- 氮 (N)', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (244, 5, 52, '   - 过量：徒长，果小。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (245, 5, 53, '   - 缺乏：叶片发黄，产量下降。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (246, 5, 54, '- 磷 (P)', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (247, 5, 55, '   - 促进根系和开花。缺乏→花少果少。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (248, 5, 56, '- 钾 (K)', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (249, 5, 57, '   - 促进果实膨大与糖分积累。缺乏→果实硬度低、糖度下降。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (250, 5, 58, '5. 专家建议（产量管理）', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (251, 5, 59, '- 采收管理：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (252, 5, 60, '   - 已成熟果：优先采摘，防止过熟。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (253, 5, 61, '   - 半成熟果：注意天气变化，连续阴雨需提前采收。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (254, 5, 62, '   - 未成熟果：保持光照与养分，避免积水。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (255, 5, 63, '- 养分补充：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (256, 5, 64, '   - 膨果期补充钾、钙肥，避免裂果。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (257, 5, 65, '   - 避免后期氮肥过量。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (258, 5, 66, '- 病害预防：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (259, 5, 67, '   - 产量预测需结合病害风险评估。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (260, 5, 68, '   - 在高湿环境下，需提前 2–3 天进行防病喷药。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (261, 5, 69, '根据环境与土壤条件，修正产量预测值：', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (262, 5, 70, '- 环境或养分超出适宜范围时，预估产量需降低 10–30%。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (263, 5, 71, '- 条件适宜时，预估产量可上调 5–15%。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (264, 5, 72, '采收时机需结合土壤湿度、温度，避免雨后立即采收。', '2025-08-21 14:36:16');
+INSERT INTO `knowledge_chunk` VALUES (276, 10, 0, '1. Angular Leafspot（角斑病）', '2025-08-21 20:59:47');
+INSERT INTO `knowledge_chunk` VALUES (277, 10, 1, '- 病原与传播：由 Xanthomonas fragariae 引起，细菌性病害，主要通过雨水、灌溉水传播。', '2025-08-21 20:59:47');
+INSERT INTO `knowledge_chunk` VALUES (278, 10, 2, '- 症状：叶片出现水浸状小斑点，逐渐发展为褐色坏死斑，严重时叶片枯死。', '2025-08-21 20:59:48');
+INSERT INTO `knowledge_chunk` VALUES (279, 10, 3, '- 环境与诱发条件：', '2025-08-21 20:59:48');
+INSERT INTO `knowledge_chunk` VALUES (280, 10, 4, '   - 低温高湿（15–20℃）时易发；', '2025-08-21 20:59:48');
+INSERT INTO `knowledge_chunk` VALUES (281, 10, 5, '   - 高湿度环境（空气湿度 > 80%、土壤湿度过高）会加重病害。', '2025-08-21 20:59:48');
+INSERT INTO `knowledge_chunk` VALUES (282, 10, 6, '- 防治措施：', '2025-08-21 20:59:49');
+INSERT INTO `knowledge_chunk` VALUES (283, 10, 7, '   - 物理：增加行距以减少叶面湿度，采用滴灌代替喷灌，避免叶面长时间潮湿。', '2025-08-21 20:59:49');
+INSERT INTO `knowledge_chunk` VALUES (284, 10, 8, '   - 药剂：铜制剂、链霉素交替使用，防止病菌产生耐药性。', '2025-08-21 20:59:49');
+INSERT INTO `knowledge_chunk` VALUES (285, 10, 9, '   - 管理：清除病残体，避免使用带病苗，减少病源基数。', '2025-08-21 20:59:49');
+INSERT INTO `knowledge_chunk` VALUES (286, 10, 10, '   - 外部环境调控：降低棚内湿度，改善通风条件。', '2025-08-21 20:59:49');
+INSERT INTO `knowledge_chunk` VALUES (287, 10, 11, '   - 土壤管理：避免过度灌水，保持土壤湿度在 60–70%。', '2025-08-21 20:59:50');
+INSERT INTO `knowledge_chunk` VALUES (288, 10, 12, '   - 营养调控：氮肥过多易加重病害，需减少氮肥施用量。', '2025-08-21 20:59:50');
+INSERT INTO `knowledge_chunk` VALUES (289, 10, 13, '2. Anthracnose Fruit Rot（炭疽病果腐）', '2025-08-21 20:59:50');
+INSERT INTO `knowledge_chunk` VALUES (290, 10, 14, '- 病原与传播：由 Colletotrichum acutatum 引起，高温高湿条件下快速传播。', '2025-08-21 20:59:50');
+INSERT INTO `knowledge_chunk` VALUES (291, 10, 15, '- 症状：果实出现黑色凹陷病斑，湿度大时病斑上长出粉红色黏孢子团。', '2025-08-21 20:59:50');
+INSERT INTO `knowledge_chunk` VALUES (292, 10, 16, '- 危害：采前采后均可发病，采后贮藏期易腐烂，导致严重产量损失。', '2025-08-21 20:59:50');
+INSERT INTO `knowledge_chunk` VALUES (293, 10, 17, '- 环境与诱发条件：高温高湿（温度 > 28℃、空气湿度 > 80%）、氮肥过多时病害易爆发。', '2025-08-21 20:59:51');
+INSERT INTO `knowledge_chunk` VALUES (294, 10, 18, '- 防治措施：', '2025-08-21 20:59:51');
+INSERT INTO `knowledge_chunk` VALUES (295, 10, 19, '   - 物理：避免果实接触地面，采后采用低温冷链贮藏，抑制病菌繁殖。', '2025-08-21 20:59:51');
+INSERT INTO `knowledge_chunk` VALUES (296, 10, 20, '   - 药剂：吡唑醚菌酯、苯醚甲环唑、啶酰菌胺交替使用，降低耐药风险。', '2025-08-21 20:59:51');
+INSERT INTO `knowledge_chunk` VALUES (297, 10, 21, '   - 管理：及时清除病果，避免连作，减少病菌积累。', '2025-08-21 20:59:52');
+INSERT INTO `knowledge_chunk` VALUES (298, 10, 22, '   - 外部环境调控：改善通风条件，保持空气湿度 < 75%。', '2025-08-21 20:59:52');
+INSERT INTO `knowledge_chunk` VALUES (299, 10, 23, '   - 土壤管理：避免积水，控制土壤湿度在 60–70%。', '2025-08-21 20:59:52');
+INSERT INTO `knowledge_chunk` VALUES (300, 10, 24, '   - 营养调控：减少氮肥施用量，补充钾肥以提高果实抗性。', '2025-08-21 20:59:52');
+INSERT INTO `knowledge_chunk` VALUES (301, 10, 25, '3. Gray Mold（灰霉病）', '2025-08-21 20:59:53');
+INSERT INTO `knowledge_chunk` VALUES (302, 10, 26, '- 病原与传播：由 Botrytis cinerea 引起，花器及幼果期感染最重，通过空气传播孢子。', '2025-08-21 20:59:53');
+INSERT INTO `knowledge_chunk` VALUES (303, 10, 27, '- 症状：果实表面出现灰色霉层，触碰即掉落孢子粉，后期果实腐烂。', '2025-08-21 20:59:53');
+INSERT INTO `knowledge_chunk` VALUES (304, 10, 28, '- 环境与诱发条件：', '2025-08-21 20:59:53');
+INSERT INTO `knowledge_chunk` VALUES (305, 10, 29, '   - 温度 15–20℃、相对湿度 > 85% 时最易爆发；', '2025-08-21 20:59:54');
+INSERT INTO `knowledge_chunk` VALUES (306, 10, 30, '   - 光照不足、果实表面长时间潮湿会加重病害。', '2025-08-21 20:59:54');
+INSERT INTO `knowledge_chunk` VALUES (307, 10, 31, '- 防治措施：', '2025-08-21 20:59:54');
+INSERT INTO `knowledge_chunk` VALUES (308, 10, 32, '   - 物理：加强通风以降低棚内湿度，避免果实相互挤压，减少接触传播。', '2025-08-21 20:59:54');
+INSERT INTO `knowledge_chunk` VALUES (309, 10, 33, '   - 药剂：腐霉利、异菌脲、嘧霉胺轮换使用，避免耐药性产生。', '2025-08-21 20:59:54');
+INSERT INTO `knowledge_chunk` VALUES (310, 10, 34, '   - 管理：及时采收病果，减少病源基数，降低扩散风险。', '2025-08-21 20:59:54');
+INSERT INTO `knowledge_chunk` VALUES (311, 10, 35, '   - 外部环境调控：加大通风量，避免棚内结露，减少高湿环境。', '2025-08-21 20:59:55');
+INSERT INTO `knowledge_chunk` VALUES (312, 10, 36, '   - 土壤管理：适度控水，避免叶片和果实接触湿土，降低感染概率。', '2025-08-21 20:59:55');
+INSERT INTO `knowledge_chunk` VALUES (313, 10, 37, '   - 营养调控：适量补钙，提高果实硬度，减少腐烂风险。', '2025-08-21 20:59:55');
+INSERT INTO `knowledge_chunk` VALUES (314, 10, 38, '4. Leaf Spot（叶斑病）', '2025-08-21 20:59:55');
+INSERT INTO `knowledge_chunk` VALUES (315, 10, 39, '- 病原与传播：由 Mycosphaerella fragariae 引起，通过气流或雨水传播。', '2025-08-21 20:59:56');
+INSERT INTO `knowledge_chunk` VALUES (316, 10, 40, '- 症状：叶片出现褐色小圆斑，边缘清晰，中部呈灰白色，影响光合作用。', '2025-08-21 20:59:56');
+INSERT INTO `knowledge_chunk` VALUES (317, 10, 41, '- 环境与诱发条件：温度 15–25℃、空气湿度 70–80% 时易发病；土壤 pH<5 时病害加重。', '2025-08-21 20:59:56');
+INSERT INTO `knowledge_chunk` VALUES (318, 10, 42, '- 防治措施：', '2025-08-21 20:59:56');
+INSERT INTO `knowledge_chunk` VALUES (319, 10, 43, '   - 物理：减少叶片潮湿时间，避免密植，改善植株间通风透光性。', '2025-08-21 20:59:56');
+INSERT INTO `knowledge_chunk` VALUES (320, 10, 44, '   - 药剂：代森锰锌、氯溴异氰尿酸喷施防治。', '2025-08-21 20:59:57');
+INSERT INTO `knowledge_chunk` VALUES (321, 10, 45, '   - 管理：选择抗病品种，注意轮作，减少病菌积累。', '2025-08-21 20:59:57');
+INSERT INTO `knowledge_chunk` VALUES (322, 10, 46, '   - 外部环境调控：及时摘除病叶，降低田间病菌密度。', '2025-08-21 20:59:57');
+INSERT INTO `knowledge_chunk` VALUES (323, 10, 47, '   - 土壤管理：调节土壤 pH 至 5.5–6.5，创造不适宜病菌繁殖的环境。', '2025-08-21 20:59:57');
+INSERT INTO `knowledge_chunk` VALUES (324, 10, 48, '   - 营养调控：氮肥过多会加重病害，需控制氮肥施用量。', '2025-08-21 20:59:58');
+INSERT INTO `knowledge_chunk` VALUES (325, 10, 49, '5. Powdery Mildew Fruit（果实白粉病）', '2025-08-21 20:59:58');
+INSERT INTO `knowledge_chunk` VALUES (326, 10, 50, '- 病原与传播：由 Podosphaera aphanis 引起，通过气流传播孢子。', '2025-08-21 20:59:58');
+INSERT INTO `knowledge_chunk` VALUES (327, 10, 51, '- 症状：果实表面覆盖白色粉层，导致果实变形，商品率显著下降。', '2025-08-21 20:59:58');
+INSERT INTO `knowledge_chunk` VALUES (328, 10, 52, '- 环境与诱发条件：', '2025-08-21 20:59:58');
+INSERT INTO `knowledge_chunk` VALUES (329, 10, 53, '   - 温暖干燥（20–25℃）、通风不良的温室环境易发；', '2025-08-21 20:59:59');
+INSERT INTO `knowledge_chunk` VALUES (330, 10, 54, '   - 氮肥过多会加重病害。', '2025-08-21 20:59:59');
+INSERT INTO `knowledge_chunk` VALUES (331, 10, 55, '- 防治措施：', '2025-08-21 20:59:59');
+INSERT INTO `knowledge_chunk` VALUES (332, 10, 56, '   - 物理：改善通风条件，避免湿热闷棚环境。', '2025-08-21 20:59:59');
+INSERT INTO `knowledge_chunk` VALUES (333, 10, 57, '   - 药剂：三唑类（戊唑醇）、硫制剂交替使用，提高防治效果。', '2025-08-21 21:00:00');
+INSERT INTO `knowledge_chunk` VALUES (334, 10, 58, '   - 管理：选用无病苗木，避免带病栽培，减少初始病源。', '2025-08-21 21:00:00');
+INSERT INTO `knowledge_chunk` VALUES (335, 10, 59, '   - 外部环境调控：增加空气流通，降低局部湿度，抑制孢子萌发。', '2025-08-21 21:00:00');
+INSERT INTO `knowledge_chunk` VALUES (336, 10, 60, '   - 土壤管理：控制氮肥用量，保持土壤电导率（EC）<1.2 mS/cm，避免盐害影响植株抗性。', '2025-08-21 21:00:00');
+INSERT INTO `knowledge_chunk` VALUES (337, 10, 61, '   - 营养调控：补充钾肥，增强果实抗性，减少病害发生。', '2025-08-21 21:00:01');
+INSERT INTO `knowledge_chunk` VALUES (338, 10, 62, '6. Powdery Mildew Leaf（叶片白粉病）', '2025-08-21 21:00:01');
+INSERT INTO `knowledge_chunk` VALUES (339, 10, 63, '- 病原与传播：由 Podosphaera aphanis 引起，与果实白粉病同源，通过气流传播。', '2025-08-21 21:00:01');
+INSERT INTO `knowledge_chunk` VALUES (340, 10, 64, '- 症状：叶片正反面均出现白色粉层，导致叶片卷曲，光合作用效率下降。', '2025-08-21 21:00:02');
+INSERT INTO `knowledge_chunk` VALUES (341, 10, 65, '- 环境与诱发条件：高湿 + 高氮环境、弱光条件下易爆发。', '2025-08-21 21:00:02');
+INSERT INTO `knowledge_chunk` VALUES (342, 10, 66, '- 防治措施：', '2025-08-21 21:00:02');
+INSERT INTO `knowledge_chunk` VALUES (343, 10, 67, '   - 物理：温室内加强通风，降低湿度，改善光照条件。', '2025-08-21 21:00:02');
+INSERT INTO `knowledge_chunk` VALUES (344, 10, 68, '   - 药剂：多抗霉素、硫磺悬浮剂喷施防治。', '2025-08-21 21:00:03');
+INSERT INTO `knowledge_chunk` VALUES (345, 10, 69, '   - 管理：避免连作，合理密植，减少植株间湿度积累。', '2025-08-21 21:00:03');
+INSERT INTO `knowledge_chunk` VALUES (346, 10, 70, '   - 外部环境调控：降低空气湿度，增强光照强度，抑制病菌生长。', '2025-08-21 21:00:03');
+INSERT INTO `knowledge_chunk` VALUES (347, 10, 71, '   - 土壤管理：控制氮肥水平，避免土壤氮含量 > 150 mg/kg，减少植株徒长。', '2025-08-21 21:00:03');
+INSERT INTO `knowledge_chunk` VALUES (348, 10, 72, '   - 营养调控：补充钙、钾肥，提升植株整体抗病性。', '2025-08-21 21:00:04');
+INSERT INTO `knowledge_chunk` VALUES (349, 11, 0, '1. Angular Leafspot（角斑病）', '2025-08-21 21:01:17');
+INSERT INTO `knowledge_chunk` VALUES (350, 11, 1, '- 病原与传播：由 Xanthomonas fragariae 引起，细菌性病害，主要通过雨水、灌溉水传播。', '2025-08-21 21:01:17');
+INSERT INTO `knowledge_chunk` VALUES (351, 11, 2, '- 症状：叶片出现水浸状小斑点，逐渐发展为褐色坏死斑，严重时叶片枯死。', '2025-08-21 21:01:17');
+INSERT INTO `knowledge_chunk` VALUES (352, 11, 3, '- 环境与诱发条件：', '2025-08-21 21:01:17');
+INSERT INTO `knowledge_chunk` VALUES (353, 11, 4, '   - 低温高湿（15–20℃）时易发；', '2025-08-21 21:01:18');
+INSERT INTO `knowledge_chunk` VALUES (354, 11, 5, '   - 高湿度环境（空气湿度 > 80%、土壤湿度过高）会加重病害。', '2025-08-21 21:01:18');
+INSERT INTO `knowledge_chunk` VALUES (355, 11, 6, '- 防治措施：', '2025-08-21 21:01:18');
+INSERT INTO `knowledge_chunk` VALUES (356, 11, 7, '   - 物理：增加行距以减少叶面湿度，采用滴灌代替喷灌，避免叶面长时间潮湿。', '2025-08-21 21:01:18');
+INSERT INTO `knowledge_chunk` VALUES (357, 11, 8, '   - 药剂：铜制剂、链霉素交替使用，防止病菌产生耐药性。', '2025-08-21 21:01:19');
+INSERT INTO `knowledge_chunk` VALUES (358, 11, 9, '   - 管理：清除病残体，避免使用带病苗，减少病源基数。', '2025-08-21 21:01:19');
+INSERT INTO `knowledge_chunk` VALUES (359, 11, 10, '   - 外部环境调控：降低棚内湿度，改善通风条件。', '2025-08-21 21:01:19');
+INSERT INTO `knowledge_chunk` VALUES (360, 11, 11, '   - 土壤管理：避免过度灌水，保持土壤湿度在 60–70%。', '2025-08-21 21:01:19');
+INSERT INTO `knowledge_chunk` VALUES (361, 11, 12, '   - 营养调控：氮肥过多易加重病害，需减少氮肥施用量。', '2025-08-21 21:01:20');
+INSERT INTO `knowledge_chunk` VALUES (362, 11, 13, '2. Anthracnose Fruit Rot（炭疽病果腐）', '2025-08-21 21:01:20');
+INSERT INTO `knowledge_chunk` VALUES (363, 11, 14, '- 病原与传播：由 Colletotrichum acutatum 引起，高温高湿条件下快速传播。', '2025-08-21 21:01:20');
+INSERT INTO `knowledge_chunk` VALUES (364, 11, 15, '- 症状：果实出现黑色凹陷病斑，湿度大时病斑上长出粉红色黏孢子团。', '2025-08-21 21:01:20');
+INSERT INTO `knowledge_chunk` VALUES (365, 11, 16, '- 危害：采前采后均可发病，采后贮藏期易腐烂，导致严重产量损失。', '2025-08-21 21:01:21');
+INSERT INTO `knowledge_chunk` VALUES (366, 11, 17, '- 环境与诱发条件：高温高湿（温度 > 28℃、空气湿度 > 80%）、氮肥过多时病害易爆发。', '2025-08-21 21:01:21');
+INSERT INTO `knowledge_chunk` VALUES (367, 11, 18, '- 防治措施：', '2025-08-21 21:01:21');
+INSERT INTO `knowledge_chunk` VALUES (368, 11, 19, '   - 物理：避免果实接触地面，采后采用低温冷链贮藏，抑制病菌繁殖。', '2025-08-21 21:01:21');
+INSERT INTO `knowledge_chunk` VALUES (369, 11, 20, '   - 药剂：吡唑醚菌酯、苯醚甲环唑、啶酰菌胺交替使用，降低耐药风险。', '2025-08-21 21:01:21');
+INSERT INTO `knowledge_chunk` VALUES (370, 11, 21, '   - 管理：及时清除病果，避免连作，减少病菌积累。', '2025-08-21 21:01:22');
+INSERT INTO `knowledge_chunk` VALUES (371, 11, 22, '   - 外部环境调控：改善通风条件，保持空气湿度 < 75%。', '2025-08-21 21:01:22');
+INSERT INTO `knowledge_chunk` VALUES (372, 11, 23, '   - 土壤管理：避免积水，控制土壤湿度在 60–70%。', '2025-08-21 21:01:22');
+INSERT INTO `knowledge_chunk` VALUES (373, 11, 24, '   - 营养调控：减少氮肥施用量，补充钾肥以提高果实抗性。', '2025-08-21 21:01:23');
+INSERT INTO `knowledge_chunk` VALUES (374, 11, 25, '3. Gray Mold（灰霉病）', '2025-08-21 21:01:23');
+INSERT INTO `knowledge_chunk` VALUES (375, 11, 26, '- 病原与传播：由 Botrytis cinerea 引起，花器及幼果期感染最重，通过空气传播孢子。', '2025-08-21 21:01:23');
+INSERT INTO `knowledge_chunk` VALUES (376, 11, 27, '- 症状：果实表面出现灰色霉层，触碰即掉落孢子粉，后期果实腐烂。', '2025-08-21 21:01:23');
+INSERT INTO `knowledge_chunk` VALUES (377, 11, 28, '- 环境与诱发条件：', '2025-08-21 21:01:23');
+INSERT INTO `knowledge_chunk` VALUES (378, 11, 29, '   - 温度 15–20℃、相对湿度 > 85% 时最易爆发；', '2025-08-21 21:01:24');
+INSERT INTO `knowledge_chunk` VALUES (379, 11, 30, '   - 光照不足、果实表面长时间潮湿会加重病害。', '2025-08-21 21:01:24');
+INSERT INTO `knowledge_chunk` VALUES (380, 11, 31, '- 防治措施：', '2025-08-21 21:01:24');
+INSERT INTO `knowledge_chunk` VALUES (381, 11, 32, '   - 物理：加强通风以降低棚内湿度，避免果实相互挤压，减少接触传播。', '2025-08-21 21:01:24');
+INSERT INTO `knowledge_chunk` VALUES (382, 11, 33, '   - 药剂：腐霉利、异菌脲、嘧霉胺轮换使用，避免耐药性产生。', '2025-08-21 21:01:24');
+INSERT INTO `knowledge_chunk` VALUES (383, 11, 34, '   - 管理：及时采收病果，减少病源基数，降低扩散风险。', '2025-08-21 21:01:25');
+INSERT INTO `knowledge_chunk` VALUES (384, 11, 35, '   - 外部环境调控：加大通风量，避免棚内结露，减少高湿环境。', '2025-08-21 21:01:25');
+INSERT INTO `knowledge_chunk` VALUES (385, 11, 36, '   - 土壤管理：适度控水，避免叶片和果实接触湿土，降低感染概率。', '2025-08-21 21:01:25');
+INSERT INTO `knowledge_chunk` VALUES (386, 11, 37, '   - 营养调控：适量补钙，提高果实硬度，减少腐烂风险。', '2025-08-21 21:01:25');
+INSERT INTO `knowledge_chunk` VALUES (387, 11, 38, '4. Leaf Spot（叶斑病）', '2025-08-21 21:01:25');
+INSERT INTO `knowledge_chunk` VALUES (388, 11, 39, '- 病原与传播：由 Mycosphaerella fragariae 引起，通过气流或雨水传播。', '2025-08-21 21:01:25');
+INSERT INTO `knowledge_chunk` VALUES (389, 11, 40, '- 症状：叶片出现褐色小圆斑，边缘清晰，中部呈灰白色，影响光合作用。', '2025-08-21 21:01:26');
+INSERT INTO `knowledge_chunk` VALUES (390, 11, 41, '- 环境与诱发条件：温度 15–25℃、空气湿度 70–80% 时易发病；土壤 pH<5 时病害加重。', '2025-08-21 21:01:26');
+INSERT INTO `knowledge_chunk` VALUES (391, 11, 42, '- 防治措施：', '2025-08-21 21:01:26');
+INSERT INTO `knowledge_chunk` VALUES (392, 11, 43, '   - 物理：减少叶片潮湿时间，避免密植，改善植株间通风透光性。', '2025-08-21 21:01:26');
+INSERT INTO `knowledge_chunk` VALUES (393, 11, 44, '   - 药剂：代森锰锌、氯溴异氰尿酸喷施防治。', '2025-08-21 21:01:27');
+INSERT INTO `knowledge_chunk` VALUES (394, 11, 45, '   - 管理：选择抗病品种，注意轮作，减少病菌积累。', '2025-08-21 21:01:27');
+INSERT INTO `knowledge_chunk` VALUES (395, 11, 46, '   - 外部环境调控：及时摘除病叶，降低田间病菌密度。', '2025-08-21 21:01:27');
+INSERT INTO `knowledge_chunk` VALUES (396, 11, 47, '   - 土壤管理：调节土壤 pH 至 5.5–6.5，创造不适宜病菌繁殖的环境。', '2025-08-21 21:01:27');
+INSERT INTO `knowledge_chunk` VALUES (397, 11, 48, '   - 营养调控：氮肥过多会加重病害，需控制氮肥施用量。', '2025-08-21 21:01:27');
+INSERT INTO `knowledge_chunk` VALUES (398, 11, 49, '5. Powdery Mildew Fruit（果实白粉病）', '2025-08-21 21:01:28');
+INSERT INTO `knowledge_chunk` VALUES (399, 11, 50, '- 病原与传播：由 Podosphaera aphanis 引起，通过气流传播孢子。', '2025-08-21 21:01:28');
+INSERT INTO `knowledge_chunk` VALUES (400, 11, 51, '- 症状：果实表面覆盖白色粉层，导致果实变形，商品率显著下降。', '2025-08-21 21:01:28');
+INSERT INTO `knowledge_chunk` VALUES (401, 11, 52, '- 环境与诱发条件：', '2025-08-21 21:01:28');
+INSERT INTO `knowledge_chunk` VALUES (402, 11, 53, '   - 温暖干燥（20–25℃）、通风不良的温室环境易发；', '2025-08-21 21:01:29');
+INSERT INTO `knowledge_chunk` VALUES (403, 11, 54, '   - 氮肥过多会加重病害。', '2025-08-21 21:01:29');
+INSERT INTO `knowledge_chunk` VALUES (404, 11, 55, '- 防治措施：', '2025-08-21 21:01:29');
+INSERT INTO `knowledge_chunk` VALUES (405, 11, 56, '   - 物理：改善通风条件，避免湿热闷棚环境。', '2025-08-21 21:01:29');
+INSERT INTO `knowledge_chunk` VALUES (406, 11, 57, '   - 药剂：三唑类（戊唑醇）、硫制剂交替使用，提高防治效果。', '2025-08-21 21:01:29');
+INSERT INTO `knowledge_chunk` VALUES (407, 11, 58, '   - 管理：选用无病苗木，避免带病栽培，减少初始病源。', '2025-08-21 21:01:30');
+INSERT INTO `knowledge_chunk` VALUES (408, 11, 59, '   - 外部环境调控：增加空气流通，降低局部湿度，抑制孢子萌发。', '2025-08-21 21:01:30');
+INSERT INTO `knowledge_chunk` VALUES (409, 11, 60, '   - 土壤管理：控制氮肥用量，保持土壤电导率（EC）<1.2 mS/cm，避免盐害影响植株抗性。', '2025-08-21 21:01:30');
+INSERT INTO `knowledge_chunk` VALUES (410, 11, 61, '   - 营养调控：补充钾肥，增强果实抗性，减少病害发生。', '2025-08-21 21:01:30');
+INSERT INTO `knowledge_chunk` VALUES (411, 11, 62, '6. Powdery Mildew Leaf（叶片白粉病）', '2025-08-21 21:01:31');
+INSERT INTO `knowledge_chunk` VALUES (412, 11, 63, '- 病原与传播：由 Podosphaera aphanis 引起，与果实白粉病同源，通过气流传播。', '2025-08-21 21:01:31');
+INSERT INTO `knowledge_chunk` VALUES (413, 11, 64, '- 症状：叶片正反面均出现白色粉层，导致叶片卷曲，光合作用效率下降。', '2025-08-21 21:01:31');
+INSERT INTO `knowledge_chunk` VALUES (414, 11, 65, '- 环境与诱发条件：高湿 + 高氮环境、弱光条件下易爆发。', '2025-08-21 21:01:31');
+INSERT INTO `knowledge_chunk` VALUES (415, 11, 66, '- 防治措施：', '2025-08-21 21:01:31');
+INSERT INTO `knowledge_chunk` VALUES (416, 11, 67, '   - 物理：温室内加强通风，降低湿度，改善光照条件。', '2025-08-21 21:01:32');
+INSERT INTO `knowledge_chunk` VALUES (417, 11, 68, '   - 药剂：多抗霉素、硫磺悬浮剂喷施防治。', '2025-08-21 21:01:32');
+INSERT INTO `knowledge_chunk` VALUES (418, 11, 69, '   - 管理：避免连作，合理密植，减少植株间湿度积累。', '2025-08-21 21:01:32');
+INSERT INTO `knowledge_chunk` VALUES (419, 11, 70, '   - 外部环境调控：降低空气湿度，增强光照强度，抑制病菌生长。', '2025-08-21 21:01:32');
+INSERT INTO `knowledge_chunk` VALUES (420, 11, 71, '   - 土壤管理：控制氮肥水平，避免土壤氮含量 > 150 mg/kg，减少植株徒长。', '2025-08-21 21:01:32');
+INSERT INTO `knowledge_chunk` VALUES (421, 11, 72, '   - 营养调控：补充钙、钾肥，提升植株整体抗病性。', '2025-08-21 21:01:32');
+INSERT INTO `knowledge_chunk` VALUES (422, 12, 0, '1. 生长周期大致时间线（温室栽培条件下）', '2025-08-22 09:20:48');
+INSERT INTO `knowledge_chunk` VALUES (423, 12, 1, '- 育苗期：30–40 天（约 4–6 周）', '2025-08-22 09:20:48');
+INSERT INTO `knowledge_chunk` VALUES (424, 12, 2, '- 营养生长期：30–40 天（约 4–6 周）', '2025-08-22 09:20:48');
+INSERT INTO `knowledge_chunk` VALUES (425, 12, 3, '- 开花期：20–25 天（约 3–4 周）', '2025-08-22 09:20:48');
+INSERT INTO `knowledge_chunk` VALUES (426, 12, 4, '- 果实膨大期：25–30 天（约 4–5 周）', '2025-08-22 09:20:48');
+INSERT INTO `knowledge_chunk` VALUES (427, 12, 5, '- 成熟采收期：20–30 天（约 3–4 周，可多批次采收）', '2025-08-22 09:20:49');
+INSERT INTO `knowledge_chunk` VALUES (428, 12, 6, '👉 合计：约 120–160 天（4–5 个月），即可进入 第一批果实采收。', '2025-08-22 09:20:49');
+INSERT INTO `knowledge_chunk` VALUES (429, 12, 7, '***', '2025-08-22 09:20:49');
+INSERT INTO `knowledge_chunk` VALUES (430, 12, 8, '2. 采收期范围', '2025-08-22 09:20:49');
+INSERT INTO `knowledge_chunk` VALUES (431, 12, 9, '- 草莓属于 连续采收型作物：一旦进入结果期，会持续开花、挂果、成熟。', '2025-08-22 09:20:50');
+INSERT INTO `knowledge_chunk` VALUES (432, 12, 10, '- 采收时间跨度：', '2025-08-22 09:20:50');
+INSERT INTO `knowledge_chunk` VALUES (433, 12, 11, '   - 首批果实成熟 → 定植后 3.5–5 个月左右', '2025-08-22 09:20:50');
+INSERT INTO `knowledge_chunk` VALUES (434, 12, 12, '   - 采收高峰期 → 持续 2–3 个月', '2025-08-22 09:20:50');
+INSERT INTO `knowledge_chunk` VALUES (435, 12, 13, '   - 总采收期 → 可维持 3–5 个月（视栽培方式和管理水平）', '2025-08-22 09:20:50');
+INSERT INTO `knowledge_chunk` VALUES (436, 12, 14, '***', '2025-08-22 09:20:51');
+INSERT INTO `knowledge_chunk` VALUES (437, 12, 15, '3. 举例说明', '2025-08-22 09:20:51');
+INSERT INTO `knowledge_chunk` VALUES (438, 12, 16, '- 秋季定植（9–10 月） → 翌年 1–2 月开始采收 → 可持续采收到 4–5 月', '2025-08-22 09:20:51');
+INSERT INTO `knowledge_chunk` VALUES (439, 12, 17, '- 早春定植（2–3 月） → 5–6 月采收 → 采收持续到 7–8 月', '2025-08-22 09:20:51');
+INSERT INTO `knowledge_chunk` VALUES (440, 12, 18, '育苗期', '2025-08-22 09:20:51');
+INSERT INTO `knowledge_chunk` VALUES (441, 12, 19, '| 空气温度                  | 空气湿度 | 光照强度                  | CO₂浓度             | 土壤温度 | 土壤湿度     | 电导率（EC） | 土壤pH值      | 养分需求（mg/kg）                                 | 成熟状态             |', '2025-08-22 09:20:51');
+INSERT INTO `knowledge_chunk` VALUES (442, 12, 20, '| ------------------------- | -------- | ----------------------------- | ----------------------- | ------------ | ---------------- | ---------------- | ----------------- | ----------------------------------------------------- | -------------------- |', '2025-08-22 09:20:52');
+INSERT INTO `knowledge_chunk` VALUES (443, 12, 21, '| 18~25℃（昼）/12~15℃（夜） | 70~80%   | 200~400 μmol/m²/s（适度遮光） | 400~600 ppm（自然通风） | 15~20℃       | 60~70%田间持水量 | 0.8~1.2 mS/cm    | 5.', '2025-08-22 09:20:52');
+INSERT INTO `knowledge_chunk` VALUES (444, 12, 22, '5~6.5（微酸性） | 氮（N）：100~150 磷（P₂O₅）：50~80 钾（K₂O）：100~120 | 根系发达，叶片健壮。 |', '2025-08-22 09:20:52');
+INSERT INTO `knowledge_chunk` VALUES (445, 12, 23, '营养生长期**（定植后至花芽分化）**', '2025-08-22 09:20:52');
+INSERT INTO `knowledge_chunk` VALUES (446, 12, 24, '| 空气温度                  | 空气湿度 | 光照强度                | CO₂浓度           | 土壤温度 | 土壤湿度     | 电导率（EC） | 土壤pH值 | 养分需求（mg/kg）                                        | 成熟状态                 |', '2025-08-22 09:20:53');
+INSERT INTO `knowledge_chunk` VALUES (447, 12, 25, '| ------------------------- | -------- | --------------------------- | --------------------- | ------------ | ---------------- | ---------------- | ------------ | ------------------------------------------------------------ | ------------------------ |', '2025-08-22 09:20:53');
+INSERT INTO `knowledge_chunk` VALUES (448, 12, 26, '| 20~25℃（昼）/10~15℃（夜） | 60~70%   | 400~600 μmol/m²/s（全光照） | 600~800 ppm（可补施） | 18~22℃       | 65~75%田间持水量 | 1.0~1.5 mS/cm    | 5.', '2025-08-22 09:20:53');
+INSERT INTO `knowledge_chunk` VALUES (449, 12, 27, '8~6.2      | 氮（N）：150~200（促进叶片生长） 磷（P₂O₅）：80~100 钾（K₂O）：120~150 | 植株分枝增多，叶片浓绿。 |', '2025-08-22 09:20:53');
+INSERT INTO `knowledge_chunk` VALUES (450, 12, 28, '开花期', '2025-08-22 09:20:53');
+INSERT INTO `knowledge_chunk` VALUES (451, 12, 29, '| 空气温度                                     | 空气湿度             | 光照强度      | CO₂浓度                  | 土壤温度 | 土壤湿度     | 电导率（EC） | 土壤pH值 | 养分需求（mg/kg）                                        | 成熟状态             |', '2025-08-22 09:20:53');
+INSERT INTO `knowledge_chunk` VALUES (452, 12, 30, '| -------------------------------------------- | -------------------- | ----------------- | ---------------------------- | ------------ | ---------------- | ---------------- | ------------ | ------------------------------------------------------------ | -------------------- |', '2025-08-22 09:20:54');
+INSERT INTO `knowledge_chunk` VALUES (453, 12, 31, '| 18~22℃（昼）/8~12℃（夜）（低温促进花芽分化） | 50~60%（过高易致病） | 500~700 μmol/m²/s | 800~1000 ppm（提升光合效率） | 16~20℃       | 60~70%田间持水量 | 1.2~1.8 mS/cm    | 6.', '2025-08-22 09:20:54');
+INSERT INTO `knowledge_chunk` VALUES (454, 12, 32, '0~6.5      | 氮（N）：100~150（减少防徒长） 磷（P₂O₅）：100~120（促花） 钾（K₂O）：150~200（增强抗逆性） | 花蕾饱满，开花整齐。 |', '2025-08-22 09:20:54');
+INSERT INTO `knowledge_chunk` VALUES (455, 12, 33, '果实膨大期', '2025-08-22 09:20:54');
+INSERT INTO `knowledge_chunk` VALUES (456, 12, 34, '| 空气温度                  | 空气湿度 | 光照强度      | CO₂浓度  | 土壤温度 | 土壤湿度               | 电导率（EC） | 土壤pH值 | 养分需求（mg/kg）                                        | 成熟状态                 |', '2025-08-22 09:20:54');
+INSERT INTO `knowledge_chunk` VALUES (457, 12, 35, '| ------------------------- | -------- | ----------------- | ------------ | ------------ | -------------------------- | ---------------- | ------------ | ------------------------------------------------------------ | ------------------------ |', '2025-08-22 09:20:55');
+INSERT INTO `knowledge_chunk` VALUES (458, 12, 36, '| 20~24℃（昼）/10~14℃（夜） | 50~60%   | 600~800 μmol/m²/s | 800~1200 ppm | 18~20℃       | 70~80%（需均匀供水防裂果） | 1.5~2.0 mS/cm    | 6.', '2025-08-22 09:20:55');
+INSERT INTO `knowledge_chunk` VALUES (459, 12, 37, '0~6.5      | 氮（N）：80~100 磷（P₂O₅）：80~100 钾（K₂O）：200~250（关键期） | 果实快速膨大，色泽转白。 |', '2025-08-22 09:20:55');
+INSERT INTO `knowledge_chunk` VALUES (460, 12, 38, '成熟采收期', '2025-08-22 09:20:55');
+INSERT INTO `knowledge_chunk` VALUES (461, 12, 39, '| 空气温度                                       | 空气湿度               | 光照强度      | CO₂浓度 | 土壤温度 | 土壤湿度             | 电导率（EC） | 土壤pH值 | 养分需求（mg/kg）                                        | 成熟状态               |', '2025-08-22 09:20:55');
+INSERT INTO `knowledge_chunk` VALUES (462, 12, 40, '| ---------------------------------------------- | ---------------------- | ----------------- | ----------- | ------------ | ------------------------ | ---------------- | ------------ | ------------------------------------------------------------ | ---------------------- |', '2025-08-22 09:20:56');
+INSERT INTO `knowledge_chunk` VALUES (463, 12, 41, '| 18~22℃（昼）/8~12℃（夜）（昼夜温差大提升糖度） | 40~50%（降低病害风险） | 700~900 μmol/m²/s | 600~800 ppm | 16~18℃       | 60~70%（采收前适度控水） | 1.0~1.5 mS/cm    | 6.', '2025-08-22 09:20:56');
+INSERT INTO `knowledge_chunk` VALUES (464, 12, 42, '0~6.5      | 氮（N）：50~80（避免过量） 磷（P₂O₅）：50~80 钾（K₂O）：150~200（提升品质） | 果实全红，糖酸比最佳。 |', '2025-08-22 09:20:56');
+INSERT INTO `knowledge_chunk` VALUES (465, 12, 43, '注意：', '2025-08-22 09:20:56');
+INSERT INTO `knowledge_chunk` VALUES (466, 12, 44, '| 温度管理                                    | 湿度控制                                             | 光照补充                                      | CO₂补充                                         | 土壤EC值                            |', '2025-08-22 09:20:56');
+INSERT INTO `knowledge_chunk` VALUES (467, 12, 45, '| ------------------------------------------- | ---------------------------------------------------- | --------------------------------------------- | ----------------------------------------------- | ----------------------------------- |', '2025-08-22 09:20:57');
+INSERT INTO `knowledge_chunk` VALUES (468, 12, 46, '| 高温（＞30℃）抑制生长，低温（＜5℃）易冻伤。 | 花期湿度过高会导致授粉不良，建议采用滴灌或通风降湿。 | 冬季需补光（LED红光+蓝光），每日光照≥12小时。', '2025-08-22 09:20:57');
+INSERT INTO `knowledge_chunk` VALUES (469, 12, 47, ' | 密闭温室中可增至1000~1500 ppm，但需配合强光照。 | 高于2.5 mS/cm可能导致盐害，需淋洗。', '2025-08-22 09:20:57');
+INSERT INTO `knowledge_chunk` VALUES (470, 12, 48, ' |', '2025-08-22 09:20:57');
+INSERT INTO `knowledge_chunk` VALUES (471, 13, 0, '1. 生长周期大致时间线（温室栽培条件下）', '2025-08-22 09:46:55');
+INSERT INTO `knowledge_chunk` VALUES (472, 13, 1, '- 育苗期：30–40 天（约 4–6 周）', '2025-08-22 09:46:56');
+INSERT INTO `knowledge_chunk` VALUES (473, 13, 2, '- 营养生长期：30–40 天（约 4–6 周）', '2025-08-22 09:46:56');
+INSERT INTO `knowledge_chunk` VALUES (474, 13, 3, '- 开花期：20–25 天（约 3–4 周）', '2025-08-22 09:46:56');
+INSERT INTO `knowledge_chunk` VALUES (475, 13, 4, '- 果实膨大期：25–30 天（约 4–5 周）', '2025-08-22 09:46:56');
+INSERT INTO `knowledge_chunk` VALUES (476, 13, 5, '- 成熟采收期：20–30 天（约 3–4 周，可多批次采收）', '2025-08-22 09:46:57');
+INSERT INTO `knowledge_chunk` VALUES (477, 13, 6, '👉 合计：约 120–160 天（4–5 个月），即可进入 第一批果实采收。', '2025-08-22 09:46:57');
+INSERT INTO `knowledge_chunk` VALUES (478, 13, 7, '***', '2025-08-22 09:46:57');
+INSERT INTO `knowledge_chunk` VALUES (479, 13, 8, '2. 采收期范围', '2025-08-22 09:46:57');
+INSERT INTO `knowledge_chunk` VALUES (480, 13, 9, '- 草莓属于 连续采收型作物：一旦进入结果期，会持续开花、挂果、成熟。', '2025-08-22 09:46:57');
+INSERT INTO `knowledge_chunk` VALUES (481, 13, 10, '- 采收时间跨度：', '2025-08-22 09:46:57');
+INSERT INTO `knowledge_chunk` VALUES (482, 13, 11, '   - 首批果实成熟 → 定植后 3.5–5 个月左右', '2025-08-22 09:46:58');
+INSERT INTO `knowledge_chunk` VALUES (483, 13, 12, '   - 采收高峰期 → 持续 2–3 个月', '2025-08-22 09:46:58');
+INSERT INTO `knowledge_chunk` VALUES (484, 13, 13, '   - 总采收期 → 可维持 3–5 个月（视栽培方式和管理水平）', '2025-08-22 09:46:58');
+INSERT INTO `knowledge_chunk` VALUES (485, 13, 14, '***', '2025-08-22 09:46:58');
+INSERT INTO `knowledge_chunk` VALUES (486, 13, 15, '3. 举例说明', '2025-08-22 09:46:59');
+INSERT INTO `knowledge_chunk` VALUES (487, 13, 16, '- 秋季定植（9–10 月） → 翌年 1–2 月开始采收 → 可持续采收到 4–5 月', '2025-08-22 09:46:59');
+INSERT INTO `knowledge_chunk` VALUES (488, 13, 17, '- 早春定植（2–3 月） → 5–6 月采收 → 采收持续到 7–8 月', '2025-08-22 09:46:59');
+INSERT INTO `knowledge_chunk` VALUES (489, 13, 18, '育苗期', '2025-08-22 09:46:59');
+INSERT INTO `knowledge_chunk` VALUES (490, 13, 19, '| 空气温度                  | 空气湿度 | 光照强度                  | CO₂浓度             | 土壤温度 | 土壤湿度     | 电导率（EC） | 土壤pH值      | 养分需求（mg/kg）                                 | 成熟状态             |', '2025-08-22 09:46:59');
+INSERT INTO `knowledge_chunk` VALUES (491, 13, 20, '| ------------------------- | -------- | ----------------------------- | ----------------------- | ------------ | ---------------- | ---------------- | ----------------- | ----------------------------------------------------- | -------------------- |', '2025-08-22 09:47:00');
+INSERT INTO `knowledge_chunk` VALUES (492, 13, 21, '| 18~25℃（昼）/12~15℃（夜） | 70~80%   | 200~400 μmol/m²/s（适度遮光） | 400~600 ppm（自然通风） | 15~20℃       | 60~70%田间持水量 | 0.8~1.2 mS/cm    | 5.', '2025-08-22 09:47:00');
+INSERT INTO `knowledge_chunk` VALUES (493, 13, 22, '5~6.5（微酸性） | 氮（N）：100~150 磷（P₂O₅）：50~80 钾（K₂O）：100~120 | 根系发达，叶片健壮。 |', '2025-08-22 09:47:00');
+INSERT INTO `knowledge_chunk` VALUES (494, 13, 23, '营养生长期**（定植后至花芽分化）**', '2025-08-22 09:47:00');
+INSERT INTO `knowledge_chunk` VALUES (495, 13, 24, '| 空气温度                  | 空气湿度 | 光照强度                | CO₂浓度           | 土壤温度 | 土壤湿度     | 电导率（EC） | 土壤pH值 | 养分需求（mg/kg）                                        | 成熟状态                 |', '2025-08-22 09:47:00');
+INSERT INTO `knowledge_chunk` VALUES (496, 13, 25, '| ------------------------- | -------- | --------------------------- | --------------------- | ------------ | ---------------- | ---------------- | ------------ | ------------------------------------------------------------ | ------------------------ |', '2025-08-22 09:47:00');
+INSERT INTO `knowledge_chunk` VALUES (497, 13, 26, '| 20~25℃（昼）/10~15℃（夜） | 60~70%   | 400~600 μmol/m²/s（全光照） | 600~800 ppm（可补施） | 18~22℃       | 65~75%田间持水量 | 1.0~1.5 mS/cm    | 5.', '2025-08-22 09:47:01');
+INSERT INTO `knowledge_chunk` VALUES (498, 13, 27, '8~6.2      | 氮（N）：150~200（促进叶片生长） 磷（P₂O₅）：80~100 钾（K₂O）：120~150 | 植株分枝增多，叶片浓绿。 |', '2025-08-22 09:47:01');
+INSERT INTO `knowledge_chunk` VALUES (499, 13, 28, '开花期', '2025-08-22 09:47:01');
+INSERT INTO `knowledge_chunk` VALUES (500, 13, 29, '| 空气温度                                     | 空气湿度             | 光照强度      | CO₂浓度                  | 土壤温度 | 土壤湿度     | 电导率（EC） | 土壤pH值 | 养分需求（mg/kg）                                        | 成熟状态             |', '2025-08-22 09:47:01');
+INSERT INTO `knowledge_chunk` VALUES (501, 13, 30, '| -------------------------------------------- | -------------------- | ----------------- | ---------------------------- | ------------ | ---------------- | ---------------- | ------------ | ------------------------------------------------------------ | -------------------- |', '2025-08-22 09:47:01');
+INSERT INTO `knowledge_chunk` VALUES (502, 13, 31, '| 18~22℃（昼）/8~12℃（夜）（低温促进花芽分化） | 50~60%（过高易致病） | 500~700 μmol/m²/s | 800~1000 ppm（提升光合效率） | 16~20℃       | 60~70%田间持水量 | 1.2~1.8 mS/cm    | 6.', '2025-08-22 09:47:02');
+INSERT INTO `knowledge_chunk` VALUES (503, 13, 32, '0~6.5      | 氮（N）：100~150（减少防徒长） 磷（P₂O₅）：100~120（促花） 钾（K₂O）：150~200（增强抗逆性） | 花蕾饱满，开花整齐。 |', '2025-08-22 09:47:02');
+INSERT INTO `knowledge_chunk` VALUES (504, 13, 33, '果实膨大期', '2025-08-22 09:47:02');
+INSERT INTO `knowledge_chunk` VALUES (505, 13, 34, '| 空气温度                  | 空气湿度 | 光照强度      | CO₂浓度  | 土壤温度 | 土壤湿度               | 电导率（EC） | 土壤pH值 | 养分需求（mg/kg）                                        | 成熟状态                 |', '2025-08-22 09:47:02');
+INSERT INTO `knowledge_chunk` VALUES (506, 13, 35, '| ------------------------- | -------- | ----------------- | ------------ | ------------ | -------------------------- | ---------------- | ------------ | ------------------------------------------------------------ | ------------------------ |', '2025-08-22 09:47:02');
+INSERT INTO `knowledge_chunk` VALUES (507, 13, 36, '| 20~24℃（昼）/10~14℃（夜） | 50~60%   | 600~800 μmol/m²/s | 800~1200 ppm | 18~20℃       | 70~80%（需均匀供水防裂果） | 1.5~2.0 mS/cm    | 6.', '2025-08-22 09:47:02');
+INSERT INTO `knowledge_chunk` VALUES (508, 13, 37, '0~6.5      | 氮（N）：80~100 磷（P₂O₅）：80~100 钾（K₂O）：200~250（关键期） | 果实快速膨大，色泽转白。 |', '2025-08-22 09:47:03');
+INSERT INTO `knowledge_chunk` VALUES (509, 13, 38, '成熟采收期', '2025-08-22 09:47:03');
+INSERT INTO `knowledge_chunk` VALUES (510, 13, 39, '| 空气温度                                       | 空气湿度               | 光照强度      | CO₂浓度 | 土壤温度 | 土壤湿度             | 电导率（EC） | 土壤pH值 | 养分需求（mg/kg）                                        | 成熟状态               |', '2025-08-22 09:47:03');
+INSERT INTO `knowledge_chunk` VALUES (511, 13, 40, '| ---------------------------------------------- | ---------------------- | ----------------- | ----------- | ------------ | ------------------------ | ---------------- | ------------ | ------------------------------------------------------------ | ---------------------- |', '2025-08-22 09:47:03');
+INSERT INTO `knowledge_chunk` VALUES (512, 13, 41, '| 18~22℃（昼）/8~12℃（夜）（昼夜温差大提升糖度） | 40~50%（降低病害风险） | 700~900 μmol/m²/s | 600~800 ppm | 16~18℃       | 60~70%（采收前适度控水） | 1.0~1.5 mS/cm    | 6.', '2025-08-22 09:47:03');
+INSERT INTO `knowledge_chunk` VALUES (513, 13, 42, '0~6.5      | 氮（N）：50~80（避免过量） 磷（P₂O₅）：50~80 钾（K₂O）：150~200（提升品质） | 果实全红，糖酸比最佳。 |', '2025-08-22 09:47:04');
+INSERT INTO `knowledge_chunk` VALUES (514, 13, 43, '注意：', '2025-08-22 09:47:04');
+INSERT INTO `knowledge_chunk` VALUES (515, 13, 44, '| 温度管理                                    | 湿度控制                                             | 光照补充                                      | CO₂补充                                         | 土壤EC值                            |', '2025-08-22 09:47:04');
+INSERT INTO `knowledge_chunk` VALUES (516, 13, 45, '| ------------------------------------------- | ---------------------------------------------------- | --------------------------------------------- | ----------------------------------------------- | ----------------------------------- |', '2025-08-22 09:47:04');
+INSERT INTO `knowledge_chunk` VALUES (517, 13, 46, '| 高温（＞30℃）抑制生长，低温（＜5℃）易冻伤。 | 花期湿度过高会导致授粉不良，建议采用滴灌或通风降湿。 | 冬季需补光（LED红光+蓝光），每日光照≥12小时。', '2025-08-22 09:47:04');
+INSERT INTO `knowledge_chunk` VALUES (518, 13, 47, ' | 密闭温室中可增至1000~1500 ppm，但需配合强光照。 | 高于2.5 mS/cm可能导致盐害，需淋洗。', '2025-08-22 09:47:04');
+INSERT INTO `knowledge_chunk` VALUES (519, 13, 48, ' |', '2025-08-22 09:47:05');
+
+-- ----------------------------
+-- Table structure for monitor_record
+-- ----------------------------
+DROP TABLE IF EXISTS `monitor_record`;
+CREATE TABLE `monitor_record`  (
+  `record_id` int NOT NULL AUTO_INCREMENT COMMENT '记录编号',
+  `address_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备地址（485传感器地址）',
+  `air_temperature` double NULL DEFAULT NULL COMMENT '空气温度（。C）',
+  `air_humidity` double NULL DEFAULT NULL COMMENT '空气湿度（%）',
+  `light_lux` int NULL DEFAULT NULL COMMENT '光照强度（Lux）',
+  `air_co2` int NULL DEFAULT NULL COMMENT '二氧化碳（ppm）',
+  `soil_temperature` double NULL DEFAULT NULL COMMENT '土壤温度（。C）',
+  `soil_humidity` double NULL DEFAULT NULL COMMENT '土壤湿度（%）',
+  `soil_conductivity` int NULL DEFAULT NULL COMMENT '电导率（us/cm）',
+  `soil_PH` double NULL DEFAULT NULL COMMENT '土壤PH值',
+  `soil_N` int NULL DEFAULT NULL COMMENT '氮（mg/kg）',
+  `soil_P` int NULL DEFAULT NULL COMMENT '磷（mg/kg）',
+  `soil_K` int NULL DEFAULT NULL COMMENT '钾（mg/kg）',
+  `create_date` datetime NULL DEFAULT NULL COMMENT '记录时间',
+  `plant_id` int NULL DEFAULT NULL COMMENT '植物ID',
+  `area_id` int NULL DEFAULT NULL COMMENT '场地ID',
+  `user_id` int NOT NULL COMMENT '用户id',
+  `create_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_date` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新人',
+  `del_flag` int NULL DEFAULT NULL COMMENT '是否删除：0，未删除，1，删除',
+  PRIMARY KEY (`record_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4076 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of monitor_record
+-- ----------------------------
+INSERT INTO `monitor_record` VALUES (2778, 'cclr04', 24.1, 55.4, 127, 788, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-02 19:30:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2779, 'cclr03', 24.1, 55.4, 127, 788, 23.6, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:09', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2780, 'cclr04', 24.1, 55.4, 127, 788, 23.6, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2781, 'cclr03', 24.1, 55.4, 127, 788, 23.6, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2782, 'cclr04', 24.1, 55.4, 123, 788, 23.6, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2783, 'cclr03', 24.1, 55.4, 123, 788, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2784, 'cclr04', 24.1, 55.3, 123, 788, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2785, 'cclr03', 24.1, 55.3, 123, 788, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:19', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2786, 'cclr04', 24.1, 55.3, 123, 788, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:20', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2787, 'cclr03', 24.1, 55.3, 123, 788, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2788, 'cclr04', 24.1, 55.3, 123, 788, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2789, 'cclr03', 24.1, 55.3, 123, 788, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2790, 'cclr04', 24.1, 55.2, 122, 786, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:32', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2791, 'cclr03', 24.1, 55.2, 122, 786, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:32', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2792, 'cclr04', 24.1, 55.3, 122, 789, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2793, 'cclr03', 24.1, 55.3, 122, 789, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2794, 'cclr04', 24.1, 55.4, 119, 790, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2795, 'cclr03', 24.1, 55.4, 119, 790, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:43', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2796, 'cclr04', 24.1, 55.4, 119, 790, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2797, 'cclr03', 24.1, 55.4, 119, 790, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2798, 'cclr04', 24.1, 55.7, 124, 793, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2799, 'cclr03', 24.1, 55.7, 124, 793, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:49', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2800, 'cclr04', 24.1, 55.5, 126, 792, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2801, 'cclr03', 24.1, 55.5, 126, 792, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:30:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2802, 'cclr04', 24.1, 55.3, 120, 789, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:31:01', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2803, 'cclr03', 24.1, 55.3, 120, 789, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:31:01', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2804, 'cclr04', 24.2, 59.7, 130, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:20', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2805, 'cclr03', 24.2, 59.7, 130, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:20', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2806, 'cclr04', 24.2, 59.8, 124, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:21', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2807, 'cclr03', 24.2, 59.8, 124, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:21', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2808, 'cclr04', 24.2, 59.8, 123, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2809, 'cclr03', 24.2, 59.8, 123, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2810, 'cclr04', 24.2, 60, 123, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:33', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2811, 'cclr03', 24.2, 60, 123, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:33', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2812, 'cclr04', 24.2, 60.1, 122, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:39', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2813, 'cclr03', 24.2, 60.1, 122, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:39', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2814, 'cclr04', 24.2, 60.1, 118, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2815, 'cclr03', 24.2, 60.1, 118, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2816, 'cclr04', 24.2, 60.1, 118, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:50', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2817, 'cclr03', 24.2, 60.2, 117, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:51', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2818, 'cclr04', 24.2, 60.2, 117, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:51', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2819, 'cclr03', 24.2, 60.2, 117, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2820, 'cclr04', 24.3, 60.2, 117, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2821, 'cclr03', 24.3, 60.2, 117, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:43:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2822, 'cclr04', 24.3, 60.3, 112, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:03', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2823, 'cclr03', 24.3, 60.3, 112, 500, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2824, 'cclr04', 24.3, 60.2, 1856, 852, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:09', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2825, 'cclr03', 24.3, 60.2, 1856, 852, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2826, 'cclr04', 24.3, 60.2, 1165, 855, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2827, 'cclr03', 24.3, 60.2, 1165, 855, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2828, 'cclr04', 24.3, 60.2, 2155, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:21', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2829, 'cclr03', 24.3, 60.2, 2155, 856, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2830, 'cclr04', 24.3, 60.2, 2144, 856, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2831, 'cclr03', 24.3, 60.2, 2144, 856, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2832, 'cclr04', 24.3, 60, 1126, 858, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:33', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2833, 'cclr03', 24.3, 60, 1126, 858, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2834, 'cclr04', 24.3, 59.9, 100, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:39', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2835, 'cclr03', 24.3, 59.9, 100, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2836, 'cclr04', 24.3, 59.8, 92, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2837, 'cclr03', 24.3, 59.8, 92, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2838, 'cclr04', 24.3, 59.9, 95, 858, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2839, 'cclr03', 24.3, 59.9, 95, 858, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2840, 'cclr04', 24.3, 60, 109, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2841, 'cclr03', 24.3, 60, 109, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:44:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2842, 'cclr04', 24.3, 60, 112, 857, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:03', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2843, 'cclr03', 24.3, 60, 112, 857, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2844, 'cclr04', 24.3, 60, 104, 855, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:09', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2845, 'cclr03', 24.3, 60, 104, 855, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2846, 'cclr04', 24.3, 60.2, 114, 854, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2847, 'cclr03', 24.3, 60.2, 114, 854, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2848, 'cclr04', 24.3, 60.2, 119, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:21', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2849, 'cclr03', 24.3, 60.2, 119, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2850, 'cclr04', 24.3, 60.1, 111, 857, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2851, 'cclr03', 24.3, 60.1, 111, 857, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2852, 'cclr04', 24.3, 60, 140, 861, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2853, 'cclr03', 24.3, 60, 140, 861, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2854, 'cclr04', 24.3, 59.9, 148, 861, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2855, 'cclr03', 24.3, 59.9, 148, 861, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2856, 'cclr04', 24.3, 59.8, 148, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2857, 'cclr03', 24.3, 59.8, 148, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2858, 'cclr04', 24.3, 59.8, 149, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2859, 'cclr03', 24.3, 59.8, 149, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2860, 'cclr04', 24.3, 59.7, 148, 861, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2861, 'cclr03', 24.3, 59.7, 148, 861, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:45:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2862, 'cclr04', 24.3, 59.7, 148, 861, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2863, 'cclr03', 24.3, 59.7, 148, 861, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2864, 'cclr04', 24.3, 59.7, 147, 862, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2865, 'cclr03', 24.3, 59.7, 147, 862, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2866, 'cclr04', 24.3, 59.6, 144, 863, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2867, 'cclr03', 24.3, 59.6, 144, 863, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2868, 'cclr04', 24.3, 59.6, 133, 862, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2869, 'cclr03', 24.3, 59.6, 133, 862, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2870, 'cclr04', 24.3, 59.6, 130, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2871, 'cclr03', 24.3, 59.6, 130, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2872, 'cclr04', 24.3, 59.6, 149, 862, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2873, 'cclr03', 24.3, 59.6, 149, 862, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2874, 'cclr04', 24.3, 59.6, 148, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2875, 'cclr03', 24.3, 59.6, 148, 860, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2876, 'cclr04', 24.3, 59.6, 148, 858, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2877, 'cclr03', 24.3, 59.6, 148, 858, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2878, 'cclr04', 24.3, 59.6, 147, 859, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2879, 'cclr03', 24.3, 59.6, 147, 859, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2880, 'cclr04', 24.3, 59.5, 147, 857, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2881, 'cclr03', 24.3, 59.5, 147, 857, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:46:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2882, 'cclr04', 24.3, 59.5, 147, 858, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2883, 'cclr03', 24.3, 59.5, 147, 858, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2884, 'cclr04', 24.3, 59.5, 147, 859, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2885, 'cclr03', 24.3, 59.5, 147, 859, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2886, 'cclr04', 24.3, 59.5, 147, 859, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2887, 'cclr03', 24.3, 59.5, 147, 859, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2888, 'cclr04', 24.3, 59.5, 147, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2889, 'cclr03', 24.3, 59.5, 147, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2890, 'cclr04', 24.3, 59.5, 147, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2891, 'cclr03', 24.3, 59.5, 147, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2892, 'cclr04', 24.3, 59.5, 147, 858, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2893, 'cclr03', 24.3, 59.5, 147, 858, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2894, 'cclr04', 24.3, 59.5, 147, 857, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2895, 'cclr03', 24.3, 59.5, 147, 857, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2896, 'cclr04', 24.2, 59.5, 147, 857, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2897, 'cclr03', 24.2, 59.5, 147, 857, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2898, 'cclr04', 24.3, 59.5, 147, 856, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2899, 'cclr03', 24.3, 59.5, 147, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2900, 'cclr04', 24.2, 59.5, 147, 855, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2901, 'cclr03', 24.2, 59.5, 147, 855, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:47:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2902, 'cclr04', 24.2, 59.6, 147, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2903, 'cclr03', 24.2, 59.6, 147, 856, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2904, 'cclr04', 24.2, 59.5, 147, 856, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2905, 'cclr03', 24.2, 59.5, 147, 856, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2906, 'cclr04', 24.2, 59.6, 147, 853, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2907, 'cclr03', 24.2, 59.6, 147, 853, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2908, 'cclr04', 24.2, 59.5, 146, 853, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2909, 'cclr03', 24.2, 59.5, 146, 853, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2910, 'cclr04', 24.2, 59.6, 146, 856, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2911, 'cclr03', 24.2, 59.6, 146, 856, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2912, 'cclr04', 24.3, 59.6, 141, 855, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2913, 'cclr03', 24.3, 59.6, 141, 855, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2914, 'cclr04', 24.2, 59.6, 128, 853, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2915, 'cclr03', 24.2, 59.6, 128, 853, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2916, 'cclr04', 24.2, 59.6, 126, 850, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2917, 'cclr03', 24.2, 59.6, 126, 850, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2918, 'cclr04', 24.2, 59.7, 126, 851, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2919, 'cclr03', 24.2, 59.7, 126, 851, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2920, 'cclr04', 24.2, 59.8, 126, 853, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:48:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2921, 'cclr03', 24.2, 59.8, 126, 853, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2922, 'cclr04', 24.2, 59.8, 123, 850, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2923, 'cclr03', 24.2, 59.8, 123, 850, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2924, 'cclr04', 24.2, 59.9, 123, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2925, 'cclr03', 24.2, 59.9, 123, 848, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2926, 'cclr04', 24.2, 59.9, 122, 846, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2927, 'cclr03', 24.2, 59.9, 122, 846, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2928, 'cclr04', 24.2, 59.8, 122, 849, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2929, 'cclr03', 24.2, 59.8, 122, 849, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2930, 'cclr04', 24.2, 59.8, 121, 849, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2931, 'cclr03', 24.2, 59.8, 121, 849, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2932, 'cclr04', 24.2, 59.8, 112, 852, 23.5, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2933, 'cclr03', 24.2, 59.8, 112, 852, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2934, 'cclr04', 24.3, 59.8, 116, 851, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2935, 'cclr03', 24.3, 59.8, 116, 851, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2936, 'cclr04', 24.3, 60, 683, 850, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:49', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2937, 'cclr03', 24.3, 60, 683, 850, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:49', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2938, 'cclr04', 24.2, 60, 1008, 849, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2939, 'cclr03', 24.2, 60, 1008, 849, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2940, 'cclr04', 24.3, 60, 2557, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2941, 'cclr03', 24.3, 60, 2557, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:49:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2942, 'cclr04', 24.3, 60, 2789, 850, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2943, 'cclr03', 24.3, 60, 2789, 850, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2944, 'cclr04', 24.3, 60.1, 6213, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2945, 'cclr03', 24.3, 60.1, 6213, 848, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2946, 'cclr04', 24.3, 60.2, 118, 848, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2947, 'cclr03', 24.3, 60.2, 118, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2948, 'cclr04', 24.3, 60.2, 111, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2949, 'cclr03', 24.3, 60.2, 111, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2950, 'cclr04', 24.3, 60.2, 94, 850, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2951, 'cclr03', 24.3, 60.2, 94, 850, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2952, 'cclr04', 24.3, 60.4, 129, 847, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2953, 'cclr03', 24.3, 60.4, 129, 847, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2954, 'cclr04', 24.3, 60.6, 133, 846, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2955, 'cclr03', 24.3, 60.6, 133, 846, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2956, 'cclr04', 24.3, 60.8, 123, 845, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2957, 'cclr03', 24.3, 60.8, 123, 845, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2958, 'cclr04', 24.3, 61, 136, 844, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2959, 'cclr03', 24.3, 61, 136, 844, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:50:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2960, 'cclr04', 24.3, 61.3, 132, 847, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2961, 'cclr03', 24.3, 61.3, 132, 847, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2962, 'cclr04', 24.3, 61.1, 131, 847, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2963, 'cclr03', 24.3, 61.1, 131, 847, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2964, 'cclr04', 24.3, 61.2, 139, 846, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2965, 'cclr03', 24.3, 61.2, 139, 846, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2966, 'cclr04', 24.3, 61.5, 101, 846, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:31', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2967, 'cclr03', 24.3, 61.5, 101, 846, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:31', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2968, 'cclr04', 24.3, 61.4, 123, 847, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:31', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2969, 'cclr03', 24.3, 61.4, 123, 847, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:31', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2970, 'cclr04', 24.3, 61.2, 150, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:31', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2971, 'cclr03', 24.3, 61.2, 150, 848, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:31', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2972, 'cclr04', 24.3, 61.1, 153, 846, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2973, 'cclr03', 24.3, 61.1, 153, 846, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2974, 'cclr04', 24.3, 61, 156, 845, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2975, 'cclr03', 24.3, 61, 156, 845, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2976, 'cclr04', 24.3, 60.9, 152, 844, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2977, 'cclr03', 24.3, 60.9, 152, 844, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2978, 'cclr04', 24.3, 60.9, 114, 844, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2979, 'cclr03', 24.3, 60.9, 114, 844, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2980, 'cclr04', 24.3, 60.9, 107, 842, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:51:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2981, 'cclr03', 24.3, 60.9, 107, 842, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:02', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2982, 'cclr04', 24.3, 60.9, 69, 841, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2983, 'cclr03', 24.3, 60.9, 69, 841, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2984, 'cclr04', 24.3, 61.1, 68, 842, 23.5, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2985, 'cclr03', 24.3, 61.1, 68, 842, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2986, 'cclr04', 24.3, 61.2, 73, 841, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2987, 'cclr03', 24.3, 61.2, 73, 841, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2988, 'cclr04', 24.3, 61.5, 66, 841, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2989, 'cclr03', 24.3, 61.5, 66, 841, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2990, 'cclr04', 24.3, 61.7, 125, 842, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2991, 'cclr03', 24.3, 61.7, 125, 842, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:32', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2992, 'cclr04', 24.3, 61.7, 158, 840, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2993, 'cclr03', 24.3, 61.7, 158, 840, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2994, 'cclr04', 24.3, 61.7, 164, 841, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2995, 'cclr03', 24.3, 61.7, 164, 841, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:44', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2996, 'cclr04', 24.3, 61.6, 164, 840, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2997, 'cclr03', 24.3, 61.6, 164, 840, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2998, 'cclr04', 24.3, 61.5, 164, 840, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (2999, 'cclr03', 24.3, 61.5, 164, 840, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:52:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3000, 'cclr04', 24.3, 61.4, 163, 840, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 19:53:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3001, 'cclr03', 24.3, 61.4, 163, 840, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:53:01', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3002, 'cclr04', 24.3, 61.1, 161, 837, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:53:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3003, 'cclr03', 24.3, 61.1, 161, 837, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:53:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3004, 'cclr04', 24.3, 61.1, 161, 838, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:53:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3005, 'cclr03', 24.3, 61.1, 161, 838, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:53:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3006, 'cclr04', 24.2, 60.5, 162, 824, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:57:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3007, 'cclr03', 24.2, 60.5, 162, 824, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:57:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3008, 'cclr04', 24.2, 60.4, 162, 824, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:57:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3009, 'cclr03', 24.2, 60.4, 162, 824, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:57:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3010, 'cclr04', 24.2, 60.4, 162, 824, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:57:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3011, 'cclr03', 24.2, 60.4, 162, 824, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 19:57:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3012, 'cclr04', 24.2, 59.6, 163, 500, 23.4, 24.2, 840, 5.5, 5, 26, 19, '2025-09-02 20:02:39', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3013, 'cclr03', 24.2, 59.6, 163, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:02:39', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3014, 'cclr04', 24.1, 59.6, 163, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:02:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3015, 'cclr03', 24.1, 59.6, 163, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:02:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3016, 'cclr04', 24.1, 59.6, 102, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:02:51', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3017, 'cclr03', 24.1, 59.6, 102, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:02:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3018, 'cclr04', 24.1, 59.7, 3173, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:02:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3019, 'cclr03', 24.1, 59.7, 3173, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:02:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3020, 'cclr04', 24.1, 59.8, 2887, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:03:03', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3021, 'cclr03', 24.1, 59.8, 2887, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:03:03', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3022, 'cclr04', 24.2, 59.7, 95, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:03:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3023, 'cclr03', 24.2, 59.7, 95, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:03:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3024, 'cclr04', 24.1, 59.7, 112, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:03:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3025, 'cclr03', 24.1, 59.7, 112, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:03:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3026, 'cclr04', 24.2, 59.6, 110, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:03:21', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3027, 'cclr03', 24.2, 59.6, 110, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:03:21', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3028, 'cclr04', 24.2, 59.7, 117, 500, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:04:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3029, 'cclr03', 24.2, 59, 137, 851, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3030, 'cclr04', 24.2, 59, 137, 851, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3031, 'cclr03', 24.2, 59, 137, 850, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3032, 'cclr04', 24.2, 59, 137, 850, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3033, 'cclr03', 24.2, 59, 137, 851, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3034, 'cclr04', 24.2, 59, 137, 851, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3035, 'cclr03', 24.2, 59, 136, 853, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3036, 'cclr04', 24.2, 59, 136, 853, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3037, 'cclr03', 24.2, 58.9, 136, 853, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:43', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3038, 'cclr04', 24.2, 58.9, 136, 853, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:43', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3039, 'cclr03', 24.2, 59, 136, 855, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3040, 'cclr04', 24.2, 59, 136, 855, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3041, 'cclr03', 24.2, 59, 137, 855, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3042, 'cclr04', 24.2, 59, 137, 855, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3043, 'cclr03', 24.2, 59, 137, 857, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3044, 'cclr04', 24.2, 59, 137, 857, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:06:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3045, 'cclr03', 24.2, 59, 137, 857, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3046, 'cclr04', 24.2, 59, 137, 857, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3047, 'cclr03', 24.2, 58.7, 137, 859, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:13', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3048, 'cclr04', 24.2, 58.7, 137, 859, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:13', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3049, 'cclr03', 24.2, 58.6, 138, 862, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3050, 'cclr04', 24.2, 58.6, 138, 862, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3051, 'cclr03', 24.2, 58.7, 138, 865, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3052, 'cclr04', 24.2, 58.7, 138, 865, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3053, 'cclr03', 24.2, 58.6, 139, 867, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3054, 'cclr04', 24.2, 58.6, 139, 867, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3055, 'cclr03', 24.2, 58.5, 138, 869, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3056, 'cclr04', 24.2, 58.5, 138, 869, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3057, 'cclr03', 24.2, 58.5, 138, 868, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3058, 'cclr04', 24.2, 58.5, 138, 868, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3059, 'cclr03', 24.2, 58.4, 138, 869, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3060, 'cclr04', 24.2, 58.4, 138, 869, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3061, 'cclr03', 24.2, 58.3, 138, 867, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3062, 'cclr04', 24.2, 58.3, 138, 867, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3063, 'cclr03', 24.2, 58.3, 138, 870, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3064, 'cclr04', 24.2, 58.3, 138, 870, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:07:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3065, 'cclr03', 24.2, 58.4, 138, 868, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3066, 'cclr04', 24.2, 58.4, 138, 868, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3067, 'cclr03', 24.2, 58.4, 138, 869, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3068, 'cclr04', 24.2, 58.4, 138, 869, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3069, 'cclr03', 24.2, 58.5, 138, 871, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3070, 'cclr04', 24.2, 58.5, 138, 871, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3071, 'cclr03', 24.2, 58.3, 138, 873, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3072, 'cclr04', 24.2, 58.3, 138, 873, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3073, 'cclr03', 24.2, 58.2, 138, 874, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3074, 'cclr04', 24.2, 58.2, 138, 874, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3075, 'cclr03', 24.2, 58.1, 138, 879, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3076, 'cclr04', 24.2, 58.1, 138, 879, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3077, 'cclr03', 24.2, 58.2, 138, 879, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3078, 'cclr04', 24.2, 58.2, 138, 879, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3079, 'cclr03', 24.2, 58.3, 137, 881, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3080, 'cclr04', 24.2, 58.3, 137, 881, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3081, 'cclr03', 24.2, 58.2, 138, 883, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3082, 'cclr04', 24.2, 58.2, 138, 883, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3083, 'cclr03', 24.2, 58.2, 138, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:08:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3084, 'cclr04', 24.2, 58.2, 138, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3085, 'cclr03', 24.2, 58.1, 138, 883, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3086, 'cclr04', 24.2, 58.1, 138, 883, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3087, 'cclr03', 24.2, 58.1, 138, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3088, 'cclr04', 24.2, 58.1, 138, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3089, 'cclr03', 24.2, 58, 138, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3090, 'cclr04', 24.2, 58, 138, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3091, 'cclr03', 24.2, 58, 137, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3092, 'cclr04', 24.2, 58, 137, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3093, 'cclr03', 24.2, 57.9, 138, 882, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3094, 'cclr04', 24.2, 57.9, 138, 882, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3095, 'cclr03', 24.2, 57.9, 138, 882, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3096, 'cclr04', 24.2, 57.9, 138, 882, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3097, 'cclr03', 24.2, 57.9, 138, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3098, 'cclr04', 24.2, 57.9, 138, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3099, 'cclr03', 24.2, 57.8, 137, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3100, 'cclr04', 24.2, 57.8, 137, 884, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3101, 'cclr03', 24.2, 57.9, 138, 887, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3102, 'cclr04', 24.2, 57.9, 138, 887, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:09:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3103, 'cclr03', 24.2, 57.8, 138, 888, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:10:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3104, 'cclr04', 24.2, 57.8, 138, 888, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:10:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3105, 'cclr03', 24.2, 57.8, 137, 888, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:10:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3106, 'cclr04', 24.2, 57.8, 137, 888, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:10:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3107, 'cclr03', 24.2, 57.9, 138, 885, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:10:13', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3108, 'cclr04', 24.2, 57.9, 138, 885, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:10:13', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3109, 'cclr03', 24.2, 57.9, 137, 886, 23.4, 24.1, 840, 5.5, 5, 26, 19, '2025-09-02 20:10:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3110, 'cclr04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-02 21:12:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3111, 'cclr03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-02 21:12:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3112, 'cclr04', 27.8, 65.5, 62, 1030, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-02 23:57:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3113, 'cclr03', 27.8, 65.5, 62, 1030, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:57:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3114, 'cclr04', 27.8, 66, 68, 1026, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:57:51', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3115, 'cclr03', 27.8, 66, 68, 1026, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:57:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3116, 'cclr04', 27.8, 66.2, 68, 1023, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:57:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3117, 'cclr03', 27.8, 66.2, 68, 1023, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:57:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3118, 'cclr04', 27.8, 65.6, 68, 1031, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:03', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3119, 'cclr03', 27.8, 65.6, 68, 1031, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3120, 'cclr04', 27.8, 65.2, 66, 1024, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:09', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3121, 'cclr03', 27.8, 65.2, 66, 1024, 27.7, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3122, 'cclr04', 27.8, 65.2, 64, 1026, 27.7, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3123, 'cclr03', 27.8, 65.2, 64, 1026, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3124, 'cclr04', 27.8, 65, 65, 1028, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:21', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3125, 'cclr03', 27.8, 65, 65, 1028, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3126, 'cclr04', 27.8, 65, 66, 1025, 26.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3127, 'cclr03', 27.8, 65, 66, 1025, 27.2, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3128, 'cclr04', 27.8, 65, 65, 1028, 27.2, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3129, 'cclr03', 27.8, 65, 65, 1028, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3130, 'cclr04', 27.8, 64.9, 65, 1030, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3131, 'cclr03', 27.8, 64.9, 65, 1030, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3132, 'cclr04', 27.8, 64.8, 66, 1030, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3133, 'cclr03', 27.8, 64.8, 66, 1030, 27.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3134, 'cclr04', 27.8, 64.9, 65, 1033, 27.5, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3135, 'cclr03', 27.8, 64.9, 65, 1033, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3136, 'cclr04', 27.8, 64.9, 65, 1033, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3137, 'cclr03', 27.8, 64.9, 65, 1033, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:58:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3138, 'cclr04', 27.8, 65, 66, 1035, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3139, 'cclr03', 27.8, 65, 66, 1035, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3140, 'cclr04', 27.8, 65, 65, 1032, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3141, 'cclr03', 27.8, 65, 65, 1032, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3142, 'cclr04', 27.8, 64.8, 64, 1033, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3143, 'cclr03', 27.8, 64.8, 64, 1033, 27.7, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3144, 'cclr04', 27.8, 64.8, 60, 1031, 27.7, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3145, 'cclr03', 27.8, 64.8, 60, 1031, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3146, 'cclr04', 27.8, 66.6, 329, 1030, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3147, 'cclr03', 27.8, 66.6, 329, 1030, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3148, 'cclr04', 27.8, 69.4, 643, 1031, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3149, 'cclr03', 27.8, 69.4, 643, 1031, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3150, 'cclr04', 27.8, 67, 1409, 1034, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3151, 'cclr03', 27.8, 67, 1409, 1034, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3152, 'cclr04', 27.8, 65.8, 2726, 1039, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3153, 'cclr03', 27.8, 65.8, 2726, 1039, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3154, 'cclr04', 27.8, 65.5, 317, 1041, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3155, 'cclr03', 27.8, 65.5, 317, 1041, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3156, 'cclr04', 27.9, 65.4, 62, 1039, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3157, 'cclr03', 27.9, 65.4, 62, 1039, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-02 23:59:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3158, 'cclr04', 27.9, 65.5, 61, 1036, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3159, 'cclr03', 27.9, 65.5, 61, 1036, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3160, 'cclr04', 27.9, 65.3, 64, 1036, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3161, 'cclr03', 27.9, 65.3, 64, 1036, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3162, 'cclr04', 27.9, 65.3, 65, 1040, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3163, 'cclr03', 27.9, 65.3, 65, 1040, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3164, 'cclr04', 27.9, 65.1, 65, 1041, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3165, 'cclr03', 27.9, 65.1, 65, 1041, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3166, 'cclr04', 27.9, 64.9, 67, 1039, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3167, 'cclr03', 27.9, 64.9, 67, 1039, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3168, 'cclr04', 27.9, 65, 65, 1041, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3169, 'cclr03', 27.9, 65, 65, 1041, 27.2, 0, 840, 8.6, 5, 26, 19, '2025-09-03 00:00:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3170, 'cclr04', 27.9, 64.9, 66, 1037, 27.2, 0, 840, 8.6, 5, 26, 19, '2025-09-03 00:00:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3171, 'cclr03', 27.9, 64.9, 66, 1037, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3172, 'cclr04', 27.9, 64.7, 66, 1040, 26.6, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3173, 'cclr03', 27.9, 64.7, 66, 1040, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3174, 'cclr04', 27.9, 64.6, 66, 1043, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3175, 'cclr03', 27.9, 64.6, 66, 1043, 27, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3176, 'cclr04', 27.9, 64.5, 66, 1045, 27, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3177, 'cclr03', 27.9, 64.5, 66, 1045, 26.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:00:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3178, 'cclr04', 27.9, 64.5, 65, 1046, 26.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3179, 'cclr03', 27.9, 64.5, 65, 1046, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3180, 'cclr04', 27.9, 64.6, 66, 1044, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:10', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3181, 'cclr03', 27.9, 64.6, 66, 1044, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3182, 'cclr04', 27.9, 64.7, 65, 1036, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3183, 'cclr03', 27.9, 64.7, 65, 1036, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3184, 'cclr04', 27.9, 64.7, 64, 1040, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3185, 'cclr03', 27.9, 64.7, 64, 1040, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3186, 'cclr04', 27.9, 64.7, 66, 1042, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3187, 'cclr03', 27.9, 64.7, 66, 1042, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3188, 'cclr04', 27.9, 64.7, 67, 1038, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3189, 'cclr03', 27.9, 64.7, 67, 1038, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3190, 'cclr04', 27.9, 64.5, 65, 1041, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3191, 'cclr03', 27.9, 64.5, 65, 1041, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3192, 'cclr04', 27.9, 64.5, 63, 1038, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3193, 'cclr03', 27.9, 64.5, 63, 1038, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3194, 'cclr04', 27.9, 64.5, 65, 1039, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3195, 'cclr03', 27.9, 64.5, 65, 1039, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3196, 'cclr04', 27.9, 65.2, 67, 1039, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3197, 'cclr03', 27.9, 65.2, 67, 1039, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:01:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3198, 'cclr04', 27.9, 65.1, 67, 1041, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3199, 'cclr03', 27.9, 65.1, 67, 1041, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3200, 'cclr04', 27.9, 64.9, 67, 1037, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3201, 'cclr03', 27.9, 64.9, 67, 1037, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3202, 'cclr04', 27.9, 64.7, 67, 1039, 26.7, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3203, 'cclr03', 27.9, 64.7, 67, 1039, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3204, 'cclr04', 27.9, 64.7, 67, 1040, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3205, 'cclr03', 27.9, 64.7, 67, 1040, 26.7, 0, 840, 8.9, 5, 26, 19, '2025-09-03 00:02:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3206, 'cclr04', 27.9, 64.7, 67, 1038, 26.7, 0, 840, 8.9, 5, 26, 19, '2025-09-03 00:02:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3207, 'cclr03', 27.9, 64.7, 67, 1038, 26.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3208, 'cclr04', 27.9, 64.7, 62, 1038, 26.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3209, 'cclr03', 27.9, 64.7, 62, 1038, 26.8, 0, 840, 8.9, 5, 26, 19, '2025-09-03 00:02:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3210, 'cclr04', 27.9, 64.8, 68, 1043, 26.8, 0, 840, 8.9, 5, 26, 19, '2025-09-03 00:02:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3211, 'cclr03', 27.9, 64.8, 68, 1043, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3212, 'cclr04', 27.9, 64.8, 66, 1043, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3213, 'cclr03', 27.9, 64.8, 66, 1043, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3214, 'cclr04', 27.9, 64.5, 66, 1041, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3215, 'cclr03', 27.9, 64.5, 66, 1041, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3216, 'cclr04', 27.9, 64.5, 65, 1045, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3217, 'cclr03', 27.9, 64.5, 65, 1045, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:02:59', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3218, 'cclr04', 27.9, 64.6, 65, 1044, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:03:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3219, 'cclr03', 27.9, 64.6, 65, 1044, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:03:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3220, 'cclr04', 27.9, 66.7, 59, 1041, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:03:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3221, 'cclr03', 27.9, 66.7, 59, 1041, 27.1, 0, 840, 9, 5, 26, 19, '2025-09-03 00:03:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3222, 'cclr04', 27.9, 67.7, 61, 1039, 27.1, 0, 840, 9, 5, 26, 19, '2025-09-03 00:03:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3223, 'cclr03', 27.9, 67.7, 61, 1039, 26.8, 0, 840, 8.8, 5, 26, 19, '2025-09-03 00:03:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3224, 'cclr04', 27.9, 67.1, 58, 1041, 26.8, 0, 840, 8.8, 5, 26, 19, '2025-09-03 00:03:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3225, 'cclr03', 27.9, 67.1, 58, 1041, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:03:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3226, 'cclr04', 28.4, 65.6, 61, 1049, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-03 00:04:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3227, 'cclr03', 28.4, 65.6, 61, 1049, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3228, 'cclr04', 28.4, 65, 62, 1051, 27.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3229, 'cclr03', 28.4, 65, 62, 1051, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3230, 'cclr04', 28.4, 65, 62, 1049, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3231, 'cclr03', 28.4, 65, 62, 1049, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3232, 'cclr04', 28.4, 64.7, 56, 1056, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3233, 'cclr03', 28.4, 64.7, 56, 1056, 27.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3234, 'cclr04', 29.6, 84.4, 52, 1057, 27.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:29', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3235, 'cclr03', 29.6, 84.4, 52, 1057, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3236, 'cclr04', 29.7, 92.8, 60, 1058, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3237, 'cclr03', 29.7, 92.8, 60, 1058, 26.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3238, 'cclr04', 29.5, 93.8, 58, 1061, 26.9, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:41', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3239, 'cclr03', 29.5, 93.8, 58, 1061, 27.4, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3240, 'cclr04', 29, 92.8, 62, 1060, 27.4, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3241, 'cclr03', 29, 92.8, 62, 1060, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3242, 'cclr04', 28.8, 87.1, 63, 1060, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:53', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3243, 'cclr03', 28.8, 87.1, 63, 1060, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:04:54', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3244, 'cclr04', 28.8, 76.8, 67, 1067, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:05:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3245, 'cclr03', 28.8, 76.8, 67, 1067, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:05:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3246, 'cclr04', 28.7, 70, 64, 1075, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:05:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3247, 'cclr03', 28.7, 70, 64, 1075, 26.8, 0, 840, 9, 5, 26, 19, '2025-09-03 00:05:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3248, 'cclr04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-03 01:24:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3249, 'cclr03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-03 01:24:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3250, 'cclr04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-03 01:24:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3251, 'cclr03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-03 01:24:33', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3252, 'cclr04', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-03 01:24:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3253, 'cclr03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-03 01:25:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3254, 'cclr04', 18.8, 54.8, 532, 351, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-09-04 17:31:02', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3255, 'cclr03', 18.8, 54.8, 532, 351, 16.3, 39.7, 840, 6.63, 107, 47, 153, '2025-09-04 17:31:02', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3256, 'cclr04', 20.3, 45.4, 542, 395, 16.3, 39.7, 840, 6.63, 107, 47, 153, '2025-09-04 17:31:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3257, 'cclr03', 20.3, 45.4, 542, 395, 17.4, 38.8, 840, 6.39, 99, 50, 157, '2025-09-04 17:31:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3258, 'cclr04', 22, 49.3, 470, 410, 17.4, 38.8, 840, 6.39, 99, 50, 157, '2025-09-04 17:31:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3259, 'cclr03', 22, 49.3, 470, 410, 19.1, 40.9, 840, 6.46, 106, 50, 140, '2025-09-04 17:31:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3260, 'cclr04', 21, 52.9, 604, 396, 19.1, 40.9, 840, 6.46, 106, 50, 140, '2025-09-04 17:31:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3261, 'cclr03', 21, 52.9, 604, 396, 18.7, 42.8, 840, 6.45, 92, 54, 151, '2025-09-04 17:31:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3262, 'cclr04', 20.7, 53.8, 511, 362, 18.7, 42.8, 840, 6.45, 92, 54, 151, '2025-09-04 17:31:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3263, 'cclr03', 20.7, 53.8, 511, 362, 18.5, 40.3, 840, 6.38, 105, 48, 165, '2025-09-04 17:31:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3264, 'cclr04', 18.9, 51.6, 519, 409, 18.5, 40.3, 840, 6.38, 105, 48, 165, '2025-09-04 17:31:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3265, 'cclr03', 18.9, 51.6, 519, 409, 17.4, 39.5, 840, 6.52, 111, 56, 159, '2025-09-04 17:31:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3266, 'cclr04', 21.6, 53.3, 599, 417, 17.4, 39.5, 840, 6.52, 111, 56, 159, '2025-09-04 18:34:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3267, 'cclr03', 21.6, 53.3, 599, 417, 18.7, 39.5, 840, 6.38, 99, 49, 143, '2025-09-04 18:34:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3268, 'cclr04', 21.7, 51, 440, 368, 18.7, 39.5, 840, 6.38, 99, 49, 143, '2025-09-04 18:34:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3269, 'cclr03', 21.7, 51, 440, 368, 19.4, 41, 840, 6.53, 109, 50, 143, '2025-09-04 18:34:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3270, 'cclr04', 20.4, 54.9, 439, 443, 19.4, 41, 840, 6.53, 109, 50, 143, '2025-09-04 18:35:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3271, 'cclr03', 20.4, 54.9, 439, 443, 17.6, 42.3, 840, 6.51, 108, 46, 144, '2025-09-04 18:35:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3272, 'cclr04', 18.6, 46.7, 451, 455, 17.6, 42.3, 840, 6.51, 108, 46, 144, '2025-09-04 18:35:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3273, 'cclr03', 18.6, 46.7, 451, 455, 16.2, 38, 840, 6.68, 108, 54, 146, '2025-09-04 18:35:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3274, 'cclr04', 20.3, 54.3, 504, 383, 16.2, 38, 840, 6.68, 108, 54, 146, '2025-09-04 18:35:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3275, 'cclr03', 20.3, 54.3, 504, 383, 17.6, 41, 840, 6.34, 108, 46, 166, '2025-09-04 18:35:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3276, 'cclr04', 18.8, 52.9, 455, 376, 17.6, 41, 840, 6.34, 108, 46, 166, '2025-09-04 18:35:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3277, 'cclr03', 18.8, 52.9, 455, 376, 16.3, 39.8, 840, 6.48, 105, 56, 157, '2025-09-04 18:35:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3278, 'cclr04', 19.2, 51.6, 573, 428, 16.3, 39.8, 840, 6.48, 105, 56, 157, '2025-09-04 18:35:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3279, 'cclr03', 19.2, 51.6, 573, 428, 17.2, 43.6, 840, 6.59, 111, 49, 167, '2025-09-04 18:35:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3280, 'cclr04', 19.8, 48.7, 520, 457, 17.2, 43.6, 840, 6.59, 111, 49, 167, '2025-09-04 18:35:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3281, 'cclr03', 19.8, 48.7, 520, 457, 17.6, 41.8, 840, 6.46, 111, 53, 153, '2025-09-04 18:35:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3282, 'cclr04', 20.1, 53.8, 565, 431, 17.6, 41.8, 840, 6.46, 111, 53, 153, '2025-09-04 18:36:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3283, 'cclr03', 20.1, 53.8, 565, 431, 19, 40.3, 840, 6.73, 96, 56, 154, '2025-09-04 18:36:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3284, 'cclr04', 19.8, 52.7, 616, 467, 19, 40.3, 840, 6.73, 96, 56, 154, '2025-09-04 18:36:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3285, 'cclr03', 19.8, 52.7, 616, 467, 18.4, 41.1, 840, 6.47, 116, 58, 161, '2025-09-04 18:36:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3286, 'cclr04', 19.3, 55.5, 594, 436, 18.4, 41.1, 840, 6.47, 116, 58, 161, '2025-09-04 18:36:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3287, 'cclr03', 19.3, 55.5, 594, 436, 16.4, 39.4, 840, 6.5, 112, 50, 147, '2025-09-04 18:36:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3288, 'cclr04', 22.4, 49, 510, 375, 16.4, 39.4, 840, 6.5, 112, 50, 147, '2025-09-04 18:36:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3289, 'cclr03', 22.4, 49, 510, 375, 19.8, 42.2, 840, 6.57, 112, 53, 163, '2025-09-04 18:36:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3290, 'cclr04', 20.2, 49.8, 610, 444, 19.8, 42.2, 840, 6.57, 112, 53, 163, '2025-09-04 18:36:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3291, 'cclr03', 20.2, 49.8, 610, 444, 18.3, 40.5, 840, 6.48, 114, 56, 172, '2025-09-04 18:36:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3292, 'cclr04', 22.9, 52.3, 546, 419, 18.3, 40.5, 840, 6.48, 114, 56, 172, '2025-09-04 18:36:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3293, 'cclr03', 22.9, 52.3, 546, 419, 20.1, 42.8, 840, 6.71, 112, 56, 170, '2025-09-04 18:36:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3294, 'cclr04', 22, 56.9, 477, 437, 20.1, 42.8, 840, 6.71, 112, 56, 170, '2025-09-04 18:37:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3295, 'cclr03', 22, 56.9, 477, 437, 19.1, 41.2, 840, 6.8, 112, 57, 167, '2025-09-04 18:37:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3296, 'cclr04', 23, 52.7, 550, 448, 19.1, 41.2, 840, 6.8, 112, 57, 167, '2025-09-04 18:37:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3297, 'cclr03', 23, 52.7, 550, 448, 20.9, 45.8, 840, 6.82, 115, 54, 172, '2025-09-04 18:37:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3298, 'cclr04', 20.4, 57.3, 592, 400, 20.9, 45.8, 840, 6.82, 115, 54, 172, '2025-09-04 18:37:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3299, 'cclr03', 20.4, 57.3, 592, 400, 17.9, 45.8, 840, 6.57, 108, 57, 160, '2025-09-04 18:37:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3300, 'cclr04', 23.6, 48.9, 470, 416, 17.9, 45.8, 840, 6.57, 108, 57, 160, '2025-09-04 18:37:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3301, 'cclr03', 23.6, 48.9, 470, 416, 22, 45.1, 840, 6.49, 106, 56, 185, '2025-09-04 18:37:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3302, 'cclr04', 23.2, 55.9, 594, 410, 22, 45.1, 840, 6.49, 106, 56, 185, '2025-09-04 18:37:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3303, 'cclr03', 23.2, 55.9, 594, 410, 20.4, 46.5, 840, 6.75, 116, 59, 163, '2025-09-04 18:37:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3304, 'cclr04', 20.3, 51.6, 636, 431, 20.4, 46.5, 840, 6.75, 116, 59, 163, '2025-09-04 18:37:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3305, 'cclr03', 20.3, 51.6, 636, 431, 17.5, 44.7, 840, 6.8, 116, 56, 179, '2025-09-04 18:37:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3306, 'cclr04', 21.4, 52, 586, 406, 17.5, 44.7, 840, 6.8, 116, 56, 179, '2025-09-04 18:38:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3307, 'cclr03', 21.4, 52, 586, 406, 20.4, 45.1, 840, 6.71, 119, 55, 159, '2025-09-04 18:38:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3308, 'cclr04', 21.3, 58.2, 653, 465, 20.4, 45.1, 840, 6.71, 119, 55, 159, '2025-09-04 18:38:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3309, 'cclr03', 21.3, 58.2, 653, 465, 20.2, 43.6, 840, 6.54, 117, 55, 161, '2025-09-04 18:38:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3310, 'cclr04', 21.5, 58.6, 511, 471, 20.2, 43.6, 840, 6.54, 117, 55, 161, '2025-09-04 18:38:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3311, 'cclr03', 21.5, 58.6, 511, 471, 18.8, 47.2, 840, 6.55, 107, 56, 176, '2025-09-04 18:38:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3312, 'cclr04', 22.8, 50.4, 624, 476, 18.8, 47.2, 840, 6.55, 107, 56, 176, '2025-09-04 18:38:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3313, 'cclr03', 22.8, 50.4, 624, 476, 21.4, 45.3, 840, 6.56, 118, 60, 165, '2025-09-04 18:38:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3314, 'cclr04', 23.3, 56.5, 542, 420, 21.4, 45.3, 840, 6.56, 118, 60, 165, '2025-09-04 18:38:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3315, 'cclr03', 23.3, 56.5, 542, 420, 21, 44.8, 840, 6.72, 116, 57, 181, '2025-09-04 18:38:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3316, 'cclr04', 24, 50.3, 670, 450, 21, 44.8, 840, 6.72, 116, 57, 181, '2025-09-04 18:38:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3317, 'cclr03', 24, 50.3, 670, 450, 22.7, 47.6, 840, 6.75, 114, 56, 168, '2025-09-04 18:38:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3318, 'cclr04', 21.1, 58, 527, 456, 22.7, 47.6, 840, 6.75, 114, 56, 168, '2025-09-04 18:39:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3319, 'cclr03', 21.1, 58, 527, 456, 19.5, 46.7, 840, 6.59, 129, 56, 188, '2025-09-04 18:39:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3320, 'cclr04', 23.1, 50.9, 627, 428, 19.5, 46.7, 840, 6.59, 129, 56, 188, '2025-09-04 18:39:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3321, 'cclr03', 23.1, 50.9, 627, 428, 20.8, 45.5, 840, 6.75, 120, 62, 181, '2025-09-04 18:39:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3322, 'cclr04', 22.4, 60, 665, 498, 20.8, 45.5, 840, 6.75, 120, 62, 181, '2025-09-04 18:39:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3323, 'cclr03', 22.4, 60, 665, 498, 19.4, 43.5, 840, 6.73, 126, 64, 183, '2025-09-04 18:39:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3324, 'cclr04', 23.4, 54.4, 536, 420, 19.4, 43.5, 840, 6.73, 126, 64, 183, '2025-09-04 18:39:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3325, 'cclr03', 23.4, 54.4, 536, 420, 21.7, 47.1, 840, 6.63, 124, 59, 196, '2025-09-04 18:39:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3326, 'cclr04', 22, 51.9, 530, 414, 21.7, 47.1, 840, 6.63, 124, 59, 196, '2025-09-04 18:39:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3327, 'cclr03', 22, 51.9, 530, 414, 20.3, 48.6, 840, 6.94, 120, 62, 171, '2025-09-04 18:39:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3328, 'cclr04', 22.1, 58.3, 632, 478, 20.3, 48.6, 840, 6.94, 120, 62, 171, '2025-09-04 18:39:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3329, 'cclr03', 22.1, 58.3, 632, 478, 20.1, 43.2, 840, 6.93, 121, 59, 189, '2025-09-04 18:39:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3330, 'cclr04', 24.8, 55.4, 526, 502, 20.1, 43.2, 840, 6.93, 121, 59, 189, '2025-09-04 18:40:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3331, 'cclr03', 24.8, 55.4, 526, 502, 21.8, 44.6, 840, 6.62, 121, 65, 183, '2025-09-04 18:40:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3332, 'cclr04', 22.5, 53.3, 608, 438, 21.8, 44.6, 840, 6.62, 121, 65, 183, '2025-09-04 18:40:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3333, 'cclr03', 22.5, 53.3, 608, 438, 21.2, 45, 840, 6.65, 134, 63, 199, '2025-09-04 18:40:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3334, 'cclr04', 24, 53.2, 597, 492, 21.2, 45, 840, 6.65, 134, 63, 199, '2025-09-04 18:40:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3335, 'cclr03', 24, 53.2, 597, 492, 21.3, 48.7, 840, 7.01, 119, 60, 178, '2025-09-04 18:40:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3336, 'cclr04', 25.1, 59.8, 546, 515, 21.3, 48.7, 840, 7.01, 119, 60, 178, '2025-09-04 18:40:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3337, 'cclr03', 25.1, 59.8, 546, 515, 22.2, 47.5, 840, 7.04, 130, 59, 203, '2025-09-04 18:40:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3338, 'cclr04', 24.3, 58.4, 664, 468, 22.2, 47.5, 840, 7.04, 130, 59, 203, '2025-09-04 18:40:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3339, 'cclr03', 24.3, 58.4, 664, 468, 22.9, 49.7, 840, 6.67, 134, 67, 200, '2025-09-04 18:40:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3340, 'cclr04', 24.4, 56.4, 575, 443, 22.9, 49.7, 840, 6.67, 134, 67, 200, '2025-09-04 18:40:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3341, 'cclr03', 24.4, 56.4, 575, 443, 23.3, 49.4, 840, 7, 138, 65, 197, '2025-09-04 18:40:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3342, 'cclr04', 23.7, 60.5, 573, 477, 23.3, 49.4, 840, 7, 138, 65, 197, '2025-09-04 18:41:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3343, 'cclr03', 23.7, 60.5, 573, 477, 21.6, 49.7, 840, 6.73, 121, 69, 209, '2025-09-04 18:41:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3344, 'cclr04', 23.6, 62.1, 533, 453, 21.6, 49.7, 840, 6.73, 121, 69, 209, '2025-09-04 18:41:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3345, 'cclr03', 23.6, 62.1, 533, 453, 21.4, 45.9, 840, 6.74, 123, 62, 207, '2025-09-04 18:41:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3346, 'cclr04', 22.1, 55.5, 714, 509, 21.4, 45.9, 840, 6.74, 123, 62, 207, '2025-09-04 18:41:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3347, 'cclr03', 22.1, 55.5, 714, 509, 20.5, 50.8, 840, 6.93, 130, 62, 196, '2025-09-04 18:41:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3348, 'cclr04', 23.6, 60, 569, 529, 20.5, 50.8, 840, 6.93, 130, 62, 196, '2025-09-04 18:41:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3349, 'cclr03', 23.6, 60, 569, 529, 21.2, 46.8, 840, 6.72, 126, 62, 196, '2025-09-04 18:41:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3350, 'cclr04', 25.3, 55, 664, 506, 21.2, 46.8, 840, 6.72, 126, 62, 196, '2025-09-04 18:41:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3351, 'cclr03', 25.3, 55, 664, 506, 22.7, 50.7, 840, 7.04, 142, 63, 206, '2025-09-04 18:41:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3352, 'cclr04', 25.4, 63.2, 560, 461, 22.7, 50.7, 840, 7.04, 142, 63, 206, '2025-09-04 18:41:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3353, 'cclr03', 25.4, 63.2, 560, 461, 23.1, 46.7, 840, 7.03, 128, 62, 199, '2025-09-04 18:41:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3354, 'cclr04', 25.1, 60.3, 545, 505, 23.1, 46.7, 840, 7.03, 128, 62, 199, '2025-09-04 18:42:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3355, 'cclr03', 25.1, 60.3, 545, 505, 23, 49.8, 840, 7.12, 133, 63, 206, '2025-09-04 18:42:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3356, 'cclr04', 23, 63.6, 716, 492, 23, 49.8, 840, 7.12, 133, 63, 206, '2025-09-04 18:42:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3357, 'cclr03', 23, 63.6, 716, 492, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 18:42:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3358, 'cclr04', 25.7, 61.1, 609, 456, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 18:42:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3359, 'cclr03', 25.7, 61.1, 609, 456, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 18:42:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3360, 'cclr04', 23.8, 59, 672, 461, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 18:42:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3361, 'cclr03', 23.8, 59, 672, 461, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 18:42:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3362, 'cclr04', 26.1, 61.9, 620, 537, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 18:42:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3363, 'cclr03', 26.1, 61.9, 620, 537, 23.4, 51.9, 840, 6.85, 139, 72, 205, '2025-09-04 18:42:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3364, 'cclr04', 26.4, 64.3, 703, 460, 23.4, 51.9, 840, 6.85, 139, 72, 205, '2025-09-04 18:42:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3365, 'cclr03', 26.4, 64.3, 703, 460, 24.5, 47.9, 840, 6.87, 143, 71, 213, '2025-09-04 18:42:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3366, 'cclr04', 24.4, 62.1, 586, 481, 24.5, 47.9, 840, 6.87, 143, 71, 213, '2025-09-04 18:43:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3367, 'cclr03', 24.4, 62.1, 586, 481, 22.5, 48.5, 840, 6.95, 144, 67, 196, '2025-09-04 18:43:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3368, 'cclr04', 25.3, 61.2, 563, 481, 22.5, 48.5, 840, 6.95, 144, 67, 196, '2025-09-04 18:43:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3369, 'cclr03', 25.3, 61.2, 563, 481, 23.4, 51.4, 840, 7.05, 137, 74, 222, '2025-09-04 18:43:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3370, 'cclr04', 25.7, 56.7, 561, 461, 23.4, 51.4, 840, 7.05, 137, 74, 222, '2025-09-04 18:43:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3371, 'cclr03', 25.7, 56.7, 561, 461, 24.4, 48.1, 840, 6.86, 136, 72, 224, '2025-09-04 18:43:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3372, 'cclr04', 25.7, 56, 632, 555, 24.4, 48.1, 840, 6.86, 136, 72, 224, '2025-09-04 18:43:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3373, 'cclr03', 25.7, 56, 632, 555, 23.6, 48.2, 840, 7.03, 142, 71, 217, '2025-09-04 18:43:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3374, 'cclr04', 24.5, 57.5, 694, 478, 23.6, 48.2, 840, 7.03, 142, 71, 217, '2025-09-04 18:43:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3375, 'cclr03', 24.5, 57.5, 694, 478, 22.8, 50.6, 840, 7.16, 134, 71, 220, '2025-09-04 18:43:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3376, 'cclr04', 23.7, 65.4, 755, 498, 22.8, 50.6, 840, 7.16, 134, 71, 220, '2025-09-04 18:43:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3377, 'cclr03', 23.7, 65.4, 755, 498, 21, 51.9, 840, 7.06, 149, 73, 204, '2025-09-04 18:43:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3378, 'cclr04', 24.9, 64.3, 735, 496, 21, 51.9, 840, 7.06, 149, 73, 204, '2025-09-04 18:44:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3379, 'cclr03', 24.9, 64.3, 735, 496, 22.9, 51.6, 840, 6.99, 145, 74, 227, '2025-09-04 18:44:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3380, 'cclr04', 24.3, 66.1, 759, 491, 22.9, 51.6, 840, 6.99, 145, 74, 227, '2025-09-04 18:44:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3381, 'cclr03', 24.3, 66.1, 759, 491, 21.4, 48.6, 840, 7.18, 147, 73, 206, '2025-09-04 18:44:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3382, 'cclr04', 26.4, 66.4, 602, 524, 21.4, 48.6, 840, 7.18, 147, 73, 206, '2025-09-04 18:44:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3383, 'cclr03', 26.4, 66.4, 602, 524, 24.3, 49.8, 840, 7, 152, 72, 224, '2025-09-04 18:44:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3384, 'cclr04', 24.4, 59.3, 595, 545, 24.3, 49.8, 840, 7, 152, 72, 224, '2025-09-04 18:44:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3385, 'cclr03', 24.4, 59.3, 595, 545, 22.8, 50.7, 840, 7.16, 148, 77, 220, '2025-09-04 18:44:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3386, 'cclr04', 24.4, 60.2, 633, 564, 22.8, 50.7, 840, 7.16, 148, 77, 220, '2025-09-04 18:44:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3387, 'cclr03', 24.4, 60.2, 633, 564, 22.5, 49.7, 840, 7.13, 144, 77, 229, '2025-09-04 18:44:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3388, 'cclr04', 26.2, 65.6, 652, 479, 22.5, 49.7, 840, 7.13, 144, 77, 229, '2025-09-04 18:44:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3389, 'cclr03', 26.2, 65.6, 652, 479, 25, 53.9, 840, 7.09, 155, 70, 229, '2025-09-04 18:44:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3390, 'cclr04', 25.1, 58.1, 683, 496, 25, 53.9, 840, 7.09, 155, 70, 229, '2025-09-04 18:45:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3391, 'cclr03', 25.1, 58.1, 683, 496, 22.2, 55, 840, 7.19, 145, 79, 217, '2025-09-04 18:45:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3392, 'cclr04', 26.2, 60, 700, 538, 22.2, 55, 840, 7.19, 145, 79, 217, '2025-09-04 18:45:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3393, 'cclr03', 26.2, 60, 700, 538, 24.7, 54.4, 840, 6.98, 157, 78, 229, '2025-09-04 18:45:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3394, 'cclr04', 26.3, 60.9, 685, 573, 24.7, 54.4, 840, 6.98, 157, 78, 229, '2025-09-04 18:45:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3395, 'cclr03', 26.3, 60.9, 685, 573, 24, 54.4, 840, 7.24, 156, 71, 231, '2025-09-04 18:45:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3396, 'cclr04', 27.7, 60.4, 744, 538, 24, 54.4, 840, 7.24, 156, 71, 231, '2025-09-04 18:45:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3397, 'cclr03', 27.7, 60.4, 744, 538, 26, 55.2, 840, 6.96, 146, 74, 215, '2025-09-04 18:45:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3398, 'cclr04', 25.8, 64.3, 773, 579, 26, 55.2, 840, 6.96, 146, 74, 215, '2025-09-04 18:45:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3399, 'cclr03', 25.8, 64.3, 773, 579, 24.8, 55.9, 840, 7.03, 162, 76, 225, '2025-09-04 18:45:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3400, 'cclr04', 25.1, 64.3, 657, 533, 24.8, 55.9, 840, 7.03, 162, 76, 225, '2025-09-04 18:45:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3401, 'cclr03', 25.1, 64.3, 657, 533, 22.9, 51.4, 840, 7.32, 144, 81, 240, '2025-09-04 18:45:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3402, 'cclr04', 25.5, 63.9, 727, 500, 22.9, 51.4, 840, 7.32, 144, 81, 240, '2025-09-04 18:46:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3403, 'cclr03', 25.5, 63.9, 727, 500, 23.8, 53.7, 840, 7.15, 148, 77, 245, '2025-09-04 18:46:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3404, 'cclr04', 25.4, 64.7, 658, 546, 23.8, 53.7, 840, 7.15, 148, 77, 245, '2025-09-04 18:46:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3405, 'cclr03', 25.4, 64.7, 658, 546, 24, 51.8, 840, 7.01, 147, 82, 236, '2025-09-04 18:46:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3406, 'cclr04', 28.1, 68, 677, 543, 24, 51.8, 840, 7.01, 147, 82, 236, '2025-09-04 18:46:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3407, 'cclr03', 28.1, 68, 677, 543, 26.5, 51.1, 840, 7.13, 162, 75, 246, '2025-09-04 18:46:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3408, 'cclr04', 27.3, 63.4, 637, 513, 26.5, 51.1, 840, 7.13, 162, 75, 246, '2025-09-04 18:46:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3409, 'cclr03', 27.3, 63.4, 637, 513, 25.8, 52.1, 840, 7.24, 149, 82, 227, '2025-09-04 18:46:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3410, 'cclr04', 28.4, 60.9, 707, 584, 25.8, 52.1, 840, 7.24, 149, 82, 227, '2025-09-04 18:46:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3411, 'cclr03', 28.4, 60.9, 707, 584, 26.9, 56.9, 840, 7.17, 159, 78, 232, '2025-09-04 18:46:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3412, 'cclr04', 26.3, 64, 690, 585, 26.9, 56.9, 840, 7.17, 159, 78, 232, '2025-09-04 18:46:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3413, 'cclr03', 26.3, 64, 690, 585, 25.1, 55.4, 840, 7.1, 158, 81, 234, '2025-09-04 18:46:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3414, 'cclr04', 28.9, 60.7, 727, 595, 25.1, 55.4, 840, 7.1, 158, 81, 234, '2025-09-04 18:47:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3415, 'cclr03', 28.9, 60.7, 727, 595, 26.9, 52.8, 840, 7.18, 154, 78, 237, '2025-09-04 18:47:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3416, 'cclr04', 27.8, 64.9, 625, 545, 26.9, 52.8, 840, 7.18, 154, 78, 237, '2025-09-04 18:47:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3417, 'cclr03', 27.8, 64.9, 625, 545, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 18:47:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3418, 'cclr04', 28, 68, 678, 555, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 18:47:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3419, 'cclr03', 28, 68, 678, 555, 26.8, 57.3, 840, 7.37, 163, 76, 231, '2025-09-04 18:47:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3420, 'cclr04', 28.6, 63.3, 685, 593, 26.8, 57.3, 840, 7.37, 163, 76, 231, '2025-09-04 18:47:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3421, 'cclr03', 28.6, 63.3, 685, 593, 26.1, 52.8, 840, 7.08, 168, 79, 238, '2025-09-04 18:47:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3422, 'cclr04', 27.6, 62, 829, 582, 26.1, 52.8, 840, 7.08, 168, 79, 238, '2025-09-04 18:47:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3423, 'cclr03', 27.6, 62, 829, 582, 26.5, 57.6, 840, 7.42, 156, 84, 239, '2025-09-04 18:47:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3424, 'cclr04', 28.8, 61.4, 641, 600, 26.5, 57.6, 840, 7.42, 156, 84, 239, '2025-09-04 18:47:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3425, 'cclr03', 28.8, 61.4, 641, 600, 26.2, 53.8, 840, 7.15, 169, 83, 251, '2025-09-04 18:47:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3426, 'cclr04', 27.5, 69.7, 712, 573, 26.2, 53.8, 840, 7.15, 169, 83, 251, '2025-09-04 18:48:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3427, 'cclr03', 27.5, 69.7, 712, 573, 25.5, 57, 840, 7.13, 155, 77, 242, '2025-09-04 18:48:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3428, 'cclr04', 27.1, 71.1, 801, 525, 25.5, 57, 840, 7.13, 155, 77, 242, '2025-09-04 18:48:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3429, 'cclr03', 27.1, 71.1, 801, 525, 25.9, 55.7, 840, 7.24, 164, 77, 248, '2025-09-04 18:48:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3430, 'cclr04', 26.6, 67.1, 711, 521, 25.9, 55.7, 840, 7.24, 164, 77, 248, '2025-09-04 18:48:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3431, 'cclr03', 26.6, 67.1, 711, 521, 24.3, 53.9, 840, 7.21, 159, 84, 251, '2025-09-04 18:48:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3432, 'cclr04', 27.3, 65, 743, 564, 24.3, 53.9, 840, 7.21, 159, 84, 251, '2025-09-04 18:48:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3433, 'cclr03', 27.3, 65, 743, 564, 25.9, 54.6, 840, 7.32, 160, 81, 259, '2025-09-04 18:48:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3434, 'cclr04', 30, 64.2, 750, 611, 25.9, 54.6, 840, 7.32, 160, 81, 259, '2025-09-04 18:48:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3435, 'cclr03', 30, 64.2, 750, 611, 28.1, 57.4, 840, 7.19, 165, 79, 238, '2025-09-04 18:48:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3436, 'cclr04', 30.4, 67.1, 734, 603, 28.1, 57.4, 840, 7.19, 165, 79, 238, '2025-09-04 18:48:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3437, 'cclr03', 30.4, 67.1, 734, 603, 28.7, 55, 840, 7.37, 158, 86, 237, '2025-09-04 18:48:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3438, 'cclr04', 28.3, 66.7, 857, 598, 28.7, 55, 840, 7.37, 158, 86, 237, '2025-09-04 18:49:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3439, 'cclr03', 28.3, 66.7, 857, 598, 25.3, 54.6, 840, 7.19, 160, 83, 258, '2025-09-04 18:49:05', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3440, 'cclr04', 29.9, 67.5, 684, 565, 25.3, 54.6, 840, 7.19, 160, 83, 258, '2025-09-04 18:49:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3441, 'cclr03', 29.9, 67.5, 684, 565, 28.5, 56.7, 840, 7.42, 160, 84, 247, '2025-09-04 18:49:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3442, 'cclr04', 29.9, 63.2, 778, 609, 28.5, 56.7, 840, 7.42, 160, 84, 247, '2025-09-04 18:49:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3443, 'cclr03', 29.9, 63.2, 778, 609, 28.1, 57.6, 840, 7.26, 170, 86, 268, '2025-09-04 18:49:25', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3444, 'cclr04', 30.2, 68.6, 746, 549, 28.1, 57.6, 840, 7.26, 170, 86, 268, '2025-09-04 18:49:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3445, 'cclr03', 30.2, 68.6, 746, 549, 28.3, 59.8, 840, 7.24, 171, 84, 252, '2025-09-04 18:49:35', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3446, 'cclr04', 28.4, 66.4, 863, 547, 28.3, 59.8, 840, 7.24, 171, 84, 252, '2025-09-04 18:49:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3447, 'cclr03', 28.4, 66.4, 863, 547, 27.2, 60.7, 840, 7.51, 162, 89, 258, '2025-09-04 18:49:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3448, 'cclr04', 28.9, 66.4, 832, 564, 27.2, 60.7, 840, 7.51, 162, 89, 258, '2025-09-04 18:49:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3449, 'cclr03', 28.9, 66.4, 832, 564, 27.2, 60.1, 840, 7.39, 175, 81, 254, '2025-09-04 18:49:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3450, 'cclr04', 28.9, 68.6, 869, 591, 27.2, 60.1, 840, 7.39, 175, 81, 254, '2025-09-04 18:50:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3451, 'cclr03', 28.9, 68.6, 869, 591, 26.5, 57.7, 840, 7.41, 168, 90, 261, '2025-09-04 18:50:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3452, 'cclr04', 30.9, 73.2, 812, 596, 26.5, 57.7, 840, 7.41, 168, 90, 261, '2025-09-04 18:50:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3453, 'cclr03', 30.9, 73.2, 812, 596, 29.8, 56.1, 840, 7.57, 181, 91, 255, '2025-09-04 18:50:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3454, 'cclr04', 27.4, 68.2, 716, 539, 29.8, 56.1, 840, 7.57, 181, 91, 255, '2025-09-04 18:50:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3455, 'cclr03', 27.4, 68.2, 716, 539, 24.7, 60.5, 840, 7.57, 168, 89, 262, '2025-09-04 18:50:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3456, 'cclr04', 29.2, 64.4, 697, 568, 24.7, 60.5, 840, 7.57, 168, 89, 262, '2025-09-04 18:50:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3457, 'cclr03', 29.2, 64.4, 697, 568, 27.3, 60.7, 840, 7.41, 177, 89, 255, '2025-09-04 18:50:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3458, 'cclr04', 29.1, 67.4, 851, 571, 27.3, 60.7, 840, 7.41, 177, 89, 255, '2025-09-04 18:50:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3459, 'cclr03', 29.1, 67.4, 851, 571, 27.7, 59, 840, 7.47, 173, 90, 271, '2025-09-04 18:50:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3460, 'cclr04', 31.1, 70.7, 877, 601, 27.7, 59, 840, 7.47, 173, 90, 271, '2025-09-04 18:50:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3461, 'cclr03', 31.1, 70.7, 877, 601, 29.4, 59.9, 840, 7.62, 171, 89, 274, '2025-09-04 18:50:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3462, 'cclr04', 28.5, 65, 782, 641, 29.4, 59.9, 840, 7.62, 171, 89, 274, '2025-09-04 18:51:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3463, 'cclr03', 28.5, 65, 782, 641, 26.6, 58.7, 840, 7.66, 169, 86, 273, '2025-09-04 18:51:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3464, 'cclr04', 29.4, 66.3, 890, 577, 26.6, 58.7, 840, 7.66, 169, 86, 273, '2025-09-04 18:51:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3465, 'cclr03', 29.4, 66.3, 890, 577, 28.4, 57.3, 840, 7.47, 179, 91, 279, '2025-09-04 18:51:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3466, 'cclr04', 21.6, 53.3, 599, 417, 28.4, 57.3, 840, 7.47, 179, 91, 279, '2025-09-04 18:51:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3467, 'cclr03', 21.6, 53.3, 599, 417, 18.7, 39.5, 840, 6.38, 99, 49, 143, '2025-09-04 18:51:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3468, 'cclr04', 21.7, 51, 440, 368, 18.7, 39.5, 840, 6.38, 99, 49, 143, '2025-09-04 18:51:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3469, 'cclr03', 21.7, 51, 440, 368, 19.4, 41, 840, 6.53, 109, 50, 143, '2025-09-04 18:51:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3470, 'cclr04', 20.4, 54.9, 439, 443, 19.4, 41, 840, 6.53, 109, 50, 143, '2025-09-04 18:51:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3471, 'cclr03', 20.4, 54.9, 439, 443, 17.6, 42.3, 840, 6.51, 108, 46, 144, '2025-09-04 18:51:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3472, 'cclr04', 18.6, 46.7, 451, 455, 17.6, 42.3, 840, 6.51, 108, 46, 144, '2025-09-04 18:51:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3473, 'cclr03', 18.6, 46.7, 451, 455, 16.2, 38, 840, 6.68, 108, 54, 146, '2025-09-04 18:51:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3474, 'cclr04', 20.3, 54.3, 504, 383, 16.2, 38, 840, 6.68, 108, 54, 146, '2025-09-04 18:52:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3475, 'cclr03', 20.3, 54.3, 504, 383, 17.6, 41, 840, 6.34, 108, 46, 166, '2025-09-04 18:52:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3476, 'cclr04', 18.8, 52.9, 455, 376, 17.6, 41, 840, 6.34, 108, 46, 166, '2025-09-04 18:52:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3477, 'cclr03', 18.8, 52.9, 455, 376, 16.3, 39.8, 840, 6.48, 105, 56, 157, '2025-09-04 18:52:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3478, 'cclr04', 19.2, 51.6, 573, 428, 16.3, 39.8, 840, 6.48, 105, 56, 157, '2025-09-04 18:52:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3479, 'cclr03', 19.2, 51.6, 573, 428, 17.2, 43.6, 840, 6.59, 111, 49, 167, '2025-09-04 18:52:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3480, 'cclr04', 19.8, 48.7, 520, 457, 17.2, 43.6, 840, 6.59, 111, 49, 167, '2025-09-04 18:52:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3481, 'cclr03', 19.8, 48.7, 520, 457, 17.6, 41.8, 840, 6.46, 111, 53, 153, '2025-09-04 18:52:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3482, 'cclr04', 20.1, 53.8, 565, 431, 17.6, 41.8, 840, 6.46, 111, 53, 153, '2025-09-04 18:52:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3483, 'cclr03', 20.1, 53.8, 565, 431, 19, 40.3, 840, 6.73, 96, 56, 154, '2025-09-04 18:52:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3484, 'cclr04', 19.8, 52.7, 616, 467, 19, 40.3, 840, 6.73, 96, 56, 154, '2025-09-04 18:52:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3485, 'cclr03', 19.8, 52.7, 616, 467, 18.4, 41.1, 840, 6.47, 116, 58, 161, '2025-09-04 18:52:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3486, 'cclr04', 19.3, 55.5, 594, 436, 18.4, 41.1, 840, 6.47, 116, 58, 161, '2025-09-04 18:53:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3487, 'cclr03', 19.3, 55.5, 594, 436, 16.4, 39.4, 840, 6.5, 112, 50, 147, '2025-09-04 18:53:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3488, 'cclr04', 22.4, 49, 510, 375, 16.4, 39.4, 840, 6.5, 112, 50, 147, '2025-09-04 18:53:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3489, 'cclr03', 22.4, 49, 510, 375, 19.8, 42.2, 840, 6.57, 112, 53, 163, '2025-09-04 18:53:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3490, 'cclr04', 20.2, 49.8, 610, 444, 19.8, 42.2, 840, 6.57, 112, 53, 163, '2025-09-04 18:53:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3491, 'cclr03', 20.2, 49.8, 610, 444, 18.3, 40.5, 840, 6.48, 114, 56, 172, '2025-09-04 18:53:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3492, 'cclr04', 22.9, 52.3, 546, 419, 18.3, 40.5, 840, 6.48, 114, 56, 172, '2025-09-04 18:53:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3493, 'cclr03', 22.9, 52.3, 546, 419, 20.1, 42.8, 840, 6.71, 112, 56, 170, '2025-09-04 18:53:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3494, 'cclr04', 22, 56.9, 477, 437, 20.1, 42.8, 840, 6.71, 112, 56, 170, '2025-09-04 18:53:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3495, 'cclr03', 22, 56.9, 477, 437, 19.1, 41.2, 840, 6.8, 112, 57, 167, '2025-09-04 18:53:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3496, 'cclr04', 23, 52.7, 550, 448, 19.1, 41.2, 840, 6.8, 112, 57, 167, '2025-09-04 18:53:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3497, 'cclr03', 23, 52.7, 550, 448, 20.9, 45.8, 840, 6.82, 115, 54, 172, '2025-09-04 18:53:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3498, 'cclr04', 20.4, 57.3, 592, 400, 20.9, 45.8, 840, 6.82, 115, 54, 172, '2025-09-04 18:54:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3499, 'cclr03', 20.4, 57.3, 592, 400, 17.9, 45.8, 840, 6.57, 108, 57, 160, '2025-09-04 18:54:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3500, 'cclr04', 23.6, 48.9, 470, 416, 17.9, 45.8, 840, 6.57, 108, 57, 160, '2025-09-04 18:54:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3501, 'cclr03', 23.6, 48.9, 470, 416, 22, 45.1, 840, 6.49, 106, 56, 185, '2025-09-04 18:54:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3502, 'cclr04', 23.2, 55.9, 594, 410, 22, 45.1, 840, 6.49, 106, 56, 185, '2025-09-04 18:54:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3503, 'cclr03', 23.2, 55.9, 594, 410, 20.4, 46.5, 840, 6.75, 116, 59, 163, '2025-09-04 18:54:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3504, 'cclr04', 20.3, 51.6, 636, 431, 20.4, 46.5, 840, 6.75, 116, 59, 163, '2025-09-04 18:54:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3505, 'cclr03', 20.3, 51.6, 636, 431, 17.5, 44.7, 840, 6.8, 116, 56, 179, '2025-09-04 18:54:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3506, 'cclr04', 21.4, 52, 586, 406, 17.5, 44.7, 840, 6.8, 116, 56, 179, '2025-09-04 18:54:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3507, 'cclr03', 21.4, 52, 586, 406, 20.4, 45.1, 840, 6.71, 119, 55, 159, '2025-09-04 18:54:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3508, 'cclr04', 21.3, 58.2, 653, 465, 20.4, 45.1, 840, 6.71, 119, 55, 159, '2025-09-04 18:54:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3509, 'cclr03', 21.3, 58.2, 653, 465, 20.2, 43.6, 840, 6.54, 117, 55, 161, '2025-09-04 18:54:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3510, 'cclr04', 21.5, 58.6, 511, 471, 20.2, 43.6, 840, 6.54, 117, 55, 161, '2025-09-04 18:55:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3511, 'cclr03', 21.5, 58.6, 511, 471, 18.8, 47.2, 840, 6.55, 107, 56, 176, '2025-09-04 18:55:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3512, 'cclr04', 22.8, 50.4, 624, 476, 18.8, 47.2, 840, 6.55, 107, 56, 176, '2025-09-04 18:55:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3513, 'cclr03', 22.8, 50.4, 624, 476, 21.4, 45.3, 840, 6.56, 118, 60, 165, '2025-09-04 18:55:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3514, 'cclr04', 23.3, 56.5, 542, 420, 21.4, 45.3, 840, 6.56, 118, 60, 165, '2025-09-04 18:55:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3515, 'cclr03', 23.3, 56.5, 542, 420, 21, 44.8, 840, 6.72, 116, 57, 181, '2025-09-04 18:55:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3516, 'cclr04', 24, 50.3, 670, 450, 21, 44.8, 840, 6.72, 116, 57, 181, '2025-09-04 18:55:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3517, 'cclr03', 24, 50.3, 670, 450, 22.7, 47.6, 840, 6.75, 114, 56, 168, '2025-09-04 18:55:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3518, 'cclr04', 21.1, 58, 527, 456, 22.7, 47.6, 840, 6.75, 114, 56, 168, '2025-09-04 18:55:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3519, 'cclr03', 21.1, 58, 527, 456, 19.5, 46.7, 840, 6.59, 129, 56, 188, '2025-09-04 18:55:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3520, 'cclr04', 23.1, 50.9, 627, 428, 19.5, 46.7, 840, 6.59, 129, 56, 188, '2025-09-04 18:55:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3521, 'cclr03', 23.1, 50.9, 627, 428, 20.8, 45.5, 840, 6.75, 120, 62, 181, '2025-09-04 18:55:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3522, 'cclr04', 22.4, 60, 665, 498, 20.8, 45.5, 840, 6.75, 120, 62, 181, '2025-09-04 18:56:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3523, 'cclr03', 22.4, 60, 665, 498, 19.4, 43.5, 840, 6.73, 126, 64, 183, '2025-09-04 18:56:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3524, 'cclr04', 23.4, 54.4, 536, 420, 19.4, 43.5, 840, 6.73, 126, 64, 183, '2025-09-04 18:56:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3525, 'cclr03', 23.4, 54.4, 536, 420, 21.7, 47.1, 840, 6.63, 124, 59, 196, '2025-09-04 18:56:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3526, 'cclr04', 22, 51.9, 530, 414, 21.7, 47.1, 840, 6.63, 124, 59, 196, '2025-09-04 18:56:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3527, 'cclr03', 22, 51.9, 530, 414, 20.3, 48.6, 840, 6.94, 120, 62, 171, '2025-09-04 18:56:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3528, 'cclr04', 22.1, 58.3, 632, 478, 20.3, 48.6, 840, 6.94, 120, 62, 171, '2025-09-04 18:56:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3529, 'cclr03', 22.1, 58.3, 632, 478, 20.1, 43.2, 840, 6.93, 121, 59, 189, '2025-09-04 18:56:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3530, 'cclr04', 24.8, 55.4, 526, 502, 20.1, 43.2, 840, 6.93, 121, 59, 189, '2025-09-04 18:56:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3531, 'cclr03', 24.8, 55.4, 526, 502, 21.8, 44.6, 840, 6.62, 121, 65, 183, '2025-09-04 18:56:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3532, 'cclr04', 22.5, 53.3, 608, 438, 21.8, 44.6, 840, 6.62, 121, 65, 183, '2025-09-04 18:56:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3533, 'cclr03', 22.5, 53.3, 608, 438, 21.2, 45, 840, 6.65, 134, 63, 199, '2025-09-04 18:56:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3534, 'cclr04', 24, 53.2, 597, 492, 21.2, 45, 840, 6.65, 134, 63, 199, '2025-09-04 18:57:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3535, 'cclr03', 24, 53.2, 597, 492, 21.3, 48.7, 840, 7.01, 119, 60, 178, '2025-09-04 18:57:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3536, 'cclr04', 25.1, 59.8, 546, 515, 21.3, 48.7, 840, 7.01, 119, 60, 178, '2025-09-04 18:57:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3537, 'cclr03', 25.1, 59.8, 546, 515, 22.2, 47.5, 840, 7.04, 130, 59, 203, '2025-09-04 18:57:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3538, 'cclr04', 24.3, 58.4, 664, 468, 22.2, 47.5, 840, 7.04, 130, 59, 203, '2025-09-04 18:57:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3539, 'cclr03', 24.3, 58.4, 664, 468, 22.9, 49.7, 840, 6.67, 134, 67, 200, '2025-09-04 18:57:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3540, 'cclr04', 24.4, 56.4, 575, 443, 22.9, 49.7, 840, 6.67, 134, 67, 200, '2025-09-04 18:57:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3541, 'cclr03', 24.4, 56.4, 575, 443, 23.3, 49.4, 840, 7, 138, 65, 197, '2025-09-04 18:57:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3542, 'cclr04', 23.7, 60.5, 573, 477, 23.3, 49.4, 840, 7, 138, 65, 197, '2025-09-04 18:57:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3543, 'cclr03', 23.7, 60.5, 573, 477, 21.6, 49.7, 840, 6.73, 121, 69, 209, '2025-09-04 18:57:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3544, 'cclr04', 23.6, 62.1, 533, 453, 21.6, 49.7, 840, 6.73, 121, 69, 209, '2025-09-04 18:57:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3545, 'cclr03', 23.6, 62.1, 533, 453, 21.4, 45.9, 840, 6.74, 123, 62, 207, '2025-09-04 18:57:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3546, 'cclr04', 22.1, 55.5, 714, 509, 21.4, 45.9, 840, 6.74, 123, 62, 207, '2025-09-04 18:58:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3547, 'cclr03', 22.1, 55.5, 714, 509, 20.5, 50.8, 840, 6.93, 130, 62, 196, '2025-09-04 18:58:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3548, 'cclr04', 23.6, 60, 569, 529, 20.5, 50.8, 840, 6.93, 130, 62, 196, '2025-09-04 18:58:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3549, 'cclr03', 23.6, 60, 569, 529, 21.2, 46.8, 840, 6.72, 126, 62, 196, '2025-09-04 18:58:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3550, 'cclr04', 25.3, 55, 664, 506, 21.2, 46.8, 840, 6.72, 126, 62, 196, '2025-09-04 18:58:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3551, 'cclr03', 25.3, 55, 664, 506, 22.7, 50.7, 840, 7.04, 142, 63, 206, '2025-09-04 18:58:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3552, 'cclr04', 25.4, 63.2, 560, 461, 22.7, 50.7, 840, 7.04, 142, 63, 206, '2025-09-04 18:58:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3553, 'cclr03', 25.4, 63.2, 560, 461, 23.1, 46.7, 840, 7.03, 128, 62, 199, '2025-09-04 18:58:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3554, 'cclr04', 25.1, 60.3, 545, 505, 23.1, 46.7, 840, 7.03, 128, 62, 199, '2025-09-04 18:58:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3555, 'cclr03', 25.1, 60.3, 545, 505, 23, 49.8, 840, 7.12, 133, 63, 206, '2025-09-04 18:58:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3556, 'cclr04', 23, 63.6, 716, 492, 23, 49.8, 840, 7.12, 133, 63, 206, '2025-09-04 18:58:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3557, 'cclr03', 23, 63.6, 716, 492, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 18:58:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3558, 'cclr04', 25.7, 61.1, 609, 456, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 18:59:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3559, 'cclr03', 25.7, 61.1, 609, 456, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 18:59:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3560, 'cclr04', 23.8, 59, 672, 461, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 18:59:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3561, 'cclr03', 23.8, 59, 672, 461, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 18:59:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3562, 'cclr04', 26.1, 61.9, 620, 537, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 18:59:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3563, 'cclr03', 26.1, 61.9, 620, 537, 23.4, 51.9, 840, 6.85, 139, 72, 205, '2025-09-04 18:59:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3564, 'cclr04', 26.4, 64.3, 703, 460, 23.4, 51.9, 840, 6.85, 139, 72, 205, '2025-09-04 18:59:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3565, 'cclr03', 26.4, 64.3, 703, 460, 24.5, 47.9, 840, 6.87, 143, 71, 213, '2025-09-04 18:59:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3566, 'cclr04', 24.4, 62.1, 586, 481, 24.5, 47.9, 840, 6.87, 143, 71, 213, '2025-09-04 18:59:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3567, 'cclr03', 24.4, 62.1, 586, 481, 22.5, 48.5, 840, 6.95, 144, 67, 196, '2025-09-04 18:59:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3568, 'cclr04', 25.3, 61.2, 563, 481, 22.5, 48.5, 840, 6.95, 144, 67, 196, '2025-09-04 18:59:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3569, 'cclr03', 25.3, 61.2, 563, 481, 23.4, 51.4, 840, 7.05, 137, 74, 222, '2025-09-04 18:59:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3570, 'cclr04', 25.7, 56.7, 561, 461, 23.4, 51.4, 840, 7.05, 137, 74, 222, '2025-09-04 19:00:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3571, 'cclr03', 25.7, 56.7, 561, 461, 24.4, 48.1, 840, 6.86, 136, 72, 224, '2025-09-04 19:00:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3572, 'cclr04', 25.7, 56, 632, 555, 24.4, 48.1, 840, 6.86, 136, 72, 224, '2025-09-04 19:00:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3573, 'cclr03', 25.7, 56, 632, 555, 23.6, 48.2, 840, 7.03, 142, 71, 217, '2025-09-04 19:00:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3574, 'cclr04', 24.5, 57.5, 694, 478, 23.6, 48.2, 840, 7.03, 142, 71, 217, '2025-09-04 19:00:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3575, 'cclr03', 24.5, 57.5, 694, 478, 22.8, 50.6, 840, 7.16, 134, 71, 220, '2025-09-04 19:00:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3576, 'cclr04', 23.7, 65.4, 755, 498, 22.8, 50.6, 840, 7.16, 134, 71, 220, '2025-09-04 19:00:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3577, 'cclr03', 23.7, 65.4, 755, 498, 21, 51.9, 840, 7.06, 149, 73, 204, '2025-09-04 19:00:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3578, 'cclr04', 24.9, 64.3, 735, 496, 21, 51.9, 840, 7.06, 149, 73, 204, '2025-09-04 19:00:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3579, 'cclr03', 24.9, 64.3, 735, 496, 22.9, 51.6, 840, 6.99, 145, 74, 227, '2025-09-04 19:00:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3580, 'cclr04', 24.3, 66.1, 759, 491, 22.9, 51.6, 840, 6.99, 145, 74, 227, '2025-09-04 19:00:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3581, 'cclr03', 24.3, 66.1, 759, 491, 21.4, 48.6, 840, 7.18, 147, 73, 206, '2025-09-04 19:00:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3582, 'cclr04', 26.4, 66.4, 602, 524, 21.4, 48.6, 840, 7.18, 147, 73, 206, '2025-09-04 19:01:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3583, 'cclr03', 26.4, 66.4, 602, 524, 24.3, 49.8, 840, 7, 152, 72, 224, '2025-09-04 19:01:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3584, 'cclr04', 24.4, 59.3, 595, 545, 24.3, 49.8, 840, 7, 152, 72, 224, '2025-09-04 19:01:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3585, 'cclr03', 24.4, 59.3, 595, 545, 22.8, 50.7, 840, 7.16, 148, 77, 220, '2025-09-04 19:01:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3586, 'cclr04', 24.4, 60.2, 633, 564, 22.8, 50.7, 840, 7.16, 148, 77, 220, '2025-09-04 19:01:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3587, 'cclr03', 24.4, 60.2, 633, 564, 22.5, 49.7, 840, 7.13, 144, 77, 229, '2025-09-04 19:01:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3588, 'cclr04', 26.2, 65.6, 652, 479, 22.5, 49.7, 840, 7.13, 144, 77, 229, '2025-09-04 19:01:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3589, 'cclr03', 26.2, 65.6, 652, 479, 25, 53.9, 840, 7.09, 155, 70, 229, '2025-09-04 19:01:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3590, 'cclr04', 25.1, 58.1, 683, 496, 25, 53.9, 840, 7.09, 155, 70, 229, '2025-09-04 19:01:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3591, 'cclr03', 25.1, 58.1, 683, 496, 22.2, 55, 840, 7.19, 145, 79, 217, '2025-09-04 19:01:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3592, 'cclr04', 26.2, 60, 700, 538, 22.2, 55, 840, 7.19, 145, 79, 217, '2025-09-04 19:01:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3593, 'cclr03', 26.2, 60, 700, 538, 24.7, 54.4, 840, 6.98, 157, 78, 229, '2025-09-04 19:01:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3594, 'cclr04', 26.3, 60.9, 685, 573, 24.7, 54.4, 840, 6.98, 157, 78, 229, '2025-09-04 19:02:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3595, 'cclr03', 26.3, 60.9, 685, 573, 24, 54.4, 840, 7.24, 156, 71, 231, '2025-09-04 19:02:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3596, 'cclr04', 27.7, 60.4, 744, 538, 24, 54.4, 840, 7.24, 156, 71, 231, '2025-09-04 19:02:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3597, 'cclr03', 27.7, 60.4, 744, 538, 26, 55.2, 840, 6.96, 146, 74, 215, '2025-09-04 19:02:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3598, 'cclr04', 25.8, 64.3, 773, 579, 26, 55.2, 840, 6.96, 146, 74, 215, '2025-09-04 19:02:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3599, 'cclr03', 25.8, 64.3, 773, 579, 24.8, 55.9, 840, 7.03, 162, 76, 225, '2025-09-04 19:02:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3600, 'cclr04', 25.1, 64.3, 657, 533, 24.8, 55.9, 840, 7.03, 162, 76, 225, '2025-09-04 19:02:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3601, 'cclr03', 25.1, 64.3, 657, 533, 22.9, 51.4, 840, 7.32, 144, 81, 240, '2025-09-04 19:02:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3602, 'cclr04', 25.5, 63.9, 727, 500, 22.9, 51.4, 840, 7.32, 144, 81, 240, '2025-09-04 19:02:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3603, 'cclr03', 25.5, 63.9, 727, 500, 23.8, 53.7, 840, 7.15, 148, 77, 245, '2025-09-04 19:02:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3604, 'cclr04', 25.4, 64.7, 658, 546, 23.8, 53.7, 840, 7.15, 148, 77, 245, '2025-09-04 19:02:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3605, 'cclr03', 25.4, 64.7, 658, 546, 24, 51.8, 840, 7.01, 147, 82, 236, '2025-09-04 19:02:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3606, 'cclr04', 28.1, 68, 677, 543, 24, 51.8, 840, 7.01, 147, 82, 236, '2025-09-04 19:03:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3607, 'cclr03', 28.1, 68, 677, 543, 26.5, 51.1, 840, 7.13, 162, 75, 246, '2025-09-04 19:03:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3608, 'cclr04', 27.3, 63.4, 637, 513, 26.5, 51.1, 840, 7.13, 162, 75, 246, '2025-09-04 19:03:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3609, 'cclr03', 27.3, 63.4, 637, 513, 25.8, 52.1, 840, 7.24, 149, 82, 227, '2025-09-04 19:03:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3610, 'cclr04', 28.4, 60.9, 707, 584, 25.8, 52.1, 840, 7.24, 149, 82, 227, '2025-09-04 19:03:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3611, 'cclr03', 28.4, 60.9, 707, 584, 26.9, 56.9, 840, 7.17, 159, 78, 232, '2025-09-04 19:03:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3612, 'cclr04', 26.3, 64, 690, 585, 26.9, 56.9, 840, 7.17, 159, 78, 232, '2025-09-04 19:03:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3613, 'cclr03', 26.3, 64, 690, 585, 25.1, 55.4, 840, 7.1, 158, 81, 234, '2025-09-04 19:03:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3614, 'cclr04', 28.9, 60.7, 727, 595, 25.1, 55.4, 840, 7.1, 158, 81, 234, '2025-09-04 19:03:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3615, 'cclr03', 28.9, 60.7, 727, 595, 26.9, 52.8, 840, 7.18, 154, 78, 237, '2025-09-04 19:03:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3616, 'cclr04', 27.8, 64.9, 625, 545, 26.9, 52.8, 840, 7.18, 154, 78, 237, '2025-09-04 19:03:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3617, 'cclr03', 27.8, 64.9, 625, 545, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 19:03:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3618, 'cclr04', 28, 68, 678, 555, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 19:04:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3619, 'cclr03', 28, 68, 678, 555, 26.8, 57.3, 840, 7.37, 163, 76, 231, '2025-09-04 19:04:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3620, 'cclr04', 28.6, 63.3, 685, 593, 26.8, 57.3, 840, 7.37, 163, 76, 231, '2025-09-04 19:04:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3621, 'cclr03', 28.6, 63.3, 685, 593, 26.1, 52.8, 840, 7.08, 168, 79, 238, '2025-09-04 19:04:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3622, 'cclr04', 27.6, 62, 829, 582, 26.1, 52.8, 840, 7.08, 168, 79, 238, '2025-09-04 19:04:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3623, 'cclr03', 27.6, 62, 829, 582, 26.5, 57.6, 840, 7.42, 156, 84, 239, '2025-09-04 19:04:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3624, 'cclr04', 28.8, 61.4, 641, 600, 26.5, 57.6, 840, 7.42, 156, 84, 239, '2025-09-04 19:04:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3625, 'cclr03', 28.8, 61.4, 641, 600, 26.2, 53.8, 840, 7.15, 169, 83, 251, '2025-09-04 19:04:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3626, 'cclr04', 27.5, 69.7, 712, 573, 26.2, 53.8, 840, 7.15, 169, 83, 251, '2025-09-04 19:04:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3627, 'cclr03', 27.5, 69.7, 712, 573, 25.5, 57, 840, 7.13, 155, 77, 242, '2025-09-04 19:04:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3628, 'cclr04', 27.1, 71.1, 801, 525, 25.5, 57, 840, 7.13, 155, 77, 242, '2025-09-04 19:04:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3629, 'cclr03', 27.1, 71.1, 801, 525, 25.9, 55.7, 840, 7.24, 164, 77, 248, '2025-09-04 19:04:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3630, 'cclr04', 26.6, 67.1, 711, 521, 25.9, 55.7, 840, 7.24, 164, 77, 248, '2025-09-04 19:05:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3631, 'cclr03', 26.6, 67.1, 711, 521, 24.3, 53.9, 840, 7.21, 159, 84, 251, '2025-09-04 19:05:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3632, 'cclr04', 27.3, 65, 743, 564, 24.3, 53.9, 840, 7.21, 159, 84, 251, '2025-09-04 19:05:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3633, 'cclr03', 27.3, 65, 743, 564, 25.9, 54.6, 840, 7.32, 160, 81, 259, '2025-09-04 19:05:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3634, 'cclr04', 30, 64.2, 750, 611, 25.9, 54.6, 840, 7.32, 160, 81, 259, '2025-09-04 19:05:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3635, 'cclr03', 30, 64.2, 750, 611, 28.1, 57.4, 840, 7.19, 165, 79, 238, '2025-09-04 19:05:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3636, 'cclr04', 30.4, 67.1, 734, 603, 28.1, 57.4, 840, 7.19, 165, 79, 238, '2025-09-04 19:05:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3637, 'cclr03', 30.4, 67.1, 734, 603, 28.7, 55, 840, 7.37, 158, 86, 237, '2025-09-04 19:05:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3638, 'cclr04', 28.3, 66.7, 857, 598, 28.7, 55, 840, 7.37, 158, 86, 237, '2025-09-04 19:05:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3639, 'cclr03', 28.3, 66.7, 857, 598, 25.3, 54.6, 840, 7.19, 160, 83, 258, '2025-09-04 19:05:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3640, 'cclr04', 29.9, 67.5, 684, 565, 25.3, 54.6, 840, 7.19, 160, 83, 258, '2025-09-04 19:05:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3641, 'cclr03', 29.9, 67.5, 684, 565, 28.5, 56.7, 840, 7.42, 160, 84, 247, '2025-09-04 19:05:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3642, 'cclr04', 29.9, 63.2, 778, 609, 28.5, 56.7, 840, 7.42, 160, 84, 247, '2025-09-04 19:06:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3643, 'cclr03', 29.9, 63.2, 778, 609, 28.1, 57.6, 840, 7.26, 170, 86, 268, '2025-09-04 19:06:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3644, 'cclr04', 30.2, 68.6, 746, 549, 28.1, 57.6, 840, 7.26, 170, 86, 268, '2025-09-04 19:06:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3645, 'cclr03', 30.2, 68.6, 746, 549, 28.3, 59.8, 840, 7.24, 171, 84, 252, '2025-09-04 19:06:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3646, 'cclr04', 28.4, 66.4, 863, 547, 28.3, 59.8, 840, 7.24, 171, 84, 252, '2025-09-04 19:06:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3647, 'cclr03', 28.4, 66.4, 863, 547, 27.2, 60.7, 840, 7.51, 162, 89, 258, '2025-09-04 19:06:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3648, 'cclr04', 28.9, 66.4, 832, 564, 27.2, 60.7, 840, 7.51, 162, 89, 258, '2025-09-04 19:06:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3649, 'cclr03', 28.9, 66.4, 832, 564, 27.2, 60.1, 840, 7.39, 175, 81, 254, '2025-09-04 19:06:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3650, 'cclr04', 28.9, 68.6, 869, 591, 27.2, 60.1, 840, 7.39, 175, 81, 254, '2025-09-04 19:06:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3651, 'cclr03', 28.9, 68.6, 869, 591, 26.5, 57.7, 840, 7.41, 168, 90, 261, '2025-09-04 19:06:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3652, 'cclr04', 30.9, 73.2, 812, 596, 26.5, 57.7, 840, 7.41, 168, 90, 261, '2025-09-04 19:06:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3653, 'cclr03', 30.9, 73.2, 812, 596, 29.8, 56.1, 840, 7.57, 181, 91, 255, '2025-09-04 19:06:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3654, 'cclr04', 27.4, 68.2, 716, 539, 29.8, 56.1, 840, 7.57, 181, 91, 255, '2025-09-04 19:07:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3655, 'cclr03', 27.4, 68.2, 716, 539, 24.7, 60.5, 840, 7.57, 168, 89, 262, '2025-09-04 19:07:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3656, 'cclr04', 29.2, 64.4, 697, 568, 24.7, 60.5, 840, 7.57, 168, 89, 262, '2025-09-04 19:07:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3657, 'cclr03', 29.2, 64.4, 697, 568, 27.3, 60.7, 840, 7.41, 177, 89, 255, '2025-09-04 19:07:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3658, 'cclr04', 29.1, 67.4, 851, 571, 27.3, 60.7, 840, 7.41, 177, 89, 255, '2025-09-04 19:07:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3659, 'cclr03', 29.1, 67.4, 851, 571, 27.7, 59, 840, 7.47, 173, 90, 271, '2025-09-04 19:07:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3660, 'cclr04', 31.1, 70.7, 877, 601, 27.7, 59, 840, 7.47, 173, 90, 271, '2025-09-04 19:07:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3661, 'cclr03', 31.1, 70.7, 877, 601, 29.4, 59.9, 840, 7.62, 171, 89, 274, '2025-09-04 19:07:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3662, 'cclr04', 28.5, 65, 782, 641, 29.4, 59.9, 840, 7.62, 171, 89, 274, '2025-09-04 19:07:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3663, 'cclr03', 28.5, 65, 782, 641, 26.6, 58.7, 840, 7.66, 169, 86, 273, '2025-09-04 19:07:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3664, 'cclr04', 29.4, 66.3, 890, 577, 26.6, 58.7, 840, 7.66, 169, 86, 273, '2025-09-04 19:07:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3665, 'cclr03', 29.4, 66.3, 890, 577, 28.4, 57.3, 840, 7.47, 179, 91, 279, '2025-09-04 19:07:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3666, 'cclr04', 21.6, 53.3, 599, 417, 28.4, 57.3, 840, 7.47, 179, 91, 279, '2025-09-04 19:08:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3667, 'cclr03', 21.6, 53.3, 599, 417, 18.7, 39.5, 840, 6.38, 99, 49, 143, '2025-09-04 19:08:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3668, 'cclr04', 21.7, 51, 440, 368, 18.7, 39.5, 840, 6.38, 99, 49, 143, '2025-09-04 19:08:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3669, 'cclr03', 21.7, 51, 440, 368, 19.4, 41, 840, 6.53, 109, 50, 143, '2025-09-04 19:08:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3670, 'cclr04', 20.4, 54.9, 439, 443, 19.4, 41, 840, 6.53, 109, 50, 143, '2025-09-04 19:08:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3671, 'cclr03', 20.4, 54.9, 439, 443, 17.6, 42.3, 840, 6.51, 108, 46, 144, '2025-09-04 19:08:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3672, 'cclr04', 18.6, 46.7, 451, 455, 17.6, 42.3, 840, 6.51, 108, 46, 144, '2025-09-04 19:08:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3673, 'cclr03', 18.6, 46.7, 451, 455, 16.2, 38, 840, 6.68, 108, 54, 146, '2025-09-04 19:08:36', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3674, 'cclr04', 20.3, 54.3, 504, 383, 16.2, 38, 840, 6.68, 108, 54, 146, '2025-09-04 19:08:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3675, 'cclr03', 20.3, 54.3, 504, 383, 17.6, 41, 840, 6.34, 108, 46, 166, '2025-09-04 19:08:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3676, 'cclr04', 18.8, 52.9, 455, 376, 17.6, 41, 840, 6.34, 108, 46, 166, '2025-09-04 19:08:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3677, 'cclr03', 18.8, 52.9, 455, 376, 16.3, 39.8, 840, 6.48, 105, 56, 157, '2025-09-04 19:08:56', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3678, 'cclr04', 19.2, 51.6, 573, 428, 16.3, 39.8, 840, 6.48, 105, 56, 157, '2025-09-04 19:09:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3679, 'cclr03', 19.2, 51.6, 573, 428, 17.2, 43.6, 840, 6.59, 111, 49, 167, '2025-09-04 19:09:06', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3680, 'cclr04', 19.8, 48.7, 520, 457, 17.2, 43.6, 840, 6.59, 111, 49, 167, '2025-09-04 19:09:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3681, 'cclr03', 19.8, 48.7, 520, 457, 17.6, 41.8, 840, 6.46, 111, 53, 153, '2025-09-04 19:09:16', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3682, 'cclr04', 20.1, 53.8, 565, 431, 17.6, 41.8, 840, 6.46, 111, 53, 153, '2025-09-04 19:09:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3683, 'cclr03', 20.1, 53.8, 565, 431, 19, 40.3, 840, 6.73, 96, 56, 154, '2025-09-04 19:09:26', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3684, 'cclr04', 19.8, 52.7, 616, 467, 19, 40.3, 840, 6.73, 96, 56, 154, '2025-09-04 19:09:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3685, 'cclr03', 19.8, 52.7, 616, 467, 18.4, 41.1, 840, 6.47, 116, 58, 161, '2025-09-04 19:09:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3686, 'cclr04', 19.3, 55.5, 594, 436, 18.4, 41.1, 840, 6.47, 116, 58, 161, '2025-09-04 19:09:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3687, 'cclr03', 19.3, 55.5, 594, 436, 16.4, 39.4, 840, 6.5, 112, 50, 147, '2025-09-04 19:09:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3688, 'cclr04', 22.4, 49, 510, 375, 16.4, 39.4, 840, 6.5, 112, 50, 147, '2025-09-04 19:09:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3689, 'cclr03', 22.4, 49, 510, 375, 19.8, 42.2, 840, 6.57, 112, 53, 163, '2025-09-04 19:09:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3690, 'cclr04', 20.2, 49.8, 610, 444, 19.8, 42.2, 840, 6.57, 112, 53, 163, '2025-09-04 19:10:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3691, 'cclr03', 20.2, 49.8, 610, 444, 18.3, 40.5, 840, 6.48, 114, 56, 172, '2025-09-04 19:10:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3692, 'cclr04', 22.9, 52.3, 546, 419, 18.3, 40.5, 840, 6.48, 114, 56, 172, '2025-09-04 19:10:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3693, 'cclr03', 22.9, 52.3, 546, 419, 20.1, 42.8, 840, 6.71, 112, 56, 170, '2025-09-04 19:10:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3694, 'cclr04', 22, 56.9, 477, 437, 20.1, 42.8, 840, 6.71, 112, 56, 170, '2025-09-04 19:10:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3695, 'cclr03', 22, 56.9, 477, 437, 19.1, 41.2, 840, 6.8, 112, 57, 167, '2025-09-04 19:10:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3696, 'cclr04', 23, 52.7, 550, 448, 19.1, 41.2, 840, 6.8, 112, 57, 167, '2025-09-04 19:10:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3697, 'cclr03', 23, 52.7, 550, 448, 20.9, 45.8, 840, 6.82, 115, 54, 172, '2025-09-04 19:10:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3698, 'cclr04', 20.4, 57.3, 592, 400, 20.9, 45.8, 840, 6.82, 115, 54, 172, '2025-09-04 19:10:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3699, 'cclr03', 20.4, 57.3, 592, 400, 17.9, 45.8, 840, 6.57, 108, 57, 160, '2025-09-04 19:10:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3700, 'cclr04', 23.6, 48.9, 470, 416, 17.9, 45.8, 840, 6.57, 108, 57, 160, '2025-09-04 19:10:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3701, 'cclr03', 23.6, 48.9, 470, 416, 22, 45.1, 840, 6.49, 106, 56, 185, '2025-09-04 19:10:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3702, 'cclr04', 23.2, 55.9, 594, 410, 22, 45.1, 840, 6.49, 106, 56, 185, '2025-09-04 19:11:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3703, 'cclr03', 23.2, 55.9, 594, 410, 20.4, 46.5, 840, 6.75, 116, 59, 163, '2025-09-04 19:11:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3704, 'cclr04', 20.3, 51.6, 636, 431, 20.4, 46.5, 840, 6.75, 116, 59, 163, '2025-09-04 19:11:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3705, 'cclr03', 20.3, 51.6, 636, 431, 17.5, 44.7, 840, 6.8, 116, 56, 179, '2025-09-04 19:11:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3706, 'cclr04', 21.4, 52, 586, 406, 17.5, 44.7, 840, 6.8, 116, 56, 179, '2025-09-04 19:11:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3707, 'cclr03', 21.4, 52, 586, 406, 20.4, 45.1, 840, 6.71, 119, 55, 159, '2025-09-04 19:11:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3708, 'cclr04', 21.3, 58.2, 653, 465, 20.4, 45.1, 840, 6.71, 119, 55, 159, '2025-09-04 19:11:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3709, 'cclr03', 21.3, 58.2, 653, 465, 20.2, 43.6, 840, 6.54, 117, 55, 161, '2025-09-04 19:11:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3710, 'cclr04', 21.5, 58.6, 511, 471, 20.2, 43.6, 840, 6.54, 117, 55, 161, '2025-09-04 19:11:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3711, 'cclr03', 21.5, 58.6, 511, 471, 18.8, 47.2, 840, 6.55, 107, 56, 176, '2025-09-04 19:11:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3712, 'cclr04', 22.8, 50.4, 624, 476, 18.8, 47.2, 840, 6.55, 107, 56, 176, '2025-09-04 19:11:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3713, 'cclr03', 22.8, 50.4, 624, 476, 21.4, 45.3, 840, 6.56, 118, 60, 165, '2025-09-04 19:11:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3714, 'cclr04', 23.3, 56.5, 542, 420, 21.4, 45.3, 840, 6.56, 118, 60, 165, '2025-09-04 19:12:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3715, 'cclr03', 23.3, 56.5, 542, 420, 21, 44.8, 840, 6.72, 116, 57, 181, '2025-09-04 19:12:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3716, 'cclr04', 24, 50.3, 670, 450, 21, 44.8, 840, 6.72, 116, 57, 181, '2025-09-04 19:12:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3717, 'cclr03', 24, 50.3, 670, 450, 22.7, 47.6, 840, 6.75, 114, 56, 168, '2025-09-04 19:12:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3718, 'cclr04', 21.1, 58, 527, 456, 22.7, 47.6, 840, 6.75, 114, 56, 168, '2025-09-04 19:12:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3719, 'cclr03', 21.1, 58, 527, 456, 19.5, 46.7, 840, 6.59, 129, 56, 188, '2025-09-04 19:12:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3720, 'cclr04', 23.1, 50.9, 627, 428, 19.5, 46.7, 840, 6.59, 129, 56, 188, '2025-09-04 19:12:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3721, 'cclr03', 23.1, 50.9, 627, 428, 20.8, 45.5, 840, 6.75, 120, 62, 181, '2025-09-04 19:12:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3722, 'cclr04', 22.4, 60, 665, 498, 20.8, 45.5, 840, 6.75, 120, 62, 181, '2025-09-04 19:12:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3723, 'cclr03', 22.4, 60, 665, 498, 19.4, 43.5, 840, 6.73, 126, 64, 183, '2025-09-04 19:12:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3724, 'cclr04', 23.4, 54.4, 536, 420, 19.4, 43.5, 840, 6.73, 126, 64, 183, '2025-09-04 19:12:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3725, 'cclr03', 23.4, 54.4, 536, 420, 21.7, 47.1, 840, 6.63, 124, 59, 196, '2025-09-04 19:12:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3726, 'cclr04', 22, 51.9, 530, 414, 21.7, 47.1, 840, 6.63, 124, 59, 196, '2025-09-04 19:13:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3727, 'cclr03', 22, 51.9, 530, 414, 20.3, 48.6, 840, 6.94, 120, 62, 171, '2025-09-04 19:13:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3728, 'cclr04', 22.1, 58.3, 632, 478, 20.3, 48.6, 840, 6.94, 120, 62, 171, '2025-09-04 19:13:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3729, 'cclr03', 22.1, 58.3, 632, 478, 20.1, 43.2, 840, 6.93, 121, 59, 189, '2025-09-04 19:13:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3730, 'cclr04', 24.8, 55.4, 526, 502, 20.1, 43.2, 840, 6.93, 121, 59, 189, '2025-09-04 19:13:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3731, 'cclr03', 24.8, 55.4, 526, 502, 21.8, 44.6, 840, 6.62, 121, 65, 183, '2025-09-04 19:13:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3732, 'cclr04', 22.5, 53.3, 608, 438, 21.8, 44.6, 840, 6.62, 121, 65, 183, '2025-09-04 19:13:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3733, 'cclr03', 22.5, 53.3, 608, 438, 21.2, 45, 840, 6.65, 134, 63, 199, '2025-09-04 19:13:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3734, 'cclr04', 24, 53.2, 597, 492, 21.2, 45, 840, 6.65, 134, 63, 199, '2025-09-04 19:13:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3735, 'cclr03', 24, 53.2, 597, 492, 21.3, 48.7, 840, 7.01, 119, 60, 178, '2025-09-04 19:13:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3736, 'cclr04', 25.1, 59.8, 546, 515, 21.3, 48.7, 840, 7.01, 119, 60, 178, '2025-09-04 19:13:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3737, 'cclr03', 25.1, 59.8, 546, 515, 22.2, 47.5, 840, 7.04, 130, 59, 203, '2025-09-04 19:13:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3738, 'cclr04', 24.3, 58.4, 664, 468, 22.2, 47.5, 840, 7.04, 130, 59, 203, '2025-09-04 19:14:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3739, 'cclr03', 24.3, 58.4, 664, 468, 22.9, 49.7, 840, 6.67, 134, 67, 200, '2025-09-04 19:14:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3740, 'cclr04', 24.4, 56.4, 575, 443, 22.9, 49.7, 840, 6.67, 134, 67, 200, '2025-09-04 19:14:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3741, 'cclr03', 24.4, 56.4, 575, 443, 23.3, 49.4, 840, 7, 138, 65, 197, '2025-09-04 19:14:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3742, 'cclr04', 23.7, 60.5, 573, 477, 23.3, 49.4, 840, 7, 138, 65, 197, '2025-09-04 19:14:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3743, 'cclr03', 23.7, 60.5, 573, 477, 21.6, 49.7, 840, 6.73, 121, 69, 209, '2025-09-04 19:14:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3744, 'cclr04', 23.6, 62.1, 533, 453, 21.6, 49.7, 840, 6.73, 121, 69, 209, '2025-09-04 19:14:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3745, 'cclr03', 23.6, 62.1, 533, 453, 21.4, 45.9, 840, 6.74, 123, 62, 207, '2025-09-04 19:14:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3746, 'cclr04', 22.1, 55.5, 714, 509, 21.4, 45.9, 840, 6.74, 123, 62, 207, '2025-09-04 19:14:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3747, 'cclr03', 22.1, 55.5, 714, 509, 20.5, 50.8, 840, 6.93, 130, 62, 196, '2025-09-04 19:14:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3748, 'cclr04', 23.6, 60, 569, 529, 20.5, 50.8, 840, 6.93, 130, 62, 196, '2025-09-04 19:14:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3749, 'cclr03', 23.6, 60, 569, 529, 21.2, 46.8, 840, 6.72, 126, 62, 196, '2025-09-04 19:14:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3750, 'cclr04', 25.3, 55, 664, 506, 21.2, 46.8, 840, 6.72, 126, 62, 196, '2025-09-04 19:15:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3751, 'cclr03', 25.3, 55, 664, 506, 22.7, 50.7, 840, 7.04, 142, 63, 206, '2025-09-04 19:15:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3752, 'cclr04', 25.4, 63.2, 560, 461, 22.7, 50.7, 840, 7.04, 142, 63, 206, '2025-09-04 19:15:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3753, 'cclr03', 25.4, 63.2, 560, 461, 23.1, 46.7, 840, 7.03, 128, 62, 199, '2025-09-04 19:15:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3754, 'cclr04', 25.1, 60.3, 545, 505, 23.1, 46.7, 840, 7.03, 128, 62, 199, '2025-09-04 19:15:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3755, 'cclr03', 25.1, 60.3, 545, 505, 23, 49.8, 840, 7.12, 133, 63, 206, '2025-09-04 19:15:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3756, 'cclr04', 23, 63.6, 716, 492, 23, 49.8, 840, 7.12, 133, 63, 206, '2025-09-04 19:15:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3757, 'cclr03', 23, 63.6, 716, 492, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 19:15:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3758, 'cclr04', 23, 63.6, 716, 492, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 19:15:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3759, 'cclr03', 23, 63.6, 716, 492, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 19:15:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3760, 'cclr04', 25.7, 61.1, 609, 456, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 19:15:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3761, 'cclr03', 25.7, 61.1, 609, 456, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 19:15:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3762, 'cclr04', 25.7, 61.1, 609, 456, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 19:15:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3763, 'cclr03', 23.8, 59, 672, 461, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 19:15:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3764, 'cclr04', 23.8, 59, 672, 461, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 19:15:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3765, 'cclr03', 23.8, 59, 672, 461, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 19:16:00', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3766, 'cclr04', 26.1, 61.9, 620, 537, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 19:16:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3767, 'cclr03', 26.1, 61.9, 620, 537, 23.4, 51.9, 840, 6.85, 139, 72, 205, '2025-09-04 19:16:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3768, 'cclr04', 26.4, 64.3, 703, 460, 23.4, 51.9, 840, 6.85, 139, 72, 205, '2025-09-04 19:16:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3769, 'cclr03', 26.4, 64.3, 703, 460, 24.5, 47.9, 840, 6.87, 143, 71, 213, '2025-09-04 19:16:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3770, 'cclr04', 24.4, 62.1, 586, 481, 24.5, 47.9, 840, 6.87, 143, 71, 213, '2025-09-04 19:16:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3771, 'cclr03', 24.4, 62.1, 586, 481, 22.5, 48.5, 840, 6.95, 144, 67, 196, '2025-09-04 19:16:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3772, 'cclr04', 25.3, 61.2, 563, 481, 22.5, 48.5, 840, 6.95, 144, 67, 196, '2025-09-04 19:16:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3773, 'cclr03', 25.3, 61.2, 563, 481, 23.4, 51.4, 840, 7.05, 137, 74, 222, '2025-09-04 19:16:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3774, 'cclr04', 25.7, 56.7, 561, 461, 23.4, 51.4, 840, 7.05, 137, 74, 222, '2025-09-04 19:16:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3775, 'cclr03', 25.7, 56.7, 561, 461, 24.4, 48.1, 840, 6.86, 136, 72, 224, '2025-09-04 19:16:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3776, 'cclr04', 25.7, 56, 632, 555, 24.4, 48.1, 840, 6.86, 136, 72, 224, '2025-09-04 19:16:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3777, 'cclr03', 25.7, 56, 632, 555, 23.6, 48.2, 840, 7.03, 142, 71, 217, '2025-09-04 19:16:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3778, 'cclr04', 24.5, 57.5, 694, 478, 23.6, 48.2, 840, 7.03, 142, 71, 217, '2025-09-04 19:17:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3779, 'cclr03', 24.5, 57.5, 694, 478, 22.8, 50.6, 840, 7.16, 134, 71, 220, '2025-09-04 19:17:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3780, 'cclr04', 23.7, 65.4, 755, 498, 22.8, 50.6, 840, 7.16, 134, 71, 220, '2025-09-04 19:17:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3781, 'cclr03', 23.7, 65.4, 755, 498, 21, 51.9, 840, 7.06, 149, 73, 204, '2025-09-04 19:17:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3782, 'cclr04', 24.9, 64.3, 735, 496, 21, 51.9, 840, 7.06, 149, 73, 204, '2025-09-04 19:17:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3783, 'cclr03', 24.9, 64.3, 735, 496, 22.9, 51.6, 840, 6.99, 145, 74, 227, '2025-09-04 19:17:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3784, 'cclr04', 24.3, 66.1, 759, 491, 22.9, 51.6, 840, 6.99, 145, 74, 227, '2025-09-04 19:17:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3785, 'cclr03', 24.3, 66.1, 759, 491, 21.4, 48.6, 840, 7.18, 147, 73, 206, '2025-09-04 19:17:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3786, 'cclr04', 26.4, 66.4, 602, 524, 21.4, 48.6, 840, 7.18, 147, 73, 206, '2025-09-04 19:17:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3787, 'cclr03', 26.4, 66.4, 602, 524, 24.3, 49.8, 840, 7, 152, 72, 224, '2025-09-04 19:17:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3788, 'cclr04', 24.4, 59.3, 595, 545, 24.3, 49.8, 840, 7, 152, 72, 224, '2025-09-04 19:17:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3789, 'cclr03', 24.4, 59.3, 595, 545, 22.8, 50.7, 840, 7.16, 148, 77, 220, '2025-09-04 19:17:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3790, 'cclr04', 24.4, 60.2, 633, 564, 22.8, 50.7, 840, 7.16, 148, 77, 220, '2025-09-04 19:18:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3791, 'cclr03', 24.4, 60.2, 633, 564, 22.5, 49.7, 840, 7.13, 144, 77, 229, '2025-09-04 19:18:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3792, 'cclr04', 26.2, 65.6, 652, 479, 22.5, 49.7, 840, 7.13, 144, 77, 229, '2025-09-04 19:18:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3793, 'cclr03', 26.2, 65.6, 652, 479, 25, 53.9, 840, 7.09, 155, 70, 229, '2025-09-04 19:18:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3794, 'cclr04', 25.1, 58.1, 683, 496, 25, 53.9, 840, 7.09, 155, 70, 229, '2025-09-04 19:18:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3795, 'cclr03', 25.1, 58.1, 683, 496, 22.2, 55, 840, 7.19, 145, 79, 217, '2025-09-04 19:18:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3796, 'cclr04', 26.2, 60, 700, 538, 22.2, 55, 840, 7.19, 145, 79, 217, '2025-09-04 19:18:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3797, 'cclr03', 26.2, 60, 700, 538, 24.7, 54.4, 840, 6.98, 157, 78, 229, '2025-09-04 19:18:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3798, 'cclr04', 26.3, 60.9, 685, 573, 24.7, 54.4, 840, 6.98, 157, 78, 229, '2025-09-04 19:18:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3799, 'cclr03', 26.3, 60.9, 685, 573, 24, 54.4, 840, 7.24, 156, 71, 231, '2025-09-04 19:18:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3800, 'cclr04', 27.7, 60.4, 744, 538, 24, 54.4, 840, 7.24, 156, 71, 231, '2025-09-04 19:18:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3801, 'cclr03', 27.7, 60.4, 744, 538, 26, 55.2, 840, 6.96, 146, 74, 215, '2025-09-04 19:18:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3802, 'cclr04', 25.8, 64.3, 773, 579, 26, 55.2, 840, 6.96, 146, 74, 215, '2025-09-04 19:19:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3803, 'cclr03', 25.8, 64.3, 773, 579, 24.8, 55.9, 840, 7.03, 162, 76, 225, '2025-09-04 19:19:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3804, 'cclr04', 25.1, 64.3, 657, 533, 24.8, 55.9, 840, 7.03, 162, 76, 225, '2025-09-04 19:19:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3805, 'cclr03', 25.1, 64.3, 657, 533, 22.9, 51.4, 840, 7.32, 144, 81, 240, '2025-09-04 19:19:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3806, 'cclr04', 25.5, 63.9, 727, 500, 22.9, 51.4, 840, 7.32, 144, 81, 240, '2025-09-04 19:19:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3807, 'cclr03', 25.5, 63.9, 727, 500, 23.8, 53.7, 840, 7.15, 148, 77, 245, '2025-09-04 19:19:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3808, 'cclr04', 25.4, 64.7, 658, 546, 23.8, 53.7, 840, 7.15, 148, 77, 245, '2025-09-04 19:19:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3809, 'cclr03', 25.4, 64.7, 658, 546, 24, 51.8, 840, 7.01, 147, 82, 236, '2025-09-04 19:19:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3810, 'cclr04', 28.1, 68, 677, 543, 24, 51.8, 840, 7.01, 147, 82, 236, '2025-09-04 19:19:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3811, 'cclr03', 28.1, 68, 677, 543, 26.5, 51.1, 840, 7.13, 162, 75, 246, '2025-09-04 19:19:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3812, 'cclr04', 27.3, 63.4, 637, 513, 26.5, 51.1, 840, 7.13, 162, 75, 246, '2025-09-04 19:19:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3813, 'cclr03', 27.3, 63.4, 637, 513, 25.8, 52.1, 840, 7.24, 149, 82, 227, '2025-09-04 19:19:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3814, 'cclr04', 28.4, 60.9, 707, 584, 25.8, 52.1, 840, 7.24, 149, 82, 227, '2025-09-04 19:20:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3815, 'cclr03', 28.4, 60.9, 707, 584, 26.9, 56.9, 840, 7.17, 159, 78, 232, '2025-09-04 19:20:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3816, 'cclr04', 26.3, 64, 690, 585, 26.9, 56.9, 840, 7.17, 159, 78, 232, '2025-09-04 19:20:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3817, 'cclr03', 26.3, 64, 690, 585, 25.1, 55.4, 840, 7.1, 158, 81, 234, '2025-09-04 19:20:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3818, 'cclr04', 28.9, 60.7, 727, 595, 25.1, 55.4, 840, 7.1, 158, 81, 234, '2025-09-04 19:20:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3819, 'cclr03', 28.9, 60.7, 727, 595, 26.9, 52.8, 840, 7.18, 154, 78, 237, '2025-09-04 19:20:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3820, 'cclr04', 27.8, 64.9, 625, 545, 26.9, 52.8, 840, 7.18, 154, 78, 237, '2025-09-04 19:20:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3821, 'cclr03', 27.8, 64.9, 625, 545, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 19:20:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3822, 'cclr04', 28, 68, 678, 555, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 19:20:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3823, 'cclr03', 28, 68, 678, 555, 26.8, 57.3, 840, 7.37, 163, 76, 231, '2025-09-04 19:20:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3824, 'cclr04', 28.6, 63.3, 685, 593, 26.8, 57.3, 840, 7.37, 163, 76, 231, '2025-09-04 19:20:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3825, 'cclr03', 28.6, 63.3, 685, 593, 26.1, 52.8, 840, 7.08, 168, 79, 238, '2025-09-04 19:20:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3826, 'cclr04', 27.6, 62, 829, 582, 26.1, 52.8, 840, 7.08, 168, 79, 238, '2025-09-04 19:21:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3827, 'cclr03', 27.6, 62, 829, 582, 26.5, 57.6, 840, 7.42, 156, 84, 239, '2025-09-04 19:21:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3828, 'cclr04', 28.8, 61.4, 641, 600, 26.5, 57.6, 840, 7.42, 156, 84, 239, '2025-09-04 19:21:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3829, 'cclr03', 28.8, 61.4, 641, 600, 26.2, 53.8, 840, 7.15, 169, 83, 251, '2025-09-04 19:21:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3830, 'cclr04', 27.5, 69.7, 712, 573, 26.2, 53.8, 840, 7.15, 169, 83, 251, '2025-09-04 19:21:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3831, 'cclr03', 27.5, 69.7, 712, 573, 25.5, 57, 840, 7.13, 155, 77, 242, '2025-09-04 19:21:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3832, 'cclr04', 27.1, 71.1, 801, 525, 25.5, 57, 840, 7.13, 155, 77, 242, '2025-09-04 19:21:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3833, 'cclr03', 27.1, 71.1, 801, 525, 25.9, 55.7, 840, 7.24, 164, 77, 248, '2025-09-04 19:21:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3834, 'cclr04', 26.6, 67.1, 711, 521, 25.9, 55.7, 840, 7.24, 164, 77, 248, '2025-09-04 19:21:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3835, 'cclr03', 26.6, 67.1, 711, 521, 24.3, 53.9, 840, 7.21, 159, 84, 251, '2025-09-04 19:21:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3836, 'cclr04', 27.3, 65, 743, 564, 24.3, 53.9, 840, 7.21, 159, 84, 251, '2025-09-04 19:21:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3837, 'cclr03', 27.3, 65, 743, 564, 25.9, 54.6, 840, 7.32, 160, 81, 259, '2025-09-04 19:21:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3838, 'cclr04', 30, 64.2, 750, 611, 25.9, 54.6, 840, 7.32, 160, 81, 259, '2025-09-04 19:22:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3839, 'cclr03', 30, 64.2, 750, 611, 28.1, 57.4, 840, 7.19, 165, 79, 238, '2025-09-04 19:22:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3840, 'cclr04', 30.4, 67.1, 734, 603, 28.1, 57.4, 840, 7.19, 165, 79, 238, '2025-09-04 19:22:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3841, 'cclr03', 30.4, 67.1, 734, 603, 28.7, 55, 840, 7.37, 158, 86, 237, '2025-09-04 19:22:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3842, 'cclr04', 28.3, 66.7, 857, 598, 28.7, 55, 840, 7.37, 158, 86, 237, '2025-09-04 19:22:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3843, 'cclr03', 28.3, 66.7, 857, 598, 25.3, 54.6, 840, 7.19, 160, 83, 258, '2025-09-04 19:22:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3844, 'cclr04', 29.9, 67.5, 684, 565, 25.3, 54.6, 840, 7.19, 160, 83, 258, '2025-09-04 19:22:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3845, 'cclr03', 29.9, 67.5, 684, 565, 28.5, 56.7, 840, 7.42, 160, 84, 247, '2025-09-04 19:22:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3846, 'cclr04', 29.9, 63.2, 778, 609, 28.5, 56.7, 840, 7.42, 160, 84, 247, '2025-09-04 19:22:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3847, 'cclr03', 29.9, 63.2, 778, 609, 28.1, 57.6, 840, 7.26, 170, 86, 268, '2025-09-04 19:22:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3848, 'cclr04', 30.2, 68.6, 746, 549, 28.1, 57.6, 840, 7.26, 170, 86, 268, '2025-09-04 19:22:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3849, 'cclr03', 30.2, 68.6, 746, 549, 28.3, 59.8, 840, 7.24, 171, 84, 252, '2025-09-04 19:22:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3850, 'cclr04', 28.4, 66.4, 863, 547, 28.3, 59.8, 840, 7.24, 171, 84, 252, '2025-09-04 19:23:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3851, 'cclr03', 28.4, 66.4, 863, 547, 27.2, 60.7, 840, 7.51, 162, 89, 258, '2025-09-04 19:23:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3852, 'cclr04', 28.9, 66.4, 832, 564, 27.2, 60.7, 840, 7.51, 162, 89, 258, '2025-09-04 19:23:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3853, 'cclr03', 28.9, 66.4, 832, 564, 27.2, 60.1, 840, 7.39, 175, 81, 254, '2025-09-04 19:23:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3854, 'cclr04', 28.9, 68.6, 869, 591, 27.2, 60.1, 840, 7.39, 175, 81, 254, '2025-09-04 19:23:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3855, 'cclr03', 28.9, 68.6, 869, 591, 26.5, 57.7, 840, 7.41, 168, 90, 261, '2025-09-04 19:23:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3856, 'cclr04', 30.9, 73.2, 812, 596, 26.5, 57.7, 840, 7.41, 168, 90, 261, '2025-09-04 19:23:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3857, 'cclr03', 30.9, 73.2, 812, 596, 29.8, 56.1, 840, 7.57, 181, 91, 255, '2025-09-04 19:23:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3858, 'cclr04', 27.4, 68.2, 716, 539, 29.8, 56.1, 840, 7.57, 181, 91, 255, '2025-09-04 19:23:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3859, 'cclr03', 27.4, 68.2, 716, 539, 24.7, 60.5, 840, 7.57, 168, 89, 262, '2025-09-04 19:23:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3860, 'cclr04', 29.2, 64.4, 697, 568, 24.7, 60.5, 840, 7.57, 168, 89, 262, '2025-09-04 19:23:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3861, 'cclr03', 29.2, 64.4, 697, 568, 27.3, 60.7, 840, 7.41, 177, 89, 255, '2025-09-04 19:23:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3862, 'cclr04', 29.1, 67.4, 851, 571, 27.3, 60.7, 840, 7.41, 177, 89, 255, '2025-09-04 19:24:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3863, 'cclr03', 29.1, 67.4, 851, 571, 27.7, 59, 840, 7.47, 173, 90, 271, '2025-09-04 19:24:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3864, 'cclr04', 31.1, 70.7, 877, 601, 27.7, 59, 840, 7.47, 173, 90, 271, '2025-09-04 19:24:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3865, 'cclr03', 31.1, 70.7, 877, 601, 29.4, 59.9, 840, 7.62, 171, 89, 274, '2025-09-04 19:24:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3866, 'cclr04', 28.5, 65, 782, 641, 29.4, 59.9, 840, 7.62, 171, 89, 274, '2025-09-04 19:24:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3867, 'cclr03', 28.5, 65, 782, 641, 26.6, 58.7, 840, 7.66, 169, 86, 273, '2025-09-04 19:24:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3868, 'cclr04', 29.4, 66.3, 890, 577, 26.6, 58.7, 840, 7.66, 169, 86, 273, '2025-09-04 19:24:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3869, 'cclr03', 29.4, 66.3, 890, 577, 28.4, 57.3, 840, 7.47, 179, 91, 279, '2025-09-04 19:24:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3870, 'cclr04', 21.6, 53.3, 599, 417, 28.4, 57.3, 840, 7.47, 179, 91, 279, '2025-09-04 19:24:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3871, 'cclr03', 21.6, 53.3, 599, 417, 18.7, 39.5, 840, 6.38, 99, 49, 143, '2025-09-04 19:24:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3872, 'cclr04', 21.7, 51, 440, 368, 18.7, 39.5, 840, 6.38, 99, 49, 143, '2025-09-04 19:24:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3873, 'cclr03', 21.7, 51, 440, 368, 19.4, 41, 840, 6.53, 109, 50, 143, '2025-09-04 19:24:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3874, 'cclr04', 20.4, 54.9, 439, 443, 19.4, 41, 840, 6.53, 109, 50, 143, '2025-09-04 19:25:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3875, 'cclr03', 20.4, 54.9, 439, 443, 17.6, 42.3, 840, 6.51, 108, 46, 144, '2025-09-04 19:25:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3876, 'cclr04', 18.6, 46.7, 451, 455, 17.6, 42.3, 840, 6.51, 108, 46, 144, '2025-09-04 19:25:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3877, 'cclr03', 18.6, 46.7, 451, 455, 16.2, 38, 840, 6.68, 108, 54, 146, '2025-09-04 19:25:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3878, 'cclr04', 20.3, 54.3, 504, 383, 16.2, 38, 840, 6.68, 108, 54, 146, '2025-09-04 19:25:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3879, 'cclr03', 20.3, 54.3, 504, 383, 17.6, 41, 840, 6.34, 108, 46, 166, '2025-09-04 19:25:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3880, 'cclr04', 18.8, 52.9, 455, 376, 17.6, 41, 840, 6.34, 108, 46, 166, '2025-09-04 19:25:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3881, 'cclr03', 18.8, 52.9, 455, 376, 16.3, 39.8, 840, 6.48, 105, 56, 157, '2025-09-04 19:25:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3882, 'cclr04', 19.2, 51.6, 573, 428, 16.3, 39.8, 840, 6.48, 105, 56, 157, '2025-09-04 19:25:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3883, 'cclr03', 19.2, 51.6, 573, 428, 17.2, 43.6, 840, 6.59, 111, 49, 167, '2025-09-04 19:25:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3884, 'cclr04', 19.8, 48.7, 520, 457, 17.2, 43.6, 840, 6.59, 111, 49, 167, '2025-09-04 19:25:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3885, 'cclr03', 19.8, 48.7, 520, 457, 17.6, 41.8, 840, 6.46, 111, 53, 153, '2025-09-04 19:25:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3886, 'cclr04', 20.1, 53.8, 565, 431, 17.6, 41.8, 840, 6.46, 111, 53, 153, '2025-09-04 19:26:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3887, 'cclr03', 20.1, 53.8, 565, 431, 19, 40.3, 840, 6.73, 96, 56, 154, '2025-09-04 19:26:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3888, 'cclr04', 19.8, 52.7, 616, 467, 19, 40.3, 840, 6.73, 96, 56, 154, '2025-09-04 19:26:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3889, 'cclr03', 19.8, 52.7, 616, 467, 18.4, 41.1, 840, 6.47, 116, 58, 161, '2025-09-04 19:26:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3890, 'cclr04', 19.3, 55.5, 594, 436, 18.4, 41.1, 840, 6.47, 116, 58, 161, '2025-09-04 19:26:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3891, 'cclr03', 19.3, 55.5, 594, 436, 16.4, 39.4, 840, 6.5, 112, 50, 147, '2025-09-04 19:26:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3892, 'cclr04', 22.4, 49, 510, 375, 16.4, 39.4, 840, 6.5, 112, 50, 147, '2025-09-04 19:26:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3893, 'cclr03', 22.4, 49, 510, 375, 19.8, 42.2, 840, 6.57, 112, 53, 163, '2025-09-04 19:26:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3894, 'cclr04', 20.2, 49.8, 610, 444, 19.8, 42.2, 840, 6.57, 112, 53, 163, '2025-09-04 19:26:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3895, 'cclr03', 20.2, 49.8, 610, 444, 18.3, 40.5, 840, 6.48, 114, 56, 172, '2025-09-04 19:26:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3896, 'cclr04', 22.9, 52.3, 546, 419, 18.3, 40.5, 840, 6.48, 114, 56, 172, '2025-09-04 19:26:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3897, 'cclr03', 22.9, 52.3, 546, 419, 20.1, 42.8, 840, 6.71, 112, 56, 170, '2025-09-04 19:26:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3898, 'cclr04', 22, 56.9, 477, 437, 20.1, 42.8, 840, 6.71, 112, 56, 170, '2025-09-04 19:27:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3899, 'cclr03', 22, 56.9, 477, 437, 19.1, 41.2, 840, 6.8, 112, 57, 167, '2025-09-04 19:27:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3900, 'cclr04', 23, 52.7, 550, 448, 19.1, 41.2, 840, 6.8, 112, 57, 167, '2025-09-04 19:27:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3901, 'cclr03', 23, 52.7, 550, 448, 20.9, 45.8, 840, 6.82, 115, 54, 172, '2025-09-04 19:27:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3902, 'cclr04', 20.4, 57.3, 592, 400, 20.9, 45.8, 840, 6.82, 115, 54, 172, '2025-09-04 19:27:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3903, 'cclr03', 20.4, 57.3, 592, 400, 17.9, 45.8, 840, 6.57, 108, 57, 160, '2025-09-04 19:27:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3904, 'cclr04', 23.6, 48.9, 470, 416, 17.9, 45.8, 840, 6.57, 108, 57, 160, '2025-09-04 19:27:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3905, 'cclr03', 23.6, 48.9, 470, 416, 22, 45.1, 840, 6.49, 106, 56, 185, '2025-09-04 19:27:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3906, 'cclr04', 23.2, 55.9, 594, 410, 22, 45.1, 840, 6.49, 106, 56, 185, '2025-09-04 19:27:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3907, 'cclr03', 23.2, 55.9, 594, 410, 20.4, 46.5, 840, 6.75, 116, 59, 163, '2025-09-04 19:27:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3908, 'cclr04', 20.3, 51.6, 636, 431, 20.4, 46.5, 840, 6.75, 116, 59, 163, '2025-09-04 19:27:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3909, 'cclr03', 20.3, 51.6, 636, 431, 17.5, 44.7, 840, 6.8, 116, 56, 179, '2025-09-04 19:27:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3910, 'cclr04', 21.4, 52, 586, 406, 17.5, 44.7, 840, 6.8, 116, 56, 179, '2025-09-04 19:28:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3911, 'cclr03', 21.4, 52, 586, 406, 20.4, 45.1, 840, 6.71, 119, 55, 159, '2025-09-04 19:28:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3912, 'cclr04', 21.3, 58.2, 653, 465, 20.4, 45.1, 840, 6.71, 119, 55, 159, '2025-09-04 19:28:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3913, 'cclr03', 21.3, 58.2, 653, 465, 20.2, 43.6, 840, 6.54, 117, 55, 161, '2025-09-04 19:28:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3914, 'cclr04', 21.5, 58.6, 511, 471, 20.2, 43.6, 840, 6.54, 117, 55, 161, '2025-09-04 19:28:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3915, 'cclr03', 21.5, 58.6, 511, 471, 18.8, 47.2, 840, 6.55, 107, 56, 176, '2025-09-04 19:28:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3916, 'cclr04', 22.8, 50.4, 624, 476, 18.8, 47.2, 840, 6.55, 107, 56, 176, '2025-09-04 19:28:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3917, 'cclr03', 22.8, 50.4, 624, 476, 21.4, 45.3, 840, 6.56, 118, 60, 165, '2025-09-04 19:28:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3918, 'cclr04', 23.3, 56.5, 542, 420, 21.4, 45.3, 840, 6.56, 118, 60, 165, '2025-09-04 19:28:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3919, 'cclr03', 23.3, 56.5, 542, 420, 21, 44.8, 840, 6.72, 116, 57, 181, '2025-09-04 19:28:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3920, 'cclr04', 24, 50.3, 670, 450, 21, 44.8, 840, 6.72, 116, 57, 181, '2025-09-04 19:28:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3921, 'cclr03', 24, 50.3, 670, 450, 22.7, 47.6, 840, 6.75, 114, 56, 168, '2025-09-04 19:28:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3922, 'cclr04', 21.1, 58, 527, 456, 22.7, 47.6, 840, 6.75, 114, 56, 168, '2025-09-04 19:29:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3923, 'cclr03', 21.1, 58, 527, 456, 19.5, 46.7, 840, 6.59, 129, 56, 188, '2025-09-04 19:29:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3924, 'cclr04', 23.1, 50.9, 627, 428, 19.5, 46.7, 840, 6.59, 129, 56, 188, '2025-09-04 19:29:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3925, 'cclr03', 23.1, 50.9, 627, 428, 20.8, 45.5, 840, 6.75, 120, 62, 181, '2025-09-04 19:29:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3926, 'cclr04', 22.4, 60, 665, 498, 20.8, 45.5, 840, 6.75, 120, 62, 181, '2025-09-04 19:29:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3927, 'cclr03', 22.4, 60, 665, 498, 19.4, 43.5, 840, 6.73, 126, 64, 183, '2025-09-04 19:29:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3928, 'cclr04', 23.4, 54.4, 536, 420, 19.4, 43.5, 840, 6.73, 126, 64, 183, '2025-09-04 19:29:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3929, 'cclr03', 23.4, 54.4, 536, 420, 21.7, 47.1, 840, 6.63, 124, 59, 196, '2025-09-04 19:29:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3930, 'cclr04', 22, 51.9, 530, 414, 21.7, 47.1, 840, 6.63, 124, 59, 196, '2025-09-04 19:29:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3931, 'cclr03', 22, 51.9, 530, 414, 20.3, 48.6, 840, 6.94, 120, 62, 171, '2025-09-04 19:29:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3932, 'cclr04', 22.1, 58.3, 632, 478, 20.3, 48.6, 840, 6.94, 120, 62, 171, '2025-09-04 19:29:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3933, 'cclr03', 22.1, 58.3, 632, 478, 20.1, 43.2, 840, 6.93, 121, 59, 189, '2025-09-04 19:29:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3934, 'cclr04', 24.8, 55.4, 526, 502, 20.1, 43.2, 840, 6.93, 121, 59, 189, '2025-09-04 19:30:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3935, 'cclr03', 24.8, 55.4, 526, 502, 21.8, 44.6, 840, 6.62, 121, 65, 183, '2025-09-04 19:30:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3936, 'cclr04', 22.5, 53.3, 608, 438, 21.8, 44.6, 840, 6.62, 121, 65, 183, '2025-09-04 19:30:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3937, 'cclr03', 22.5, 53.3, 608, 438, 21.2, 45, 840, 6.65, 134, 63, 199, '2025-09-04 19:30:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3938, 'cclr04', 24, 53.2, 597, 492, 21.2, 45, 840, 6.65, 134, 63, 199, '2025-09-04 19:30:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3939, 'cclr03', 24, 53.2, 597, 492, 21.3, 48.7, 840, 7.01, 119, 60, 178, '2025-09-04 19:30:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3940, 'cclr04', 25.1, 59.8, 546, 515, 21.3, 48.7, 840, 7.01, 119, 60, 178, '2025-09-04 19:30:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3941, 'cclr03', 25.1, 59.8, 546, 515, 22.2, 47.5, 840, 7.04, 130, 59, 203, '2025-09-04 19:30:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3942, 'cclr04', 24.3, 58.4, 664, 468, 22.2, 47.5, 840, 7.04, 130, 59, 203, '2025-09-04 19:30:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3943, 'cclr03', 24.3, 58.4, 664, 468, 22.9, 49.7, 840, 6.67, 134, 67, 200, '2025-09-04 19:30:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3944, 'cclr04', 24.4, 56.4, 575, 443, 22.9, 49.7, 840, 6.67, 134, 67, 200, '2025-09-04 19:30:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3945, 'cclr03', 24.4, 56.4, 575, 443, 23.3, 49.4, 840, 7, 138, 65, 197, '2025-09-04 19:30:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3946, 'cclr04', 23.7, 60.5, 573, 477, 23.3, 49.4, 840, 7, 138, 65, 197, '2025-09-04 19:31:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3947, 'cclr03', 23.7, 60.5, 573, 477, 21.6, 49.7, 840, 6.73, 121, 69, 209, '2025-09-04 19:31:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3948, 'cclr04', 23.6, 62.1, 533, 453, 21.6, 49.7, 840, 6.73, 121, 69, 209, '2025-09-04 19:31:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3949, 'cclr03', 23.6, 62.1, 533, 453, 21.4, 45.9, 840, 6.74, 123, 62, 207, '2025-09-04 19:31:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3950, 'cclr04', 22.1, 55.5, 714, 509, 21.4, 45.9, 840, 6.74, 123, 62, 207, '2025-09-04 19:31:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3951, 'cclr03', 22.1, 55.5, 714, 509, 20.5, 50.8, 840, 6.93, 130, 62, 196, '2025-09-04 19:31:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3952, 'cclr04', 23.6, 60, 569, 529, 20.5, 50.8, 840, 6.93, 130, 62, 196, '2025-09-04 19:31:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3953, 'cclr03', 23.6, 60, 569, 529, 21.2, 46.8, 840, 6.72, 126, 62, 196, '2025-09-04 19:31:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3954, 'cclr04', 25.3, 55, 664, 506, 21.2, 46.8, 840, 6.72, 126, 62, 196, '2025-09-04 19:31:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3955, 'cclr03', 25.3, 55, 664, 506, 22.7, 50.7, 840, 7.04, 142, 63, 206, '2025-09-04 19:31:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3956, 'cclr04', 25.4, 63.2, 560, 461, 22.7, 50.7, 840, 7.04, 142, 63, 206, '2025-09-04 19:31:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3957, 'cclr03', 25.4, 63.2, 560, 461, 23.1, 46.7, 840, 7.03, 128, 62, 199, '2025-09-04 19:31:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3958, 'cclr04', 25.1, 60.3, 545, 505, 23.1, 46.7, 840, 7.03, 128, 62, 199, '2025-09-04 19:32:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3959, 'cclr03', 25.1, 60.3, 545, 505, 23, 49.8, 840, 7.12, 133, 63, 206, '2025-09-04 19:32:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3960, 'cclr04', 23, 63.6, 716, 492, 23, 49.8, 840, 7.12, 133, 63, 206, '2025-09-04 19:32:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3961, 'cclr03', 23, 63.6, 716, 492, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 19:32:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3962, 'cclr04', 25.7, 61.1, 609, 456, 21.5, 51.9, 840, 7.07, 142, 69, 198, '2025-09-04 19:32:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3963, 'cclr03', 25.7, 61.1, 609, 456, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 19:32:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3964, 'cclr04', 23.8, 59, 672, 461, 23.2, 46.7, 840, 7.13, 140, 69, 196, '2025-09-04 19:32:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3965, 'cclr03', 23.8, 59, 672, 461, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 19:32:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3966, 'cclr04', 26.1, 61.9, 620, 537, 22.8, 51.5, 840, 7.09, 142, 63, 195, '2025-09-04 19:32:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3967, 'cclr03', 26.1, 61.9, 620, 537, 23.4, 51.9, 840, 6.85, 139, 72, 205, '2025-09-04 19:32:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3968, 'cclr04', 26.4, 64.3, 703, 460, 23.4, 51.9, 840, 6.85, 139, 72, 205, '2025-09-04 19:32:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3969, 'cclr03', 26.4, 64.3, 703, 460, 24.5, 47.9, 840, 6.87, 143, 71, 213, '2025-09-04 19:32:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3970, 'cclr04', 24.4, 62.1, 586, 481, 24.5, 47.9, 840, 6.87, 143, 71, 213, '2025-09-04 19:33:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3971, 'cclr03', 24.4, 62.1, 586, 481, 22.5, 48.5, 840, 6.95, 144, 67, 196, '2025-09-04 19:33:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3972, 'cclr04', 25.3, 61.2, 563, 481, 22.5, 48.5, 840, 6.95, 144, 67, 196, '2025-09-04 19:33:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3973, 'cclr03', 25.3, 61.2, 563, 481, 23.4, 51.4, 840, 7.05, 137, 74, 222, '2025-09-04 19:33:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3974, 'cclr04', 25.7, 56.7, 561, 461, 23.4, 51.4, 840, 7.05, 137, 74, 222, '2025-09-04 19:33:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3975, 'cclr03', 25.7, 56.7, 561, 461, 24.4, 48.1, 840, 6.86, 136, 72, 224, '2025-09-04 19:33:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3976, 'cclr04', 25.7, 56, 632, 555, 24.4, 48.1, 840, 6.86, 136, 72, 224, '2025-09-04 19:33:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3977, 'cclr03', 25.7, 56, 632, 555, 23.6, 48.2, 840, 7.03, 142, 71, 217, '2025-09-04 19:33:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3978, 'cclr04', 24.5, 57.5, 694, 478, 23.6, 48.2, 840, 7.03, 142, 71, 217, '2025-09-04 19:33:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3979, 'cclr03', 24.5, 57.5, 694, 478, 22.8, 50.6, 840, 7.16, 134, 71, 220, '2025-09-04 19:33:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3980, 'cclr04', 23.7, 65.4, 755, 498, 22.8, 50.6, 840, 7.16, 134, 71, 220, '2025-09-04 19:33:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3981, 'cclr03', 23.7, 65.4, 755, 498, 21, 51.9, 840, 7.06, 149, 73, 204, '2025-09-04 19:33:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3982, 'cclr04', 24.9, 64.3, 735, 496, 21, 51.9, 840, 7.06, 149, 73, 204, '2025-09-04 19:34:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3983, 'cclr03', 24.9, 64.3, 735, 496, 22.9, 51.6, 840, 6.99, 145, 74, 227, '2025-09-04 19:34:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3984, 'cclr04', 24.3, 66.1, 759, 491, 22.9, 51.6, 840, 6.99, 145, 74, 227, '2025-09-04 19:34:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3985, 'cclr03', 24.3, 66.1, 759, 491, 21.4, 48.6, 840, 7.18, 147, 73, 206, '2025-09-04 19:34:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3986, 'cclr04', 26.4, 66.4, 602, 524, 21.4, 48.6, 840, 7.18, 147, 73, 206, '2025-09-04 19:34:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3987, 'cclr03', 26.4, 66.4, 602, 524, 24.3, 49.8, 840, 7, 152, 72, 224, '2025-09-04 19:34:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3988, 'cclr04', 24.4, 59.3, 595, 545, 24.3, 49.8, 840, 7, 152, 72, 224, '2025-09-04 19:34:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3989, 'cclr03', 24.4, 59.3, 595, 545, 22.8, 50.7, 840, 7.16, 148, 77, 220, '2025-09-04 19:34:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3990, 'cclr04', 24.4, 60.2, 633, 564, 22.8, 50.7, 840, 7.16, 148, 77, 220, '2025-09-04 19:34:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3991, 'cclr03', 24.4, 60.2, 633, 564, 22.5, 49.7, 840, 7.13, 144, 77, 229, '2025-09-04 19:34:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3992, 'cclr04', 26.2, 65.6, 652, 479, 22.5, 49.7, 840, 7.13, 144, 77, 229, '2025-09-04 19:34:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3993, 'cclr03', 26.2, 65.6, 652, 479, 25, 53.9, 840, 7.09, 155, 70, 229, '2025-09-04 19:34:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3994, 'cclr04', 25.1, 58.1, 683, 496, 25, 53.9, 840, 7.09, 155, 70, 229, '2025-09-04 19:35:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3995, 'cclr03', 25.1, 58.1, 683, 496, 22.2, 55, 840, 7.19, 145, 79, 217, '2025-09-04 19:35:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3996, 'cclr04', 26.2, 60, 700, 538, 22.2, 55, 840, 7.19, 145, 79, 217, '2025-09-04 19:35:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3997, 'cclr03', 26.2, 60, 700, 538, 24.7, 54.4, 840, 6.98, 157, 78, 229, '2025-09-04 19:35:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3998, 'cclr04', 26.3, 60.9, 685, 573, 24.7, 54.4, 840, 6.98, 157, 78, 229, '2025-09-04 19:35:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (3999, 'cclr03', 26.3, 60.9, 685, 573, 24, 54.4, 840, 7.24, 156, 71, 231, '2025-09-04 19:35:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4000, 'cclr04', 27.7, 60.4, 744, 538, 24, 54.4, 840, 7.24, 156, 71, 231, '2025-09-04 19:35:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4001, 'cclr03', 27.7, 60.4, 744, 538, 26, 55.2, 840, 6.96, 146, 74, 215, '2025-09-04 19:35:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4002, 'cclr04', 25.8, 64.3, 773, 579, 26, 55.2, 840, 6.96, 146, 74, 215, '2025-09-04 19:35:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4003, 'cclr03', 25.8, 64.3, 773, 579, 24.8, 55.9, 840, 7.03, 162, 76, 225, '2025-09-04 19:35:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4004, 'cclr04', 25.1, 64.3, 657, 533, 24.8, 55.9, 840, 7.03, 162, 76, 225, '2025-09-04 19:35:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4005, 'cclr03', 25.1, 64.3, 657, 533, 22.9, 51.4, 840, 7.32, 144, 81, 240, '2025-09-04 19:35:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4006, 'cclr04', 25.5, 63.9, 727, 500, 22.9, 51.4, 840, 7.32, 144, 81, 240, '2025-09-04 19:36:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4007, 'cclr03', 25.5, 63.9, 727, 500, 23.8, 53.7, 840, 7.15, 148, 77, 245, '2025-09-04 19:36:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4008, 'cclr04', 25.4, 64.7, 658, 546, 23.8, 53.7, 840, 7.15, 148, 77, 245, '2025-09-04 19:36:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4009, 'cclr03', 25.4, 64.7, 658, 546, 24, 51.8, 840, 7.01, 147, 82, 236, '2025-09-04 19:36:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4010, 'cclr04', 28.1, 68, 677, 543, 24, 51.8, 840, 7.01, 147, 82, 236, '2025-09-04 19:36:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4011, 'cclr03', 28.1, 68, 677, 543, 26.5, 51.1, 840, 7.13, 162, 75, 246, '2025-09-04 19:36:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4012, 'cclr04', 27.3, 63.4, 637, 513, 26.5, 51.1, 840, 7.13, 162, 75, 246, '2025-09-04 19:36:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4013, 'cclr03', 27.3, 63.4, 637, 513, 25.8, 52.1, 840, 7.24, 149, 82, 227, '2025-09-04 19:36:38', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4014, 'cclr04', 28.4, 60.9, 707, 584, 25.8, 52.1, 840, 7.24, 149, 82, 227, '2025-09-04 19:36:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4015, 'cclr03', 28.4, 60.9, 707, 584, 26.9, 56.9, 840, 7.17, 159, 78, 232, '2025-09-04 19:36:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4016, 'cclr04', 26.3, 64, 690, 585, 26.9, 56.9, 840, 7.17, 159, 78, 232, '2025-09-04 19:36:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4017, 'cclr03', 26.3, 64, 690, 585, 25.1, 55.4, 840, 7.1, 158, 81, 234, '2025-09-04 19:36:58', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4018, 'cclr04', 28.9, 60.7, 727, 595, 25.1, 55.4, 840, 7.1, 158, 81, 234, '2025-09-04 19:37:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4019, 'cclr03', 28.9, 60.7, 727, 595, 26.9, 52.8, 840, 7.18, 154, 78, 237, '2025-09-04 19:37:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4020, 'cclr04', 27.8, 64.9, 625, 545, 26.9, 52.8, 840, 7.18, 154, 78, 237, '2025-09-04 19:37:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4021, 'cclr03', 27.8, 64.9, 625, 545, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 19:37:18', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4022, 'cclr04', 27.8, 64.9, 625, 545, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 21:07:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4023, 'cclr03', 27.8, 64.9, 625, 545, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 21:07:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4024, 'cclr04', 20.3, 51.2, 550, 429, 26, 56, 840, 7.4, 159, 78, 249, '2025-09-04 21:08:51', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4025, 'cclr03', 20.3, 51.2, 550, 429, 18.9, 38, 840, 6.63, 108, 54, 156, '2025-09-04 21:08:51', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4026, 'cclr04', 20.3, 51.2, 550, 429, 18.9, 38, 840, 6.63, 108, 54, 156, '2025-09-04 21:08:55', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4027, 'cclr03', 20, 48.8, 424, 386, 18.9, 38, 840, 6.63, 108, 54, 156, '2025-09-04 21:09:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4028, 'cclr04', 20, 48.8, 424, 386, 17.1, 42.7, 840, 6.5, 106, 54, 159, '2025-09-04 21:09:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4029, 'cclr03', 18.5, 49.6, 550, 375, 17.1, 42.7, 840, 6.5, 106, 54, 159, '2025-09-04 21:09:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4030, 'cclr04', 18.5, 49.6, 550, 375, 16.4, 38.1, 840, 6.34, 92, 49, 137, '2025-09-04 21:09:12', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4031, 'cclr03', 21.7, 51.7, 407, 443, 16.4, 38.1, 840, 6.34, 92, 49, 137, '2025-09-04 21:09:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4032, 'cclr04', 21.7, 51.7, 407, 443, 20.4, 38.1, 840, 6.55, 107, 49, 144, '2025-09-04 21:09:17', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4033, 'cclr03', 20.9, 51.3, 478, 365, 20.4, 38.1, 840, 6.55, 107, 49, 144, '2025-09-04 21:09:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4034, 'cclr04', 20.9, 51.3, 478, 365, 19.1, 39.5, 840, 6.64, 99, 55, 144, '2025-09-04 21:09:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4035, 'cclr03', 22.1, 46.8, 518, 393, 19.1, 39.5, 840, 6.64, 99, 55, 144, '2025-09-04 21:09:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4036, 'cclr04', 22.1, 46.8, 518, 393, 19.7, 41.3, 840, 6.39, 109, 52, 160, '2025-09-04 21:09:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4037, 'cclr03', 21.1, 55.8, 438, 371, 19.7, 41.3, 840, 6.39, 109, 52, 160, '2025-09-04 21:09:32', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4038, 'cclr04', 21.1, 55.8, 438, 371, 18.7, 41.1, 840, 6.7, 95, 51, 156, '2025-09-04 21:09:32', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4039, 'cclr03', 21.9, 52.7, 458, 370, 18.7, 41.1, 840, 6.7, 95, 51, 156, '2025-09-04 21:09:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4040, 'cclr04', 21.9, 52.7, 458, 370, 20.6, 39.3, 840, 6.7, 103, 57, 156, '2025-09-04 21:09:37', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4041, 'cclr03', 18.9, 51.8, 523, 454, 20.6, 39.3, 840, 6.7, 103, 57, 156, '2025-09-04 21:09:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4042, 'cclr04', 18.9, 51.8, 523, 454, 17.4, 39.6, 840, 6.66, 109, 57, 153, '2025-09-04 21:09:42', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4043, 'cclr03', 19.7, 46.8, 432, 426, 17.4, 39.6, 840, 6.66, 109, 57, 153, '2025-09-04 21:09:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4044, 'cclr04', 19.7, 46.8, 432, 426, 18.1, 43.9, 840, 6.41, 96, 57, 159, '2025-09-04 21:09:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4045, 'cclr03', 19.2, 56.3, 587, 464, 18.1, 43.9, 840, 6.41, 96, 57, 159, '2025-09-04 21:09:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4046, 'cclr04', 19.2, 56.3, 587, 464, 17.1, 44.4, 840, 6.63, 104, 55, 149, '2025-09-04 21:09:52', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4047, 'cclr03', 22.3, 53, 499, 401, 17.1, 44.4, 840, 6.63, 104, 55, 149, '2025-09-04 21:09:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4048, 'cclr04', 22.3, 53, 499, 401, 19.3, 45, 840, 6.45, 110, 51, 172, '2025-09-04 21:09:57', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4049, 'cclr03', 21.3, 47.8, 494, 392, 19.3, 45, 840, 6.45, 110, 51, 172, '2025-09-04 21:10:02', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4050, 'cclr04', 21.3, 47.8, 494, 392, 19.7, 44, 840, 6.61, 113, 55, 149, '2025-09-04 21:10:02', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4051, 'cclr03', 23.1, 57, 617, 444, 19.7, 44, 840, 6.61, 113, 55, 149, '2025-09-04 21:10:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4052, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 21:10:07', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4053, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 21:12:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4054, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 21:13:45', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4055, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 21:18:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4056, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 21:19:01', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4057, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 21:24:02', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4058, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 22:31:34', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4059, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 22:31:46', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4060, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 22:32:11', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4061, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 22:32:22', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4062, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 22:32:30', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4063, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 22:32:47', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4064, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:18:13', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4065, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:19:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4066, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:19:04', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4067, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:19:15', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4068, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:19:24', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4069, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:20:08', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4070, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:35:23', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4071, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:35:27', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4072, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:35:28', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4073, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:35:31', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4074, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:35:40', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4075, 'cclr03', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:35:48', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+INSERT INTO `monitor_record` VALUES (4076, 'cclr04', 23.1, 57, 617, 444, 21.1, 44.8, 840, 6.67, 111, 53, 179, '2025-09-04 23:35:50', 2, 2, 100, 'hunanCenZhou', NULL, NULL, 0);
+
+-- ----------------------------
+-- Table structure for plant_manage
+-- ----------------------------
+DROP TABLE IF EXISTS `plant_manage`;
+CREATE TABLE `plant_manage`  (
+  `plant_id` int NOT NULL AUTO_INCREMENT COMMENT '植物ID',
+  `plant_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '植物名称',
+  `plant_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '植物类型',
+  `plant_lifeCycle` int NULL DEFAULT NULL COMMENT '生命周期（单位：月）',
+  `area_id` int NULL DEFAULT NULL COMMENT '所属场地',
+  `user_id` int NOT NULL COMMENT '用户id',
+  `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_date` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `update_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新人',
+  `del_flag` int NULL DEFAULT NULL COMMENT '是否删除：0，未删除，1，删除',
+  PRIMARY KEY (`plant_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of plant_manage
+-- ----------------------------
+INSERT INTO `plant_manage` VALUES (1, '羊肚菌', '菌类', 3, 1, 101, '2023-12-21 00:00:00', 'admin', '2025-08-13 00:00:00', NULL, 0);
+INSERT INTO `plant_manage` VALUES (2, '草莓', '水果', 3, 2, 100, '2024-01-25 00:00:00', 'admin', '2025-08-14 00:00:00', NULL, 0);
+INSERT INTO `plant_manage` VALUES (3, '花生', '沙土种植', 6, 2, 1, '2024-06-08 00:00:00', NULL, '2024-06-09 00:00:00', NULL, 0);
+INSERT INTO `plant_manage` VALUES (4, '月季', '藤蔓类', 12, 2, 1, '2024-06-09 00:00:00', NULL, NULL, NULL, 0);
+
+-- ----------------------------
+-- Table structure for qrtz_blob_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_blob_triggers`;
+CREATE TABLE `qrtz_blob_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_name鐨勫?閿',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_group鐨勫?閿',
+  `blob_data` blob NULL COMMENT '瀛樻斁鎸佷箙鍖朤rigger瀵硅薄',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = 'Blob绫诲瀷鐨勮Е鍙戝櫒琛' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_blob_triggers
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_calendars
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_calendars`;
+CREATE TABLE `qrtz_calendars`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `calendar_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '鏃ュ巻鍚嶇О',
+  `calendar` blob NOT NULL COMMENT '瀛樻斁鎸佷箙鍖朿alendar瀵硅薄',
+  PRIMARY KEY (`sched_name`, `calendar_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '鏃ュ巻淇℃伅琛' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_calendars
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_cron_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_cron_triggers`;
+CREATE TABLE `qrtz_cron_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_name鐨勫?閿',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_group鐨勫?閿',
+  `cron_expression` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'cron琛ㄨ揪寮',
+  `time_zone_id` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '鏃跺尯',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = 'Cron绫诲瀷鐨勮Е鍙戝櫒琛' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_cron_triggers
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_fired_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_fired_triggers`;
+CREATE TABLE `qrtz_fired_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `entry_id` varchar(95) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍣ㄥ疄渚媔d',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_name鐨勫?閿',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_group鐨勫?閿',
+  `instance_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍣ㄥ疄渚嬪悕',
+  `fired_time` bigint NOT NULL COMMENT '瑙﹀彂鐨勬椂闂',
+  `sched_time` bigint NOT NULL COMMENT '瀹氭椂鍣ㄥ埗瀹氱殑鏃堕棿',
+  `priority` int NOT NULL COMMENT '浼樺厛绾',
+  `state` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '鐘舵?',
+  `job_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '浠诲姟鍚嶇О',
+  `job_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '浠诲姟缁勫悕',
+  `is_nonconcurrent` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '鏄?惁骞跺彂',
+  `requests_recovery` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '鏄?惁鎺ュ彈鎭㈠?鎵ц?',
+  PRIMARY KEY (`sched_name`, `entry_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '宸茶Е鍙戠殑瑙﹀彂鍣ㄨ〃' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_fired_triggers
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_job_details
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_job_details`;
+CREATE TABLE `qrtz_job_details`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `job_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '浠诲姟鍚嶇О',
+  `job_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '浠诲姟缁勫悕',
+  `description` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '鐩稿叧浠嬬粛',
+  `job_class_name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '鎵ц?浠诲姟绫诲悕绉',
+  `is_durable` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '鏄?惁鎸佷箙鍖',
+  `is_nonconcurrent` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '鏄?惁骞跺彂',
+  `is_update_data` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '鏄?惁鏇存柊鏁版嵁',
+  `requests_recovery` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '鏄?惁鎺ュ彈鎭㈠?鎵ц?',
+  `job_data` blob NULL COMMENT '瀛樻斁鎸佷箙鍖杍ob瀵硅薄',
+  PRIMARY KEY (`sched_name`, `job_name`, `job_group`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '浠诲姟璇︾粏淇℃伅琛' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_job_details
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_locks
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_locks`;
+CREATE TABLE `qrtz_locks`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `lock_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '鎮茶?閿佸悕绉',
+  PRIMARY KEY (`sched_name`, `lock_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '瀛樺偍鐨勬偛瑙傞攣淇℃伅琛' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_locks
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_paused_trigger_grps
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
+CREATE TABLE `qrtz_paused_trigger_grps`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_group鐨勫?閿',
+  PRIMARY KEY (`sched_name`, `trigger_group`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '鏆傚仠鐨勮Е鍙戝櫒琛' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_paused_trigger_grps
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_scheduler_state
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_scheduler_state`;
+CREATE TABLE `qrtz_scheduler_state`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `instance_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '瀹炰緥鍚嶇О',
+  `last_checkin_time` bigint NOT NULL COMMENT '涓婃?妫?煡鏃堕棿',
+  `checkin_interval` bigint NOT NULL COMMENT '妫?煡闂撮殧鏃堕棿',
+  PRIMARY KEY (`sched_name`, `instance_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '璋冨害鍣ㄧ姸鎬佽〃' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_scheduler_state
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_simple_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_simple_triggers`;
+CREATE TABLE `qrtz_simple_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_name鐨勫?閿',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_group鐨勫?閿',
+  `repeat_count` bigint NOT NULL COMMENT '閲嶅?鐨勬?鏁扮粺璁',
+  `repeat_interval` bigint NOT NULL COMMENT '閲嶅?鐨勯棿闅旀椂闂',
+  `times_triggered` bigint NOT NULL COMMENT '宸茬粡瑙﹀彂鐨勬?鏁',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '绠?崟瑙﹀彂鍣ㄧ殑淇℃伅琛' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_simple_triggers
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_simprop_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
+CREATE TABLE `qrtz_simprop_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_name鐨勫?閿',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_triggers琛╰rigger_group鐨勫?閿',
+  `str_prop_1` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT 'String绫诲瀷鐨則rigger鐨勭?涓?釜鍙傛暟',
+  `str_prop_2` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT 'String绫诲瀷鐨則rigger鐨勭?浜屼釜鍙傛暟',
+  `str_prop_3` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT 'String绫诲瀷鐨則rigger鐨勭?涓変釜鍙傛暟',
+  `int_prop_1` int NULL DEFAULT NULL COMMENT 'int绫诲瀷鐨則rigger鐨勭?涓?釜鍙傛暟',
+  `int_prop_2` int NULL DEFAULT NULL COMMENT 'int绫诲瀷鐨則rigger鐨勭?浜屼釜鍙傛暟',
+  `long_prop_1` bigint NULL DEFAULT NULL COMMENT 'long绫诲瀷鐨則rigger鐨勭?涓?釜鍙傛暟',
+  `long_prop_2` bigint NULL DEFAULT NULL COMMENT 'long绫诲瀷鐨則rigger鐨勭?浜屼釜鍙傛暟',
+  `dec_prop_1` decimal(13, 4) NULL DEFAULT NULL COMMENT 'decimal绫诲瀷鐨則rigger鐨勭?涓?釜鍙傛暟',
+  `dec_prop_2` decimal(13, 4) NULL DEFAULT NULL COMMENT 'decimal绫诲瀷鐨則rigger鐨勭?浜屼釜鍙傛暟',
+  `bool_prop_1` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT 'Boolean绫诲瀷鐨則rigger鐨勭?涓?釜鍙傛暟',
+  `bool_prop_2` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT 'Boolean绫诲瀷鐨則rigger鐨勭?浜屼釜鍙傛暟',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '鍚屾?鏈哄埗鐨勮?閿佽〃' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_simprop_triggers
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for qrtz_triggers
+-- ----------------------------
+DROP TABLE IF EXISTS `qrtz_triggers`;
+CREATE TABLE `qrtz_triggers`  (
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '璋冨害鍚嶇О',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '瑙﹀彂鍣ㄧ殑鍚嶅瓧',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '瑙﹀彂鍣ㄦ墍灞炵粍鐨勫悕瀛',
+  `job_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_job_details琛╦ob_name鐨勫?閿',
+  `job_group` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT 'qrtz_job_details琛╦ob_group鐨勫?閿',
+  `description` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '鐩稿叧浠嬬粛',
+  `next_fire_time` bigint NULL DEFAULT NULL COMMENT '涓婁竴娆¤Е鍙戞椂闂达紙姣??锛',
+  `prev_fire_time` bigint NULL DEFAULT NULL COMMENT '涓嬩竴娆¤Е鍙戞椂闂达紙榛樿?涓?1琛ㄧず涓嶈Е鍙戯級',
+  `priority` int NULL DEFAULT NULL COMMENT '浼樺厛绾',
+  `trigger_state` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '瑙﹀彂鍣ㄧ姸鎬',
+  `trigger_type` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '瑙﹀彂鍣ㄧ殑绫诲瀷',
+  `start_time` bigint NOT NULL COMMENT '寮??鏃堕棿',
+  `end_time` bigint NULL DEFAULT NULL COMMENT '缁撴潫鏃堕棿',
+  `calendar_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '鏃ョ▼琛ㄥ悕绉',
+  `misfire_instr` smallint NULL DEFAULT NULL COMMENT '琛ュ伩鎵ц?鐨勭瓥鐣',
+  `job_data` blob NULL COMMENT '瀛樻斁鎸佷箙鍖杍ob瀵硅薄',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  INDEX `sched_name`(`sched_name`, `job_name`, `job_group`) USING BTREE,
+  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `job_name`, `job_group`) REFERENCES `qrtz_job_details` (`sched_name`, `job_name`, `job_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '瑙﹀彂鍣ㄨ?缁嗕俊鎭?〃' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qrtz_triggers
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for spring_ai_chat_memory
+-- ----------------------------
+DROP TABLE IF EXISTS `spring_ai_chat_memory`;
+CREATE TABLE `spring_ai_chat_memory`  (
+  `conversation_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `timestamp` timestamp NOT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of spring_ai_chat_memory
+-- ----------------------------
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755679362330', '你好', 'USER', '2025-08-20 16:43:53');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755679362330', '你好！很高兴为你提供帮助。请问有什么我可以为你解答的问题吗？', 'ASSISTANT', '2025-08-20 16:43:53');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755679362330', '你是谁', 'USER', '2025-08-20 16:43:53');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755679362330', '我是DeepSeek-V3，由深度求索公司（DeepSeek）研发的智能助手。我可以帮助你解答问题、提供信息、进行文本处理和分析等。如果你有任何问题或需要帮助，随时告诉我！😊', 'ASSISTANT', '2025-08-20 16:43:53');
+INSERT INTO `spring_ai_chat_memory` VALUES ('default', '请基于以上数据对草莓产量进行智能预测，并提供详细的预测依据和优化建议', 'USER', '2025-08-21 15:11:05');
+INSERT INTO `spring_ai_chat_memory` VALUES ('default', '### 草莓产量智能预测报告\n\n基于您提供的草莓簇数据（簇ID: 1），我将从多个角度进行产量预测和优化分析。以下是详细预测结果，包括预测依据、置信度评估和优化建议。总体而言，该草莓簇的预测产量为**高潜力**，但需关注未成熟果实的生长和环境因素。\n\n---\n\n#### 1. 基于当前成熟度分布的产量预测\n- **当前状态**：总数量3个，已成熟2个（66.7%），未成熟1个（33.3%），无半成熟果实。\n- **预测依据**：成熟度分布显示大部分果实已成熟，表明该簇已进入高产期。未成熟果实（1个）有潜力在未来成熟，但数量较少。基于草莓生长模型（如Logistic生长曲线），未成熟果实通常在7-14天内成熟，假设环境条件理想。\n- **产量预测**：短期（1-2周）内，预计新增产量为1个果实（从未成熟转为成熟），总产量可达3个成熟果实。单位产量（基于平均大小25mm）约为中等水平（草莓平均大小通常20-30mm），但簇规模小，整体产量有限。\n- **量化预测**：最终产量概率：高（90% confidence）达到3个成熟果实；低概率（10%）由于环境风险，产量可能降至2个。\n\n---\n\n#### 2. 环境因素对产量的影响分析\n- **预测依据**：数据中未提供具体环境参数（如温度、湿度、光照），但基于草莓生长特性（最适温度15-25°C，湿度60-80%），假设当前环境为理想状态。环境因素是产量变动的关键驱动因素：\n  - **温度影响**：若温度高于25°C，可能加速成熟但增加病虫害风险；低于15°C会延迟成熟。\n  - **光照影响**：充足光照（每天6-8小时）促进光合作用，提升产量；不足会导致果实变小。\n  - **湿度影响**：高湿度（>80%）易引发真菌病害（如灰霉病），降低产量。\n- **风险分析**：由于位置区域为null，无法精确评估。建议监控环境，以避免产量损失5-10%。\n\n---\n\n#### 3. 生长周期和成熟时间预测\n- **预测依据**：草莓生长周期通常为4-6周从开花到成熟。当前状态显示已成熟果实占多数，表明簇处于成熟后期。\n- **时间预测**：\n  - **未成熟果实**：基于平均大小25mm（接近成熟大小），预计在**7-10天**内成熟，假设环境稳定。\n  - **整体簇生命周期**：该簇可能已在衰退期，产量高峰已过。未来1-2周后，产量将趋于稳定，无新增果实。\n- **输出**：成熟时间轴：第0天（当前） - 2成熟, 1未成熟；第7天 - 预计全部成熟。\n\n---\n\n#### 4. 产量变化趋势分析\n- **当前趋势**：产量呈上升趋势但接近峰值。已成熟果实多，表明近期产量增长快（可能由于前期的 favorable 条件）。\n- **未来趋势**：基于生长曲线，产量将在1周内达到峰值（3个果实），之后可能下降 due to natural senescence或环境变化。趋势预测：短期平稳，中长期（2周后）可能衰退，除非有新花芽形成（但数据未提示）。\n- **可视化摘要**：趋势曲线显示倒U形，峰值在近期。\n\n---\n\n#### 5. 预测置信度和不确定性评估\n- **置信度**：高（85%），因当前数据清晰（成熟度分布明确），但不确定性来自：\n  - **数据限制**：位置区域null和环境数据缺失，增加20%不确定性。\n  - **生物变异**：草莓生长有个体差异，可能导致未成熟果实发育延迟（10%风险）。\n- **不确定性量化**：产量范围2-3个果实，概率分布：3个（85%），2个（15%）。建议通过实时监测降低不确定性。\n\n---\n\n#### 6. 影响产量的关键因素识别\n- **主要因素**：\n  - **成熟度分布**：高成熟比例利好产量，但未成熟果实数量少限制增长。\n  - **环境条件**：温度、光照、湿度是核心变量；缺失数据增加风险。\n  - **簇大小**：总数量仅3个，表明簇较小，可能由于前期生长限制（如养分或空间）。\n  - **病虫害历史**：数据未提供，但草莓常见病害（如白粉病）可减产 up to 20%。\n- **优先级**：环境监控 > 病虫害预防 > 养分管理。\n\n---\n\n#### 7. 基于病虫害历史数据的预测\n- **预测依据**：无病虫害历史数据提供，但基于草莓常见风险（如灰霉病、蚜虫），假设当前无疫情。然而，高成熟度果实易吸引害虫。\n- **风险预测**：如果环境湿度高，病虫害爆发概率中等（30%），可能导致产量损失1个果实。建议预防性措施。\n- **预防性产量调整**：纳入风险后，保守产量预测为2-3个（平均2.5个）。\n\n---\n\n#### 8. 综合考虑产量和病虫害的优化建议\n为了最大化产量并最小化风险，提出以下数据驱动的优化建议：\n- **短期行动（1周内）**：\n  - **监控环境**：安装传感器跟踪温度（保持15-25°C）、湿度（60-80%）和光照。如果环境偏离理想，调整温室设置。\n  - ** Harvest已成熟果实**：及时采摘2个成熟果实，以避免过度成熟或病虫害传播。\n  - **促进未成熟果实**：施用平衡肥料（N-P-K 10-10-10）和适量浇水，加速最后1个果实的成熟。\n- **中期预防（1-2周）**：\n  - **病虫害管理**：喷洒有机杀菌剂（如 neem oil）预防真菌病害；检查叶片是否有虫卵。\n  - **簇健康评估**：观察是否有新花芽，以延长产量周期。如果无，考虑 replanting 新簇。\n- **长期策略**：\n  - **数据集成**：记录位置区域和环境数据，未来使用AI模型（如时间序列预测）提高准确性。\n  - **多样化种植**：增加簇数量或品种，以分散风险。\n- **预期效果**：实施这些建议可提升产量置信度至95%，潜在增加产量10-20%（通过预防损失），并延长簇寿命。\n\n### 总结\n该草莓簇产量预测为**3个成熟果实（高概率）**，但受环境不确定性影响。重点关注环境控制和病虫害预防以优化输出。建议定期更新数据以 refine 预测。如果您有更多数据（如环境读数或病虫害历史），我可以提供更精确的分析！', 'ASSISTANT', '2025-08-21 15:11:05');
+INSERT INTO `spring_ai_chat_memory` VALUES ('default', '请基于以上数据对草莓产量进行智能预测，并提供详细的预测依据和优化建议', 'USER', '2025-08-21 15:11:05');
+INSERT INTO `spring_ai_chat_memory` VALUES ('default', '好的，作为专业的草莓产量预测专家，我将基于您提供的数据进行详细分析。\n\n### **草莓产量智能预测报告**\n\n**预测结论：**\n该草莓簇（ID: 1）的**短期最终产量预计为3颗成熟果实**。当前已可采收2颗，剩余1颗未成熟果实在未来7-10天内达到可采收标准的概率极高（>90%）。该簇整体已进入产量释放末期，若无新花芽补充，此生产周期将很快结束。\n\n---\n\n### **一、 详细预测依据与分析**\n\n我的预测基于对当前生长状态、数据模型和行业知识的综合分析：\n\n1.  **基于成熟度分布的即时产量评估：**\n    *   **已成熟 (2颗):** 这部分是立即可获得的产量，占比66.7%，表明簇的生长能量已大部分转化为最终产出。\n    *   **未成熟 (1颗):** 这是预测增量的核心。其最终成熟是产量预测的关键。\n\n2.  **基于果实大小的生长阶段判断：**\n    *   **平均大小25mm:** 这是一个非常重要的指标。草莓果实通常在直径超过20mm后进入快速膨大期和转色期。25mm的果实已度过最易夭折的幼果期，抗逆性增强，成功发育成熟的概率非常大。它并非一个“新生”的小果，而是一个“即将成熟”的果实。\n\n3.  **生长模型与时间预测：**\n    *   结合果实大小（25mm）和草莓的典型生长曲线（Logistic模型），该未成熟果实正处于生长拐点之后，即将进入成熟期。\n    *   **预测成熟时间：** 在光照、温度和水分适宜的条件下（日温23-25°C，夜温8-10°C），一颗25mm的绿色草莓果实通常需要**7-10天**即可完全转色并达到糖度峰值。**因此，预测一周后该簇总产量将锁定为3颗。**\n\n4.  **不确定性及风险分析：**\n    *   **置信度：** 本次预测置信度**高**。主要风险来自于未知的环境因素（“位置区域: null”）。\n    *   **潜在风险：**\n        *   **病虫害侵袭：** 成熟的果实散发的香气容易吸引果蝇等害虫。若防护不当，可能导致果实被蛀食而报废。\n        *   **环境剧变：** 持续高温（>30°C）会抑制果实膨大，导致成熟果变小或灼伤；持续降雨或高湿环境则极易引发**灰霉病**，造成果实腐烂。\n        *   **养分中断：** 如果此时缺水或缺肥，最后一个果实可能无法充分膨大，导致最终尺寸偏小，影响单果重和品质。\n\n---\n\n### **二、 数据短板与优化建议**\n\n当前最大的分析瓶颈在于**环境数据的缺失**（“位置区域: null”）。真正的“智能预测”高度依赖环境数据流。以下是针对性的优化建议：\n\n**1. 紧急操作建议（未来几天内）：**\n*   **立即采收：** 建议尽快采收那2颗已成熟的果实。这可以：\n    *   避免其过度成熟或遭受病虫害，保证商品性。\n    *   将植株的养分集中供给最后1颗未成熟果实，促进其更好更快地发育。\n*   **检查防护：** 检查防虫网、黄蓝板等物理防护措施是否完好，预防果蝇等害虫。\n\n**2. 环境监控优化建议（系统层面）：**\n*   **补全数据维度：** 这是最重要的建议。请为该簇补充环境传感器数据：\n    *   **温度/湿度传感器：** 实时监控冠层微气候，确保处于草莓生长最适区间（温度15-25°C，湿度60-80%）。\n    *   **光照传感器：** 确保每日有6-8小时的光照（或补光）以保障光合作用。\n    *   **土壤湿度传感器：** 实现精准灌溉，避免忽干忽湿导致裂果。\n*   **记录位置信息：** 明确记录该簇位于大棚的哪个区域（如“东侧冠层”、“近门口”），不同位置的光照和通风条件不同，会影响生长速率和病害风险。\n\n**3. 栽培管理优化建议：**\n*   **养分补充：** 考虑到果实膨大需要大量钾元素，可叶面喷施一次磷酸二氢钾溶液（0.2%-0.3%），助力最后一颗果实增甜膨大。\n*   **病害预防：** 在采收完成熟果后，可对环境进行一次广谱杀菌剂（如低毒的生物制剂）喷雾，重点预防灰霉病，保护未成熟果实。\n\n**4. 长期预测与规划：**\n*   该簇总果数仅为3个，属于正常偏少范围。建议在下一个生产周期：\n    *   **花期管理：** 分析花期授粉情况，确保授粉充分，以提高坐果率和果实均匀度。\n    *   **疏花疏果：** 在花果期进行适当疏除，保留健壮花果，有助于剩余果实长得更大、品质更高，从而提升整体商品产量和价值。\n\n### **总结**\n总而言之，簇ID: 1的产量前景非常明朗，**预计最终产量为3颗**。当前工作重心应从“产量预测”转向“**品质保全和风险防控**”，即保护已成熟果实安全采收，并保障未成熟果实顺利完成最后生长。通过引入环境数据监测，未来的产量预测将更加精准、主动，从“事后统计”变为“事前预警”，真正实现智慧农业的价值。', 'ASSISTANT', '2025-08-21 15:11:05');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755766937023', '介绍掌声', 'USER', '2025-08-21 17:02:33');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755766937023', '（模拟掌声音效）👏👏👏\n\n大家好，让我们用热烈的掌声欢迎来自大连东软信息学院的张申同学！作为荣获海峡两岸暨港澳地区大学生计算机比赛国家级三等奖、中国大学生计算机设计大赛省级二等奖的获奖者，拥有软件著作权和专利申请的创新人才，同时还是优秀团员和社团干部——让我们再次用掌声祝贺他在学术与实践中取得的优异成绩！\n\n期待未来能听到更多关于他的精彩故事！👏🎉', 'ASSISTANT', '2025-08-21 17:02:33');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755768579299', '张申介绍', 'USER', '2025-08-21 17:29:54');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755768579299', '您好，我是张申，来自大连东软信息学院医学信息工程专业。\n\n我始终以严谨务实的态度对待学习和工作，具备较强的学习能力，能够快速适应新技术、新需求，并在跨领域项目中迅速掌握核心要点，推进项目实施。无论是硬件开发还是AI应用，我都能有效应对并取得成果。\n\n此外，我责任心强，抗压能力突出，吃苦耐劳，面对复杂任务时能够保持积极心态，有条不紊地推进工作。期待未来与您有更多交流与合作的机会！', 'ASSISTANT', '2025-08-21 17:29:54');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755781303248', '给我讲讲预测草莓病例应该做什么措施？', 'USER', '2025-08-21 21:02:31');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755781303248', '根据您提供的知识库内容，针对草莓病害的预测与防控，建议采取以下综合措施，以降低病害发生风险并提升果实健康水平：\n\n---\n\n### 1. **源头控制与病源减少**\n   - **及时清理病果**：发现病果立即采收并销毁，减少田间病原菌基数，防止扩散。\n   - **选用无病苗木**：从可靠渠道引进抗病品种或无病毒种苗，避免初始病原引入。\n   - **实行轮作制度**：与非茄科作物轮作，减少土壤中病原菌的积累。\n\n---\n\n### 2. **环境与土壤管理**\n   - **控水防湿**：避免过度灌溉，保持土壤适度湿润，防止积水。采用滴灌或垄作栽培，减少果实和叶片与湿土接触。\n   - **改善通风透光**：合理密植，定期修剪老叶，降低田间湿度，抑制病菌繁殖。\n\n---\n\n### 3. **营养与抗性提升**\n   - **补钙增硬**：通过叶面喷施或土壤施用钙肥（如硝酸钙），增强果实细胞壁强度，降低裂果和腐烂风险。\n   - **平衡施肥**：避免过量氮肥，增施磷钾肥，提升植株整体抗病能力。\n\n---\n\n### 4. **监测与预警**\n   - **定期田间巡查**：密切观察叶片、果实是否有病斑、霉层等早期症状，及时干预。\n   - **气候预警**：高温高湿天气提前采取预防措施（如喷施生物农药或低毒杀菌剂）。\n\n---\n\n### 总结：\n通过**品种选择、病源清理、环境调控、营养管理**四方面综合施策，可有效预测和防控草莓病害，减少经济损失。若病害已发生，需结合具体病原类型（如灰霉病、炭疽病等）针对性用药，并遵循绿色防控原则。', 'ASSISTANT', '2025-08-21 21:02:31');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755825665325', '你是谁？', 'USER', '2025-08-22 09:22:01');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755825665325', '我是DeepSeek-V3，由深度求索公司创造的智能助手！😊 我可以帮助你解答问题、提供建议、进行知识查询，甚至陪你聊天。如果你有任何问题或需要帮助，随时告诉我哦！', 'ASSISTANT', '2025-08-22 09:22:01');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755825665325', '你给我你介绍一下草莓模型', 'USER', '2025-08-22 09:22:01');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1755825665325', '您好！根据您提到的“草莓模型”，结合您的知识库背景（草莓的生长周期相关），我推测您可能是指**草莓的生长阶段模型**或**农业种植中的草莓发育模型**。以下是基于草莓生长周期的简要介绍：\n\n---\n\n### 草莓生长模型（发育阶段）\n草莓的生长通常分为以下关键阶段，形成一个连续的循环模型：  \n1. **育苗期**  \n   - 从种子或匍匐茎繁殖开始，培育健壮幼苗，通常需数周至数月。  \n2. **开花坐果期**  \n   - 植株现蕾、开花、授粉，幼果开始形成。  \n3. **果实膨大期**  \n   - 幼果迅速膨大，持续约 **25–30天**（4–5周），需充足水分和养分。  \n4. **成熟采收期**  \n   - 果实变红、糖分积累，进入可采收阶段。草莓为**连续采收型作物**，成熟期可持续数周至数月，分批采摘。  \n5. **休眠期（多年生植株）**  \n   - 在温带地区，冬季低温诱导休眠，为下一生长季储备能量。\n\n---\n\n### 关键特点\n- **连续性**：草莓开花、结果、成熟同时进行，需定期管理（如肥水、病虫害防治）。  \n- **环境敏感性**：温度、光照、水分对果实品质和产量影响显著。  \n- **栽培模式**：可根据模型优化温室调控、水肥管理等（例如无土栽培、促早熟技术）。\n\n---\n\n如果您指的是其他领域的“草莓模型”（如机器学习、经济学等），请提供更多背景，我会进一步补充解答！ 🌱', 'ASSISTANT', '2025-08-22 09:22:01');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1756112692677', '你好', 'USER', '2025-08-25 17:05:12');
+INSERT INTO `spring_ai_chat_memory` VALUES ('1756112692677', '您好！我是您的草莓种植智能助手，专注于提供 **产量预测、病害判断、成熟度评估和自动化管理建议**。如果您有任何关于草莓种植的问题，例如：\n\n- 🌱 **产量预估**：需要提供种植环境数据（如温湿度、光照）或品种信息。  \n- 🦠 **病害诊断**：可描述症状或上传图片（如叶片斑点、果实异常）。  \n- 🍄 **成熟度判断**：提供果实图片或生长时间，我会评估采摘时机。  \n- 🤖 **智能管理**：根据土壤湿度、天气等数据，生成灌溉、通风或施肥建议。  \n\n请随时告诉我您的需求，我会为您提供精准分析！', 'ASSISTANT', '2025-08-25 17:05:12');
+INSERT INTO `spring_ai_chat_memory` VALUES ('2', '你好', 'USER', '2025-08-27 20:08:40');
+INSERT INTO `spring_ai_chat_memory` VALUES ('2', ' 您好！作为您的草莓种植智能专家，有什么问题可以帮助您解答或者需要提供哪些方面的指导呢？', 'ASSISTANT', '2025-08-27 20:08:40');
+
+-- ----------------------------
+-- Table structure for strawberry_cluster
+-- ----------------------------
+DROP TABLE IF EXISTS `strawberry_cluster`;
+CREATE TABLE `strawberry_cluster`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `cluster_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '草莓簇/区域唯一ID',
+  `cluster_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '区域/地块名称（例如：温室A北区）',
+  `total_count` int NULL DEFAULT NULL COMMENT '簇内草莓总数',
+  `ripe_count` int NULL DEFAULT NULL COMMENT '已成熟数量',
+  `half_ripe_count` int NULL DEFAULT NULL COMMENT '半成熟数量',
+  `unripe_count` int NULL DEFAULT NULL COMMENT '未成熟数量',
+  `avg_size_mm` float NULL DEFAULT NULL COMMENT '平均大小（毫米）',
+  `location_area` geometry NULL COMMENT '区域范围（地块/簇）',
+  `latitude` double NULL DEFAULT NULL COMMENT '簇中心点纬度',
+  `longitude` double NULL DEFAULT NULL COMMENT '簇中心点经度',
+  `recommendation` text CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL COMMENT '系统生成的采摘建议采摘时间（由AI或定时任务写入）',
+  `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `cluster_id`(`cluster_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '草莓产量预期表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of strawberry_cluster
+-- ----------------------------
+INSERT INTO `strawberry_cluster` VALUES (4, '1', '1', 3, 2, 0, 1, 25, NULL, 30, 120, '2颗成熟草莓建议1-2天内采摘；', '2025-08-25 00:00:00');
+INSERT INTO `strawberry_cluster` VALUES (5, '1', '1', 3, 2, 0, 1, 25, NULL, 30, 120, '2颗成熟草莓建议1-2天内采摘；', '2025-08-21 14:40:58');
+INSERT INTO `strawberry_cluster` VALUES (6, '1', '1', 3, 2, 0, 1, 25, NULL, 30, 120, '2颗成熟草莓建议1-2天内采摘；', '2025-08-21 14:40:58');
+INSERT INTO `strawberry_cluster` VALUES (7, '1', '1', 3, 2, 0, 1, 25, NULL, 30, 120, '2颗成熟草莓建议1-2天内采摘；', '2025-08-21 14:40:58');
+INSERT INTO `strawberry_cluster` VALUES (8, '1', '1', 3, 2, 0, 1, 25, NULL, 30, 120, '2颗成熟草莓建议1-2天内采摘；', '2025-08-21 14:40:58');
+INSERT INTO `strawberry_cluster` VALUES (9, NULL, NULL, 4, 0, 1, 3, 20, NULL, 30, 120, '1颗半熟草莓预计3-5天成熟，建议定期监测', '2025-09-04 19:00:43');
+
+-- ----------------------------
+-- Table structure for strawberry_pest_disease
+-- ----------------------------
+DROP TABLE IF EXISTS `strawberry_pest_disease`;
+CREATE TABLE `strawberry_pest_disease`  (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `cluster_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '对应草莓簇/区域ID',
+  `object_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '检测对象类型：leaf（叶子）/ fruit（果实）/ stem（茎）',
+  `bbox_x_min` float NULL DEFAULT NULL COMMENT '边界框最小X坐标（目标检测框左上角X）',
+  `bbox_y_min` float NULL DEFAULT NULL COMMENT '边界框最小Y坐标（目标检测框左上角Y）',
+  `bbox_x_max` float NULL DEFAULT NULL COMMENT '边界框最大X坐标（目标检测框右下角X）',
+  `bbox_y_max` float NULL DEFAULT NULL COMMENT '边界框最大Y坐标（目标检测框右下角Y）',
+  `confidence` float NULL DEFAULT NULL COMMENT '检测置信度（0.0 ~ 1.0）',
+  `pest_disease_class` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '识别出的病虫害类别（如：白粉病、红蜘蛛等）',
+  `severity_level` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '严重程度：low / medium / high',
+  `recommendation` text CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL COMMENT '系统生成的防治或处理建议（由AI或定时任务写入）',
+  `detected_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '病虫害检测时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '病虫害分析表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of strawberry_pest_disease
+-- ----------------------------
+INSERT INTO `strawberry_pest_disease` VALUES (1, '2', 'Leaf', 285.035, 242.215, 399.003, 422.491, 0.84, 'anthracnose', 'medium', '中度炭疽病，用咪鲜胺', '2025-08-18 00:00:00');
+
+-- ----------------------------
+-- Table structure for sys_config
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_config`;
+CREATE TABLE `sys_config`  (
+  `config_id` int NOT NULL AUTO_INCREMENT COMMENT '参数主键',
+  `config_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '参数名称',
+  `config_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '参数键名',
+  `config_value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '参数键值',
+  `config_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT 'N' COMMENT '系统内置（Y是 N否）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`config_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '参数配置表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_config
+-- ----------------------------
+INSERT INTO `sys_config` VALUES (1, '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-blue', 'Y', 'admin', '2024-08-24 08:16:50', '', NULL, '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow');
+INSERT INTO `sys_config` VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', '2024-08-24 08:16:50', '', NULL, '初始化密码 123456');
+INSERT INTO `sys_config` VALUES (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', '2024-08-24 08:16:50', '', NULL, '深色主题theme-dark，浅色主题theme-light');
+INSERT INTO `sys_config` VALUES (4, '账号自助-验证码开关', 'sys.account.captchaEnabled', 'true', 'Y', 'admin', '2024-08-24 08:16:50', '', NULL, '是否开启验证码功能（true开启，false关闭）');
+INSERT INTO `sys_config` VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', '2024-08-24 08:16:50', '', NULL, '是否开启注册用户功能（true开启，false关闭）');
+INSERT INTO `sys_config` VALUES (6, '用户登录-黑名单列表', 'sys.login.blackIPList', '', 'Y', 'admin', '2024-08-24 08:16:50', '', NULL, '设置登录IP黑名单限制，多个匹配项以;分隔，支持匹配（*通配、网段）');
+
+-- ----------------------------
+-- Table structure for sys_dept
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dept`;
+CREATE TABLE `sys_dept`  (
+  `dept_id` bigint NOT NULL AUTO_INCREMENT COMMENT '部门id',
+  `parent_id` bigint NULL DEFAULT 0 COMMENT '父部门id',
+  `ancestors` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '祖级列表',
+  `dept_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '部门名称',
+  `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
+  `leader` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '负责人',
+  `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '联系电话',
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`dept_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 201 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_dept
+-- ----------------------------
+INSERT INTO `sys_dept` VALUES (100, 0, '0', '若依科技', 0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '东软物联网', 2, '张永', '18504245638', 'zhangyong@neusoft.edu.cn', '0', '0', 'admin', '2024-08-24 08:16:40', 'admin', '2024-08-24 09:35:13');
+INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '2', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若依', '15888888888', 'ry@qq.com', '0', '2', 'admin', '2024-08-24 08:16:40', '', NULL);
+INSERT INTO `sys_dept` VALUES (200, 102, '0,100,102', '长春草莓种植基地', 1, '曲韧涛', '18943949110', NULL, '0', '0', 'admin', '2024-08-24 09:36:31', '', NULL);
+INSERT INTO `sys_dept` VALUES (201, 102, '0,100,102', '朝阳羊肚菌种植基地', 2, '郑松涛', '15389888766', NULL, '0', '0', 'admin', '2024-08-24 09:37:48', '', NULL);
+
+-- ----------------------------
+-- Table structure for sys_dict_data
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dict_data`;
+CREATE TABLE `sys_dict_data`  (
+  `dict_code` bigint NOT NULL AUTO_INCREMENT COMMENT '字典编码',
+  `dict_sort` int NULL DEFAULT 0 COMMENT '字典排序',
+  `dict_label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '字典标签',
+  `dict_value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '字典键值',
+  `dict_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '字典类型',
+  `css_class` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '样式属性（其他样式扩展）',
+  `list_class` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '表格回显样式',
+  `is_default` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT 'N' COMMENT '是否默认（Y是 N否）',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`dict_code`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_dict_data
+-- ----------------------------
+INSERT INTO `sys_dict_data` VALUES (1, 1, '男', '0', 'sys_user_sex', '', '', 'Y', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '性别男');
+INSERT INTO `sys_dict_data` VALUES (2, 2, '女', '1', 'sys_user_sex', '', '', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '性别女');
+INSERT INTO `sys_dict_data` VALUES (3, 3, '未知', '2', 'sys_user_sex', '', '', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '性别未知');
+INSERT INTO `sys_dict_data` VALUES (4, 1, '显示', '0', 'sys_show_hide', '', 'primary', 'Y', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '显示菜单');
+INSERT INTO `sys_dict_data` VALUES (5, 2, '隐藏', '1', 'sys_show_hide', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '隐藏菜单');
+INSERT INTO `sys_dict_data` VALUES (6, 1, '正常', '0', 'sys_normal_disable', '', 'primary', 'Y', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '正常状态');
+INSERT INTO `sys_dict_data` VALUES (7, 2, '停用', '1', 'sys_normal_disable', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '停用状态');
+INSERT INTO `sys_dict_data` VALUES (8, 1, '正常', '0', 'sys_job_status', '', 'primary', 'Y', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '正常状态');
+INSERT INTO `sys_dict_data` VALUES (9, 2, '暂停', '1', 'sys_job_status', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '停用状态');
+INSERT INTO `sys_dict_data` VALUES (10, 1, '默认', 'DEFAULT', 'sys_job_group', '', '', 'Y', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '默认分组');
+INSERT INTO `sys_dict_data` VALUES (11, 2, '系统', 'SYSTEM', 'sys_job_group', '', '', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '系统分组');
+INSERT INTO `sys_dict_data` VALUES (12, 1, '是', 'Y', 'sys_yes_no', '', 'primary', 'Y', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '系统默认是');
+INSERT INTO `sys_dict_data` VALUES (13, 2, '否', 'N', 'sys_yes_no', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '系统默认否');
+INSERT INTO `sys_dict_data` VALUES (14, 1, '通知', '1', 'sys_notice_type', '', 'warning', 'Y', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '通知');
+INSERT INTO `sys_dict_data` VALUES (15, 2, '公告', '2', 'sys_notice_type', '', 'success', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '公告');
+INSERT INTO `sys_dict_data` VALUES (16, 1, '正常', '0', 'sys_notice_status', '', 'primary', 'Y', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '正常状态');
+INSERT INTO `sys_dict_data` VALUES (17, 2, '关闭', '1', 'sys_notice_status', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '关闭状态');
+INSERT INTO `sys_dict_data` VALUES (18, 99, '其他', '0', 'sys_oper_type', '', 'info', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '其他操作');
+INSERT INTO `sys_dict_data` VALUES (19, 1, '新增', '1', 'sys_oper_type', '', 'info', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '新增操作');
+INSERT INTO `sys_dict_data` VALUES (20, 2, '修改', '2', 'sys_oper_type', '', 'info', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '修改操作');
+INSERT INTO `sys_dict_data` VALUES (21, 3, '删除', '3', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '删除操作');
+INSERT INTO `sys_dict_data` VALUES (22, 4, '授权', '4', 'sys_oper_type', '', 'primary', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '授权操作');
+INSERT INTO `sys_dict_data` VALUES (23, 5, '导出', '5', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '导出操作');
+INSERT INTO `sys_dict_data` VALUES (24, 6, '导入', '6', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '导入操作');
+INSERT INTO `sys_dict_data` VALUES (25, 7, '强退', '7', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '强退操作');
+INSERT INTO `sys_dict_data` VALUES (26, 8, '生成代码', '8', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '生成操作');
+INSERT INTO `sys_dict_data` VALUES (27, 9, '清空数据', '9', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:49', '', NULL, '清空操作');
+INSERT INTO `sys_dict_data` VALUES (28, 1, '成功', '0', 'sys_common_status', '', 'primary', 'N', '0', 'admin', '2024-08-24 08:16:50', '', NULL, '正常状态');
+INSERT INTO `sys_dict_data` VALUES (29, 2, '失败', '1', 'sys_common_status', '', 'danger', 'N', '0', 'admin', '2024-08-24 08:16:50', '', NULL, '停用状态');
+
+-- ----------------------------
+-- Table structure for sys_dict_type
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dict_type`;
+CREATE TABLE `sys_dict_type`  (
+  `dict_id` bigint NOT NULL AUTO_INCREMENT COMMENT '字典主键',
+  `dict_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '字典名称',
+  `dict_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '字典类型',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`dict_id`) USING BTREE,
+  UNIQUE INDEX `dict_type`(`dict_type`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_dict_type
+-- ----------------------------
+INSERT INTO `sys_dict_type` VALUES (1, '用户性别', 'sys_user_sex', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '用户性别列表');
+INSERT INTO `sys_dict_type` VALUES (2, '菜单状态', 'sys_show_hide', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '菜单状态列表');
+INSERT INTO `sys_dict_type` VALUES (3, '系统开关', 'sys_normal_disable', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '系统开关列表');
+INSERT INTO `sys_dict_type` VALUES (4, '任务状态', 'sys_job_status', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '任务状态列表');
+INSERT INTO `sys_dict_type` VALUES (5, '任务分组', 'sys_job_group', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '任务分组列表');
+INSERT INTO `sys_dict_type` VALUES (6, '系统是否', 'sys_yes_no', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '系统是否列表');
+INSERT INTO `sys_dict_type` VALUES (7, '通知类型', 'sys_notice_type', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '通知类型列表');
+INSERT INTO `sys_dict_type` VALUES (8, '通知状态', 'sys_notice_status', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '通知状态列表');
+INSERT INTO `sys_dict_type` VALUES (9, '操作类型', 'sys_oper_type', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '操作类型列表');
+INSERT INTO `sys_dict_type` VALUES (10, '系统状态', 'sys_common_status', '0', 'admin', '2024-08-24 08:16:48', '', NULL, '登录状态列表');
+
+-- ----------------------------
+-- Table structure for sys_job
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_job`;
+CREATE TABLE `sys_job`  (
+  `job_id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `job_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL DEFAULT '' COMMENT '任务名称',
+  `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
+  `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '调用目标字符串',
+  `cron_expression` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT 'cron执行表达式',
+  `misfire_policy` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
+  `concurrent` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '1' COMMENT '是否并发执行（0允许 1禁止）',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '状态（0正常 1暂停）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '备注信息',
+  PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_job
+-- ----------------------------
+INSERT INTO `sys_job` VALUES (1, '系统默认（无参）', 'DEFAULT', 'ryTask.ryNoParams', '0/10 * * * * ?', '3', '1', '1', 'admin', '2024-08-24 08:16:50', '', NULL, '');
+INSERT INTO `sys_job` VALUES (2, '系统默认（有参）', 'DEFAULT', 'ryTask.ryParams(\'ry\')', '0/15 * * * * ?', '3', '1', '1', 'admin', '2024-08-24 08:16:50', '', NULL, '');
+INSERT INTO `sys_job` VALUES (3, '系统默认（多参）', 'DEFAULT', 'ryTask.ryMultipleParams(\'ry\', true, 2000L, 316.50D, 100)', '0/20 * * * * ?', '3', '1', '1', 'admin', '2024-08-24 08:16:50', '', NULL, '');
+
+-- ----------------------------
+-- Table structure for sys_job_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_job_log`;
+CREATE TABLE `sys_job_log`  (
+  `job_log_id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
+  `job_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '任务名称',
+  `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '任务组名',
+  `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '调用目标字符串',
+  `job_message` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '日志信息',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '执行状态（0正常 1失败）',
+  `exception_info` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '异常信息',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`job_log_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_job_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_logininfor
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_logininfor`;
+CREATE TABLE `sys_logininfor`  (
+  `info_id` bigint NOT NULL AUTO_INCREMENT COMMENT '访问ID',
+  `user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '用户账号',
+  `ipaddr` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '登录IP地址',
+  `login_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '登录地点',
+  `browser` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '浏览器类型',
+  `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '操作系统',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
+  `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '提示消息',
+  `login_time` datetime NULL DEFAULT NULL COMMENT '访问时间',
+  PRIMARY KEY (`info_id`) USING BTREE,
+  INDEX `idx_sys_logininfor_s`(`status`) USING BTREE,
+  INDEX `idx_sys_logininfor_lt`(`login_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 320 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_logininfor
+-- ----------------------------
+INSERT INTO `sys_logininfor` VALUES (100, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-08-24 09:48:00');
+INSERT INTO `sys_logininfor` VALUES (101, 'changchun', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '用户不存在/密码错误', '2024-08-24 09:48:15');
+INSERT INTO `sys_logininfor` VALUES (102, 'changchun', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '用户不存在/密码错误', '2024-08-24 09:48:25');
+INSERT INTO `sys_logininfor` VALUES (103, 'changchun', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-24 09:50:15');
+INSERT INTO `sys_logininfor` VALUES (104, 'changchun', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-08-24 09:52:24');
+INSERT INTO `sys_logininfor` VALUES (105, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-24 09:52:29');
+INSERT INTO `sys_logininfor` VALUES (106, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-08-24 09:53:46');
+INSERT INTO `sys_logininfor` VALUES (107, 'changchun', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-24 09:53:56');
+INSERT INTO `sys_logininfor` VALUES (108, 'changchun', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-08-24 10:03:28');
+INSERT INTO `sys_logininfor` VALUES (109, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-24 10:03:33');
+INSERT INTO `sys_logininfor` VALUES (110, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-08-24 10:03:54');
+INSERT INTO `sys_logininfor` VALUES (111, 'chaoyamg', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '用户不存在/密码错误', '2024-08-24 10:04:13');
+INSERT INTO `sys_logininfor` VALUES (112, 'chaoyang', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-24 10:04:24');
+INSERT INTO `sys_logininfor` VALUES (113, 'chaoyang', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-08-24 10:04:46');
+INSERT INTO `sys_logininfor` VALUES (114, 'changchun', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-24 10:04:55');
+INSERT INTO `sys_logininfor` VALUES (115, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-25 08:09:05');
+INSERT INTO `sys_logininfor` VALUES (116, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 8', '0', '登录成功', '2024-08-25 15:17:46');
+INSERT INTO `sys_logininfor` VALUES (117, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-27 09:17:49');
+INSERT INTO `sys_logininfor` VALUES (118, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-27 10:06:56');
+INSERT INTO `sys_logininfor` VALUES (119, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '验证码已失效', '2024-08-28 15:39:48');
+INSERT INTO `sys_logininfor` VALUES (120, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-08-28 15:39:55');
+INSERT INTO `sys_logininfor` VALUES (121, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-09-01 15:48:16');
+INSERT INTO `sys_logininfor` VALUES (122, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '退出成功', '2024-09-12 16:38:03');
+INSERT INTO `sys_logininfor` VALUES (123, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-09-12 16:38:27');
+INSERT INTO `sys_logininfor` VALUES (124, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '验证码已失效', '2024-09-13 08:27:27');
+INSERT INTO `sys_logininfor` VALUES (125, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-09-13 08:27:32');
+INSERT INTO `sys_logininfor` VALUES (126, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '1', '验证码已失效', '2024-09-13 08:57:09');
+INSERT INTO `sys_logininfor` VALUES (127, 'admin', '127.0.0.1', '内网IP', 'Chrome 12', 'Windows 10', '0', '登录成功', '2024-09-13 08:57:35');
+INSERT INTO `sys_logininfor` VALUES (128, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2024-11-04 13:34:34');
+INSERT INTO `sys_logininfor` VALUES (129, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2024-11-04 13:34:38');
+INSERT INTO `sys_logininfor` VALUES (130, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2024-11-04 13:34:44');
+INSERT INTO `sys_logininfor` VALUES (131, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-06-24 13:57:14');
+INSERT INTO `sys_logininfor` VALUES (132, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-06-24 17:35:44');
+INSERT INTO `sys_logininfor` VALUES (133, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-07-04 20:54:58');
+INSERT INTO `sys_logininfor` VALUES (134, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-04 20:55:05');
+INSERT INTO `sys_logininfor` VALUES (135, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-05 05:54:20');
+INSERT INTO `sys_logininfor` VALUES (136, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-05 07:48:07');
+INSERT INTO `sys_logininfor` VALUES (137, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-05 10:20:15');
+INSERT INTO `sys_logininfor` VALUES (138, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-05 11:49:00');
+INSERT INTO `sys_logininfor` VALUES (139, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-05 13:36:00');
+INSERT INTO `sys_logininfor` VALUES (140, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-07-05 14:31:24');
+INSERT INTO `sys_logininfor` VALUES (141, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-05 14:31:30');
+INSERT INTO `sys_logininfor` VALUES (142, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-05 17:16:19');
+INSERT INTO `sys_logininfor` VALUES (143, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-06 06:28:00');
+INSERT INTO `sys_logininfor` VALUES (144, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-07-06 09:58:37');
+INSERT INTO `sys_logininfor` VALUES (145, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-06 09:58:42');
+INSERT INTO `sys_logininfor` VALUES (146, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-06 18:53:48');
+INSERT INTO `sys_logininfor` VALUES (147, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-06 19:28:54');
+INSERT INTO `sys_logininfor` VALUES (148, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-07-06 20:03:00');
+INSERT INTO `sys_logininfor` VALUES (149, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-06 20:03:06');
+INSERT INTO `sys_logininfor` VALUES (150, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-10 14:12:06');
+INSERT INTO `sys_logininfor` VALUES (151, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-10 15:54:07');
+INSERT INTO `sys_logininfor` VALUES (152, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-07-12 09:04:06');
+INSERT INTO `sys_logininfor` VALUES (153, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-12 09:04:13');
+INSERT INTO `sys_logininfor` VALUES (154, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-12 10:11:49');
+INSERT INTO `sys_logininfor` VALUES (155, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-12 10:50:51');
+INSERT INTO `sys_logininfor` VALUES (156, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-12 11:50:38');
+INSERT INTO `sys_logininfor` VALUES (157, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-12 15:35:08');
+INSERT INTO `sys_logininfor` VALUES (158, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-12 17:49:39');
+INSERT INTO `sys_logininfor` VALUES (159, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-12 18:31:13');
+INSERT INTO `sys_logininfor` VALUES (160, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-17 07:52:07');
+INSERT INTO `sys_logininfor` VALUES (161, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-23 18:19:07');
+INSERT INTO `sys_logininfor` VALUES (162, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-23 19:28:42');
+INSERT INTO `sys_logininfor` VALUES (163, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-25 07:19:23');
+INSERT INTO `sys_logininfor` VALUES (164, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-07-25 08:46:58');
+INSERT INTO `sys_logininfor` VALUES (165, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-25 08:47:02');
+INSERT INTO `sys_logininfor` VALUES (166, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-07-25 10:41:50');
+INSERT INTO `sys_logininfor` VALUES (167, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-25 10:41:56');
+INSERT INTO `sys_logininfor` VALUES (168, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-25 15:56:40');
+INSERT INTO `sys_logininfor` VALUES (169, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-25 16:45:11');
+INSERT INTO `sys_logininfor` VALUES (170, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-26 09:52:25');
+INSERT INTO `sys_logininfor` VALUES (171, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-28 20:09:52');
+INSERT INTO `sys_logininfor` VALUES (172, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-07-29 13:54:53');
+INSERT INTO `sys_logininfor` VALUES (173, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-29 13:55:00');
+INSERT INTO `sys_logininfor` VALUES (174, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-07-31 15:42:55');
+INSERT INTO `sys_logininfor` VALUES (175, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-07-31 15:43:02');
+INSERT INTO `sys_logininfor` VALUES (176, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 8', '0', '登录成功', '2025-07-31 16:58:33');
+INSERT INTO `sys_logininfor` VALUES (177, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-01 14:37:57');
+INSERT INTO `sys_logininfor` VALUES (178, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-01 15:35:21');
+INSERT INTO `sys_logininfor` VALUES (179, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-01 15:35:26');
+INSERT INTO `sys_logininfor` VALUES (180, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-02 08:18:16');
+INSERT INTO `sys_logininfor` VALUES (181, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-02 10:23:26');
+INSERT INTO `sys_logininfor` VALUES (182, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-02 14:57:37');
+INSERT INTO `sys_logininfor` VALUES (183, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-02 15:46:32');
+INSERT INTO `sys_logininfor` VALUES (184, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-02 19:40:10');
+INSERT INTO `sys_logininfor` VALUES (185, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-02 20:55:46');
+INSERT INTO `sys_logininfor` VALUES (186, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-08-02 20:58:21');
+INSERT INTO `sys_logininfor` VALUES (187, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-02 20:58:37');
+INSERT INTO `sys_logininfor` VALUES (188, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-05 10:16:01');
+INSERT INTO `sys_logininfor` VALUES (189, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-08-05 15:12:36');
+INSERT INTO `sys_logininfor` VALUES (190, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-05 15:12:42');
+INSERT INTO `sys_logininfor` VALUES (191, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-05 15:51:43');
+INSERT INTO `sys_logininfor` VALUES (192, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-06 07:41:09');
+INSERT INTO `sys_logininfor` VALUES (193, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-06 10:00:12');
+INSERT INTO `sys_logininfor` VALUES (194, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-06 14:34:01');
+INSERT INTO `sys_logininfor` VALUES (195, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-06 15:14:21');
+INSERT INTO `sys_logininfor` VALUES (196, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-06 16:55:46');
+INSERT INTO `sys_logininfor` VALUES (197, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-06 20:52:32');
+INSERT INTO `sys_logininfor` VALUES (198, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-07 06:21:27');
+INSERT INTO `sys_logininfor` VALUES (199, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-07 09:46:38');
+INSERT INTO `sys_logininfor` VALUES (200, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-07 11:24:47');
+INSERT INTO `sys_logininfor` VALUES (201, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-08 10:19:41');
+INSERT INTO `sys_logininfor` VALUES (202, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-12 09:13:59');
+INSERT INTO `sys_logininfor` VALUES (203, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-12 14:24:44');
+INSERT INTO `sys_logininfor` VALUES (204, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-12 14:46:43');
+INSERT INTO `sys_logininfor` VALUES (205, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-12 16:17:35');
+INSERT INTO `sys_logininfor` VALUES (206, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-13 09:07:33');
+INSERT INTO `sys_logininfor` VALUES (207, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-13 15:21:47');
+INSERT INTO `sys_logininfor` VALUES (208, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-14 09:58:24');
+INSERT INTO `sys_logininfor` VALUES (209, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-14 09:58:30');
+INSERT INTO `sys_logininfor` VALUES (210, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-14 10:46:37');
+INSERT INTO `sys_logininfor` VALUES (211, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-14 16:19:46');
+INSERT INTO `sys_logininfor` VALUES (212, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-15 07:22:47');
+INSERT INTO `sys_logininfor` VALUES (213, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-15 07:40:53');
+INSERT INTO `sys_logininfor` VALUES (214, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-15 08:53:08');
+INSERT INTO `sys_logininfor` VALUES (215, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-15 12:02:24');
+INSERT INTO `sys_logininfor` VALUES (216, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-17 18:47:50');
+INSERT INTO `sys_logininfor` VALUES (217, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-17 19:30:24');
+INSERT INTO `sys_logininfor` VALUES (218, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-17 19:31:40');
+INSERT INTO `sys_logininfor` VALUES (219, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-17 19:36:50');
+INSERT INTO `sys_logininfor` VALUES (220, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-17 19:41:43');
+INSERT INTO `sys_logininfor` VALUES (221, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-18 06:47:59');
+INSERT INTO `sys_logininfor` VALUES (222, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-18 08:00:33');
+INSERT INTO `sys_logininfor` VALUES (223, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-18 10:23:36');
+INSERT INTO `sys_logininfor` VALUES (224, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-18 13:59:02');
+INSERT INTO `sys_logininfor` VALUES (225, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-18 13:59:07');
+INSERT INTO `sys_logininfor` VALUES (226, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-18 15:30:30');
+INSERT INTO `sys_logininfor` VALUES (227, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-18 16:27:35');
+INSERT INTO `sys_logininfor` VALUES (228, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-19 09:30:42');
+INSERT INTO `sys_logininfor` VALUES (229, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-19 10:59:38');
+INSERT INTO `sys_logininfor` VALUES (230, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-20 07:40:22');
+INSERT INTO `sys_logininfor` VALUES (231, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-20 08:47:55');
+INSERT INTO `sys_logininfor` VALUES (232, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-08-20 11:11:38');
+INSERT INTO `sys_logininfor` VALUES (233, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-20 11:11:48');
+INSERT INTO `sys_logininfor` VALUES (234, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-20 14:36:38');
+INSERT INTO `sys_logininfor` VALUES (235, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-20 15:20:45');
+INSERT INTO `sys_logininfor` VALUES (236, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-20 16:42:34');
+INSERT INTO `sys_logininfor` VALUES (237, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-20 22:40:40');
+INSERT INTO `sys_logininfor` VALUES (238, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-21 08:50:31');
+INSERT INTO `sys_logininfor` VALUES (239, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-21 14:14:53');
+INSERT INTO `sys_logininfor` VALUES (240, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-08-21 15:45:08');
+INSERT INTO `sys_logininfor` VALUES (241, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-21 15:47:23');
+INSERT INTO `sys_logininfor` VALUES (242, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-08-21 15:47:34');
+INSERT INTO `sys_logininfor` VALUES (243, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-21 15:47:40');
+INSERT INTO `sys_logininfor` VALUES (244, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-21 16:56:53');
+INSERT INTO `sys_logininfor` VALUES (245, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-08-21 17:51:35');
+INSERT INTO `sys_logininfor` VALUES (246, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-21 17:51:39');
+INSERT INTO `sys_logininfor` VALUES (247, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-21 19:55:48');
+INSERT INTO `sys_logininfor` VALUES (248, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-22 09:20:24');
+INSERT INTO `sys_logininfor` VALUES (249, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-22 19:42:06');
+INSERT INTO `sys_logininfor` VALUES (250, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-22 19:42:10');
+INSERT INTO `sys_logininfor` VALUES (251, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-24 16:33:09');
+INSERT INTO `sys_logininfor` VALUES (252, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-24 16:33:13');
+INSERT INTO `sys_logininfor` VALUES (253, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-24 18:01:58');
+INSERT INTO `sys_logininfor` VALUES (254, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-24 22:27:07');
+INSERT INTO `sys_logininfor` VALUES (255, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-25 09:26:09');
+INSERT INTO `sys_logininfor` VALUES (256, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-25 10:34:54');
+INSERT INTO `sys_logininfor` VALUES (257, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-25 12:46:15');
+INSERT INTO `sys_logininfor` VALUES (258, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-25 15:08:18');
+INSERT INTO `sys_logininfor` VALUES (259, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-25 15:08:22');
+INSERT INTO `sys_logininfor` VALUES (260, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-08-25 15:16:12');
+INSERT INTO `sys_logininfor` VALUES (261, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-25 15:16:15');
+INSERT INTO `sys_logininfor` VALUES (262, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-25 16:01:26');
+INSERT INTO `sys_logininfor` VALUES (263, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-26 21:22:35');
+INSERT INTO `sys_logininfor` VALUES (264, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-08-27 10:31:04');
+INSERT INTO `sys_logininfor` VALUES (265, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-27 10:31:09');
+INSERT INTO `sys_logininfor` VALUES (266, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-08-27 12:45:19');
+INSERT INTO `sys_logininfor` VALUES (267, 'changchun', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '用户不存在/密码错误', '2025-08-27 12:45:28');
+INSERT INTO `sys_logininfor` VALUES (268, 'changchun', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-27 12:45:38');
+INSERT INTO `sys_logininfor` VALUES (269, 'changchun', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-08-27 12:48:15');
+INSERT INTO `sys_logininfor` VALUES (270, 'changchun', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-08-27 12:48:27');
+INSERT INTO `sys_logininfor` VALUES (271, 'changchun', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-08-27 12:48:32');
+INSERT INTO `sys_logininfor` VALUES (272, 'changchun', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-27 12:48:36');
+INSERT INTO `sys_logininfor` VALUES (273, 'changchun', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-08-27 12:48:42');
+INSERT INTO `sys_logininfor` VALUES (274, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-27 12:48:50');
+INSERT INTO `sys_logininfor` VALUES (275, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-27 19:59:19');
+INSERT INTO `sys_logininfor` VALUES (276, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-28 09:58:58');
+INSERT INTO `sys_logininfor` VALUES (277, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-28 16:14:14');
+INSERT INTO `sys_logininfor` VALUES (278, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-28 16:17:09');
+INSERT INTO `sys_logininfor` VALUES (279, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-28 16:17:13');
+INSERT INTO `sys_logininfor` VALUES (280, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-28 18:22:56');
+INSERT INTO `sys_logininfor` VALUES (281, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-28 19:33:00');
+INSERT INTO `sys_logininfor` VALUES (282, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-08-28 21:09:10');
+INSERT INTO `sys_logininfor` VALUES (283, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-28 21:09:13');
+INSERT INTO `sys_logininfor` VALUES (284, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-08-28 21:14:09');
+INSERT INTO `sys_logininfor` VALUES (285, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-28 21:14:59');
+INSERT INTO `sys_logininfor` VALUES (286, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-29 10:41:43');
+INSERT INTO `sys_logininfor` VALUES (287, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-29 10:45:20');
+INSERT INTO `sys_logininfor` VALUES (288, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-29 10:51:18');
+INSERT INTO `sys_logininfor` VALUES (289, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-30 11:43:49');
+INSERT INTO `sys_logininfor` VALUES (290, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-08-30 18:15:54');
+INSERT INTO `sys_logininfor` VALUES (291, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-01 14:03:47');
+INSERT INTO `sys_logininfor` VALUES (292, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-01 15:17:15');
+INSERT INTO `sys_logininfor` VALUES (293, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-09-01 16:34:57');
+INSERT INTO `sys_logininfor` VALUES (294, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-01 16:35:00');
+INSERT INTO `sys_logininfor` VALUES (295, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-01 20:03:34');
+INSERT INTO `sys_logininfor` VALUES (296, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-01 20:40:52');
+INSERT INTO `sys_logininfor` VALUES (297, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-09-01 21:32:16');
+INSERT INTO `sys_logininfor` VALUES (298, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-01 21:32:20');
+INSERT INTO `sys_logininfor` VALUES (299, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-02 08:28:37');
+INSERT INTO `sys_logininfor` VALUES (300, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-02 12:41:49');
+INSERT INTO `sys_logininfor` VALUES (301, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-09-02 16:19:22');
+INSERT INTO `sys_logininfor` VALUES (302, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-02 16:19:30');
+INSERT INTO `sys_logininfor` VALUES (303, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '退出成功', '2025-09-02 20:01:22');
+INSERT INTO `sys_logininfor` VALUES (304, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-02 20:01:30');
+INSERT INTO `sys_logininfor` VALUES (305, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-02 22:40:20');
+INSERT INTO `sys_logininfor` VALUES (306, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-03 01:08:44');
+INSERT INTO `sys_logininfor` VALUES (307, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-03 20:51:38');
+INSERT INTO `sys_logininfor` VALUES (308, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 18:38:37');
+INSERT INTO `sys_logininfor` VALUES (309, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-09-04 18:44:12');
+INSERT INTO `sys_logininfor` VALUES (310, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 18:44:14');
+INSERT INTO `sys_logininfor` VALUES (311, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 18:44:16');
+INSERT INTO `sys_logininfor` VALUES (312, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 18:48:24');
+INSERT INTO `sys_logininfor` VALUES (313, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 18:48:32');
+INSERT INTO `sys_logininfor` VALUES (314, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码已失效', '2025-09-04 19:00:12');
+INSERT INTO `sys_logininfor` VALUES (315, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 19:00:17');
+INSERT INTO `sys_logininfor` VALUES (316, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 19:16:19');
+INSERT INTO `sys_logininfor` VALUES (317, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '1', '验证码错误', '2025-09-04 21:39:28');
+INSERT INTO `sys_logininfor` VALUES (318, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 21:39:32');
+INSERT INTO `sys_logininfor` VALUES (319, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 22:28:12');
+INSERT INTO `sys_logininfor` VALUES (320, 'admin', '127.0.0.1', '内网IP', 'Chrome 13', 'Windows 10', '0', '登录成功', '2025-09-04 22:30:07');
+
+-- ----------------------------
+-- Table structure for sys_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_menu`;
+CREATE TABLE `sys_menu`  (
+  `menu_id` bigint NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+  `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '菜单名称',
+  `parent_id` bigint NULL DEFAULT 0 COMMENT '父菜单ID',
+  `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
+  `path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '路由地址',
+  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '组件路径',
+  `query` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '路由参数',
+  `route_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '路由名称',
+  `is_frame` int NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
+  `is_cache` int NULL DEFAULT 0 COMMENT '是否缓存（0缓存 1不缓存）',
+  `menu_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
+  `visible` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
+  `perms` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '权限标识',
+  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '#' COMMENT '菜单图标',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`menu_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2057 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_menu
+-- ----------------------------
+INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 1, 'system', NULL, '', '', 1, 0, 'M', '0', '0', '', 'system', 'admin', '2024-08-24 08:16:41', '', NULL, '系统管理目录');
+INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 2, 'monitor', NULL, '', '', 1, 0, 'M', '0', '0', '', 'monitor', 'admin', '2024-08-24 08:16:41', '', NULL, '系统监控目录');
+INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 3, 'tool', NULL, '', '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', '2024-08-24 08:16:41', '', NULL, '系统工具目录');
+INSERT INTO `sys_menu` VALUES (100, '用户管理', 1, 1, 'user', 'system/user/index', '', '', 1, 0, 'C', '0', '0', 'system:user:list', 'user', 'admin', '2024-08-24 08:16:41', '', NULL, '用户管理菜单');
+INSERT INTO `sys_menu` VALUES (101, '角色管理', 1, 2, 'role', 'system/role/index', '', '', 1, 0, 'C', '0', '0', 'system:role:list', 'peoples', 'admin', '2024-08-24 08:16:41', '', NULL, '角色管理菜单');
+INSERT INTO `sys_menu` VALUES (102, '菜单管理', 1, 3, 'menu', 'system/menu/index', '', '', 1, 0, 'C', '0', '0', 'system:menu:list', 'tree-table', 'admin', '2024-08-24 08:16:41', '', NULL, '菜单管理菜单');
+INSERT INTO `sys_menu` VALUES (103, '部门管理', 1, 4, 'dept', 'system/dept/index', '', '', 1, 0, 'C', '0', '0', 'system:dept:list', 'tree', 'admin', '2024-08-24 08:16:41', '', NULL, '部门管理菜单');
+INSERT INTO `sys_menu` VALUES (104, '岗位管理', 1, 5, 'post', 'system/post/index', '', '', 1, 0, 'C', '0', '0', 'system:post:list', 'post', 'admin', '2024-08-24 08:16:41', '', NULL, '岗位管理菜单');
+INSERT INTO `sys_menu` VALUES (105, '字典管理', 1, 6, 'dict', 'system/dict/index', '', '', 1, 0, 'C', '0', '0', 'system:dict:list', 'dict', 'admin', '2024-08-24 08:16:41', '', NULL, '字典管理菜单');
+INSERT INTO `sys_menu` VALUES (106, '参数设置', 1, 7, 'config', 'system/config/index', '', '', 1, 0, 'C', '0', '0', 'system:config:list', 'edit', 'admin', '2024-08-24 08:16:41', '', NULL, '参数设置菜单');
+INSERT INTO `sys_menu` VALUES (107, '通知公告', 1, 8, 'notice', 'system/notice/index', '', '', 1, 0, 'C', '0', '0', 'system:notice:list', 'message', 'admin', '2024-08-24 08:16:41', '', NULL, '通知公告菜单');
+INSERT INTO `sys_menu` VALUES (108, '日志管理', 1, 9, 'log', '', '', '', 1, 0, 'M', '0', '0', '', 'log', 'admin', '2024-08-24 08:16:41', '', NULL, '日志管理菜单');
+INSERT INTO `sys_menu` VALUES (109, '在线用户', 2, 1, 'online', 'monitor/online/index', '', '', 1, 0, 'C', '0', '0', 'monitor:online:list', 'online', 'admin', '2024-08-24 08:16:41', '', NULL, '在线用户菜单');
+INSERT INTO `sys_menu` VALUES (110, '定时任务', 2, 2, 'job', 'monitor/job/index', '', '', 1, 0, 'C', '0', '0', 'monitor:job:list', 'job', 'admin', '2024-08-24 08:16:41', '', NULL, '定时任务菜单');
+INSERT INTO `sys_menu` VALUES (111, '数据监控', 2, 3, 'druid', 'monitor/druid/index', '', '', 1, 0, 'C', '0', '0', 'monitor:druid:list', 'druid', 'admin', '2024-08-24 08:16:41', '', NULL, '数据监控菜单');
+INSERT INTO `sys_menu` VALUES (112, '服务监控', 2, 4, 'server', 'monitor/server/index', '', '', 1, 0, 'C', '0', '0', 'monitor:server:list', 'server', 'admin', '2024-08-24 08:16:41', '', NULL, '服务监控菜单');
+INSERT INTO `sys_menu` VALUES (113, '缓存监控', 2, 5, 'cache', 'monitor/cache/index', '', '', 1, 0, 'C', '0', '0', 'monitor:cache:list', 'redis', 'admin', '2024-08-24 08:16:42', '', NULL, '缓存监控菜单');
+INSERT INTO `sys_menu` VALUES (114, '缓存列表', 2, 6, 'cacheList', 'monitor/cache/list', '', '', 1, 0, 'C', '0', '0', 'monitor:cache:list', 'redis-list', 'admin', '2024-08-24 08:16:42', '', NULL, '缓存列表菜单');
+INSERT INTO `sys_menu` VALUES (115, '表单构建', 3, 1, 'build', 'tool/build/index', '', '', 1, 0, 'C', '0', '0', 'tool:build:list', 'build', 'admin', '2024-08-24 08:16:42', '', NULL, '表单构建菜单');
+INSERT INTO `sys_menu` VALUES (116, '代码生成', 3, 2, 'gen', 'tool/gen/index', '', '', 1, 0, 'C', '0', '0', 'tool:gen:list', 'code', 'admin', '2024-08-24 08:16:42', '', NULL, '代码生成菜单');
+INSERT INTO `sys_menu` VALUES (117, '系统接口', 3, 3, 'swagger', 'tool/swagger/index', '', '', 1, 0, 'C', '0', '0', 'tool:swagger:list', 'swagger', 'admin', '2024-08-24 08:16:42', '', NULL, '系统接口菜单');
+INSERT INTO `sys_menu` VALUES (500, '操作日志', 108, 1, 'operlog', 'monitor/operlog/index', '', '', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'form', 'admin', '2024-08-24 08:16:42', '', NULL, '操作日志菜单');
+INSERT INTO `sys_menu` VALUES (501, '登录日志', 108, 2, 'logininfor', 'monitor/logininfor/index', '', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor', 'admin', '2024-08-24 08:16:42', '', NULL, '登录日志菜单');
+INSERT INTO `sys_menu` VALUES (1000, '用户查询', 100, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'system:user:query', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1001, '用户新增', 100, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'system:user:add', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1002, '用户修改', 100, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'system:user:edit', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1003, '用户删除', 100, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'system:user:remove', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1004, '用户导出', 100, 5, '', '', '', '', 1, 0, 'F', '0', '0', 'system:user:export', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1005, '用户导入', 100, 6, '', '', '', '', 1, 0, 'F', '0', '0', 'system:user:import', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1006, '重置密码', 100, 7, '', '', '', '', 1, 0, 'F', '0', '0', 'system:user:resetPwd', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1007, '角色查询', 101, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'system:role:query', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1008, '角色新增', 101, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'system:role:add', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1009, '角色修改', 101, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'system:role:edit', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1010, '角色删除', 101, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'system:role:remove', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1011, '角色导出', 101, 5, '', '', '', '', 1, 0, 'F', '0', '0', 'system:role:export', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1012, '菜单查询', 102, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'system:menu:query', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1013, '菜单新增', 102, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'system:menu:add', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1014, '菜单修改', 102, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'system:menu:edit', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1015, '菜单删除', 102, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'system:menu:remove', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1016, '部门查询', 103, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'system:dept:query', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1017, '部门新增', 103, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'system:dept:add', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1018, '部门修改', 103, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'system:dept:edit', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1019, '部门删除', 103, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'system:dept:remove', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1020, '岗位查询', 104, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'system:post:query', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1021, '岗位新增', 104, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'system:post:add', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1022, '岗位修改', 104, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'system:post:edit', '#', 'admin', '2024-08-24 08:16:42', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1023, '岗位删除', 104, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'system:post:remove', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1024, '岗位导出', 104, 5, '', '', '', '', 1, 0, 'F', '0', '0', 'system:post:export', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1025, '字典查询', 105, 1, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:dict:query', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1026, '字典新增', 105, 2, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:dict:add', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1027, '字典修改', 105, 3, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:dict:edit', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1028, '字典删除', 105, 4, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:dict:remove', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1029, '字典导出', 105, 5, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:dict:export', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1030, '参数查询', 106, 1, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:config:query', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1031, '参数新增', 106, 2, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:config:add', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1032, '参数修改', 106, 3, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:config:edit', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1033, '参数删除', 106, 4, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:config:remove', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1034, '参数导出', 106, 5, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:config:export', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1035, '公告查询', 107, 1, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:notice:query', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1036, '公告新增', 107, 2, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:notice:add', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1037, '公告修改', 107, 3, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:notice:edit', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1038, '公告删除', 107, 4, '#', '', '', '', 1, 0, 'F', '0', '0', 'system:notice:remove', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1039, '操作查询', 500, 1, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:operlog:query', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1040, '操作删除', 500, 2, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:operlog:remove', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1041, '日志导出', 500, 3, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:operlog:export', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1042, '登录查询', 501, 1, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:logininfor:query', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1043, '登录删除', 501, 2, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:logininfor:remove', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1044, '日志导出', 501, 3, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:logininfor:export', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1045, '账户解锁', 501, 4, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:logininfor:unlock', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1046, '在线查询', 109, 1, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:online:query', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1047, '批量强退', 109, 2, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:online:batchLogout', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1048, '单条强退', 109, 3, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:online:forceLogout', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1049, '任务查询', 110, 1, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:job:query', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1050, '任务新增', 110, 2, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:job:add', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1051, '任务修改', 110, 3, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:job:edit', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1052, '任务删除', 110, 4, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:job:remove', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1053, '状态修改', 110, 5, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:job:changeStatus', '#', 'admin', '2024-08-24 08:16:43', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1054, '任务导出', 110, 6, '#', '', '', '', 1, 0, 'F', '0', '0', 'monitor:job:export', '#', 'admin', '2024-08-24 08:16:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1055, '生成查询', 116, 1, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:query', '#', 'admin', '2024-08-24 08:16:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1056, '生成修改', 116, 2, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:edit', '#', 'admin', '2024-08-24 08:16:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1057, '生成删除', 116, 3, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:remove', '#', 'admin', '2024-08-24 08:16:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1058, '导入代码', 116, 4, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', '2024-08-24 08:16:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1059, '预览代码', 116, 5, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2024-08-24 08:16:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1060, '生成代码', 116, 6, '#', '', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2024-08-24 08:16:44', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2000, '场地管理', 0, 5, 'area', '', NULL, '', 1, 0, 'M', '0', '0', '', 'build', 'admin', '2024-08-24 08:21:11', 'admin', '2024-08-24 09:20:28', '【请填写功能名称】菜单');
+INSERT INTO `sys_menu` VALUES (2001, '【 场地】查询', 2026, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:area:query', '#', 'admin', '2024-08-24 08:21:11', 'admin', '2024-08-27 15:42:46', '');
+INSERT INTO `sys_menu` VALUES (2002, '【场地】新增', 2026, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:area:add', '#', 'admin', '2024-08-24 08:21:11', 'admin', '2024-08-24 09:14:24', '');
+INSERT INTO `sys_menu` VALUES (2003, '【场地】修改', 2026, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:area:edit', '#', 'admin', '2024-08-24 08:21:11', 'admin', '2024-08-24 09:14:33', '');
+INSERT INTO `sys_menu` VALUES (2004, '【场地】删除', 2026, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:area:remove', '#', 'admin', '2024-08-24 08:21:11', 'admin', '2024-08-24 09:14:45', '');
+INSERT INTO `sys_menu` VALUES (2005, '【场地】导出', 2026, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:area:export', '#', 'admin', '2024-08-24 08:21:11', 'admin', '2024-08-24 09:14:54', '');
+INSERT INTO `sys_menu` VALUES (2006, '设备管理', 0, 6, 'device', '', NULL, '', 1, 0, 'M', '0', '0', '', 'documentation', 'admin', '2024-08-24 08:36:43', 'admin', '2024-08-24 09:20:44', '【请填写功能名称】菜单');
+INSERT INTO `sys_menu` VALUES (2007, '【设备】查询', 2027, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:device:query', '#', 'admin', '2024-08-24 08:36:43', 'admin', '2024-08-24 09:18:23', '');
+INSERT INTO `sys_menu` VALUES (2008, '【设备】新增', 2027, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:device:add', '#', 'admin', '2024-08-24 08:36:43', 'admin', '2024-08-24 09:18:34', '');
+INSERT INTO `sys_menu` VALUES (2009, '【设备】修改', 2027, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:device:edit', '#', 'admin', '2024-08-24 08:36:43', 'admin', '2024-08-24 09:18:42', '');
+INSERT INTO `sys_menu` VALUES (2010, '【设备】删除', 2027, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:device:remove', '#', 'admin', '2024-08-24 08:36:43', 'admin', '2024-08-24 09:18:49', '');
+INSERT INTO `sys_menu` VALUES (2011, '【设备】导出', 2027, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:device:export', '#', 'admin', '2024-08-24 08:36:44', 'admin', '2024-08-24 09:18:56', '');
+INSERT INTO `sys_menu` VALUES (2012, '植物管理', 0, 7, 'plant', '', NULL, '', 1, 0, 'M', '0', '0', '', 'chart', 'admin', '2024-08-24 08:41:08', 'admin', '2024-08-24 09:22:27', '【请填写功能名称】菜单');
+INSERT INTO `sys_menu` VALUES (2013, '【植物】查询', 2028, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:plant:query', '#', 'admin', '2024-08-24 08:41:09', 'admin', '2024-08-24 09:22:39', '');
+INSERT INTO `sys_menu` VALUES (2014, '【植物】新增', 2028, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:plant:add', '#', 'admin', '2024-08-24 08:41:10', 'admin', '2024-08-24 09:22:53', '');
+INSERT INTO `sys_menu` VALUES (2015, '【植物】修改', 2028, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:plant:edit', '#', 'admin', '2024-08-24 08:41:10', 'admin', '2024-08-24 09:23:06', '');
+INSERT INTO `sys_menu` VALUES (2016, '【植物】删除', 2028, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:plant:remove', '#', 'admin', '2024-08-24 08:41:10', 'admin', '2024-08-24 09:22:59', '');
+INSERT INTO `sys_menu` VALUES (2017, '【植物】导出', 2028, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:plant:export', '#', 'admin', '2024-08-24 08:41:10', 'admin', '2024-08-24 09:23:14', '');
+INSERT INTO `sys_menu` VALUES (2018, '监控数据', 0, 8, 'record', '', NULL, '', 1, 0, 'M', '0', '0', '', 'monitor', 'admin', '2024-08-24 08:44:49', 'admin', '2024-08-24 09:07:58', '【请填写功能名称】菜单');
+INSERT INTO `sys_menu` VALUES (2019, '【数据】查询', 2024, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:record:query', '#', 'admin', '2024-08-24 08:44:49', 'admin', '2024-08-24 09:02:50', '');
+INSERT INTO `sys_menu` VALUES (2020, '【数据】新增', 2024, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:record:add', '#', 'admin', '2024-08-24 08:44:49', 'admin', '2024-08-24 09:03:27', '');
+INSERT INTO `sys_menu` VALUES (2021, '【数据】修改', 2024, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:record:edit', '#', 'admin', '2024-08-24 08:44:49', 'admin', '2024-08-24 09:03:37', '');
+INSERT INTO `sys_menu` VALUES (2022, '【数据】删除', 2024, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:record:remove', '#', 'admin', '2024-08-24 08:44:49', 'admin', '2024-08-24 09:03:46', '');
+INSERT INTO `sys_menu` VALUES (2023, '【数据】导出', 2024, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:record:export', '#', 'admin', '2024-08-24 08:44:49', 'admin', '2024-08-24 09:03:53', '');
+INSERT INTO `sys_menu` VALUES (2024, '监控记录', 2018, 1, 'record', 'system/record/index', NULL, '', 1, 0, 'C', '0', '0', 'system:record:list', 'chart', 'admin', '2024-08-24 09:01:01', 'admin', '2024-08-24 09:02:29', '');
+INSERT INTO `sys_menu` VALUES (2025, '大屏显示', 2018, 2, 'contro', 'system/control/index', NULL, '', 1, 0, 'C', '0', '0', '', 'monitor', 'admin', '2024-08-24 09:04:33', 'admin', '2024-08-24 09:05:34', '');
+INSERT INTO `sys_menu` VALUES (2026, '场地管理', 2000, 1, 'area', 'system/area/index', NULL, '', 1, 0, 'C', '0', '0', 'system:area:list', 'international', 'admin', '2024-08-24 09:13:33', 'admin', '2024-08-24 09:53:01', '');
+INSERT INTO `sys_menu` VALUES (2027, '设备管理', 2006, 1, 'device', 'system/device/index', NULL, '', 1, 0, 'C', '0', '0', 'system:device:list', 'dict', 'admin', '2024-08-24 09:17:49', 'admin', '2024-08-24 09:53:23', '');
+INSERT INTO `sys_menu` VALUES (2028, '植物管理', 2012, 1, 'plant', 'system/plant/index', NULL, '', 1, 0, 'C', '0', '0', 'system:plant:list', 'list', 'admin', '2024-08-24 09:22:09', 'admin', '2024-08-24 09:53:35', '');
+INSERT INTO `sys_menu` VALUES (2035, '病虫预防', 2036, 1, 'pets', 'system/pets/index', NULL, '', 1, 0, 'C', '0', '0', 'system:pets:list', 'bug', 'admin', '2025-07-06 19:31:23', 'admin', '2025-07-06 20:07:13', '');
+INSERT INTO `sys_menu` VALUES (2036, '疾病预防', 0, 9, 'disease', NULL, NULL, '', 1, 0, 'M', '0', '0', NULL, 'drag', 'admin', '2025-07-06 20:06:57', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2037, '元素分析', 2036, 2, 'elementAnalsis', 'system/elementAnalsis/index', NULL, '', 1, 0, 'C', '0', '0', 'system:elementAnalsis:list', 'redis-list', 'admin', '2025-07-25 09:58:22', 'admin', '2025-07-25 10:42:52', '');
+INSERT INTO `sys_menu` VALUES (2040, '智能分析', 0, 10, 'analysis', NULL, NULL, '', 1, 0, 'M', '0', '0', '', 'druid', 'admin', '2025-08-18 10:25:07', 'admin', '2025-08-18 10:25:21', '');
+INSERT INTO `sys_menu` VALUES (2041, '草莓产量预测', 2040, 6, 'starryCluster', 'system/starryCluster/index', NULL, '', 1, 0, 'C', '0', '0', 'system:starryCluster:list', 'form', 'admin', '2025-08-18 10:36:51', 'admin', '2025-09-02 08:43:01', '产量预期菜单');
+INSERT INTO `sys_menu` VALUES (2042, '产量预期查询', 2041, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:starryCluster:query', '#', 'admin', '2025-08-18 10:36:51', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2043, '产量预期新增', 2041, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:starryCluster:add', '#', 'admin', '2025-08-18 10:36:51', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2044, '产量预期修改', 2041, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:starryCluster:edit', '#', 'admin', '2025-08-18 10:36:51', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2045, '产量预期删除', 2041, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:starryCluster:remove', '#', 'admin', '2025-08-18 10:36:51', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2046, '产量预期导出', 2041, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:starryCluster:export', '#', 'admin', '2025-08-18 10:36:51', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2047, '病虫害分析', 2040, 6, 'disease', 'system/disease/index', NULL, '', 1, 0, 'C', '0', '0', 'system:disease:list', 'bug', 'admin', '2025-08-18 14:09:32', 'admin', '2025-09-02 08:41:29', '病虫害分析菜单');
+INSERT INTO `sys_menu` VALUES (2048, '病虫害分析查询', 2047, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:disease:query', '#', 'admin', '2025-08-18 14:09:32', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2049, '病虫害分析新增', 2047, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:disease:add', '#', 'admin', '2025-08-18 14:09:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2050, '病虫害分析修改', 2047, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:disease:edit', '#', 'admin', '2025-08-18 14:09:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2051, '病虫害分析删除', 2047, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:disease:remove', '#', 'admin', '2025-08-18 14:09:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2052, '病虫害分析导出', 2047, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'system:disease:export', '#', 'admin', '2025-08-18 14:09:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2053, '智能专家交互', 2040, 1, 'Chat', 'system/chat/index', NULL, '', 1, 0, 'C', '0', '0', '', 'qq', 'admin', '2025-08-19 09:32:28', 'admin', '2025-09-02 08:39:06', '');
+INSERT INTO `sys_menu` VALUES (2054, '专家知识库管理', 2040, 0, 'professional', 'system/professional/index', NULL, '', 1, 0, 'C', '0', '0', '', 'pdf', 'admin', '2025-08-19 09:34:31', 'admin', '2025-09-02 08:38:58', '');
+INSERT INTO `sys_menu` VALUES (2055, '草莓产量总览', 2040, 2, 'strawBerry', 'system/strawBerry/index', NULL, '', 1, 0, 'C', '1', '0', 'system:strawBerry:index', 'monitor', 'admin', '2025-08-26 08:39:23', 'admin', '2025-09-02 08:41:18', '');
+INSERT INTO `sys_menu` VALUES (2056, '生长模型管理', 2040, 3, 'controll', 'system/controll/index', NULL, '', 1, 0, 'C', '0', '0', '', 'fullscreen', 'admin', '2025-09-01 16:39:30', 'admin', '2025-09-02 09:50:14', '');
+INSERT INTO `sys_menu` VALUES (2057, '精准生长智控', 2040, 4, 'smartContro', 'system/smartContro/index', NULL, '', 1, 0, 'C', '0', '0', '', 'time', 'admin', '2025-09-01 23:28:43', 'admin', '2025-09-02 09:50:00', '');
+
+-- ----------------------------
+-- Table structure for sys_notice
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_notice`;
+CREATE TABLE `sys_notice`  (
+  `notice_id` int NOT NULL AUTO_INCREMENT COMMENT '公告ID',
+  `notice_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '公告标题',
+  `notice_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '公告类型（1通知 2公告）',
+  `notice_content` longblob NULL COMMENT '公告内容',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '公告状态（0正常 1关闭）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`notice_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_notice
+-- ----------------------------
+INSERT INTO `sys_notice` VALUES (1, '温馨提醒：2018-07-01 若依新版本发布啦', '2', 0xE696B0E78988E69CACE58685E5AEB9, '0', 'admin', '2024-08-24 08:16:51', '', NULL, '管理员');
+INSERT INTO `sys_notice` VALUES (2, '维护通知：2018-07-01 若依系统凌晨维护', '1', 0xE7BBB4E68AA4E58685E5AEB9, '0', 'admin', '2024-08-24 08:16:51', '', NULL, '管理员');
+
+-- ----------------------------
+-- Table structure for sys_oper_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_oper_log`;
+CREATE TABLE `sys_oper_log`  (
+  `oper_id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '模块标题',
+  `business_type` int NULL DEFAULT 0 COMMENT '业务类型（0其它 1新增 2修改 3删除）',
+  `method` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '方法名称',
+  `request_method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '请求方式',
+  `operator_type` int NULL DEFAULT 0 COMMENT '操作类别（0其它 1后台用户 2手机端用户）',
+  `oper_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '操作人员',
+  `dept_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '部门名称',
+  `oper_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '请求URL',
+  `oper_ip` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '主机地址',
+  `oper_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '操作地点',
+  `oper_param` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '请求参数',
+  `json_result` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '返回参数',
+  `status` int NULL DEFAULT 0 COMMENT '操作状态（0正常 1异常）',
+  `error_msg` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '错误消息',
+  `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
+  `cost_time` bigint NULL DEFAULT 0 COMMENT '消耗时间',
+  PRIMARY KEY (`oper_id`) USING BTREE,
+  INDEX `idx_sys_oper_log_bt`(`business_type`) USING BTREE,
+  INDEX `idx_sys_oper_log_s`(`status`) USING BTREE,
+  INDEX `idx_sys_oper_log_ot`(`oper_time`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 308 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_oper_log
+-- ----------------------------
+INSERT INTO `sys_oper_log` VALUES (100, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/manage/index\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"场地管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":3,\"path\":\"manage\",\"perms\":\"system:manage:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:22:24', 133);
+INSERT INTO `sys_oper_log` VALUES (101, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2001,\"menuName\":\"【 场地】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:manage:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:22:46', 104);
+INSERT INTO `sys_oper_log` VALUES (102, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2002,\"menuName\":\"【场地】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:manage:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:22:54', 175);
+INSERT INTO `sys_oper_log` VALUES (103, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2003,\"menuName\":\"【场地】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:manage:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:23:02', 48);
+INSERT INTO `sys_oper_log` VALUES (104, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2004,\"menuName\":\"【场地】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:manage:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:23:10', 187);
+INSERT INTO `sys_oper_log` VALUES (105, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2005,\"menuName\":\"【场地】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:manage:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:23:18', 49);
+INSERT INTO `sys_oper_log` VALUES (106, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/manage/index\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"build\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"场地管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:manage:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:23:50', 82);
+INSERT INTO `sys_oper_log` VALUES (107, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/manage/index\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"build\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"场地管理\",\"menuType\":\"C\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:manage:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:24:13', 181);
+INSERT INTO `sys_oper_log` VALUES (108, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/area/index\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"build\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"场地管理\",\"menuType\":\"C\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:manage:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:25:17', 174);
+INSERT INTO `sys_oper_log` VALUES (109, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/manage/index\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"documentation\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2006,\"menuName\":\"设备管理\",\"menuType\":\"C\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:manage:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:38:27', 163);
+INSERT INTO `sys_oper_log` VALUES (110, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2007,\"menuName\":\"【设备】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:manage:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:38:43', 168);
+INSERT INTO `sys_oper_log` VALUES (111, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2008,\"menuName\":\"【设备】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:manage:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:38:49', 177);
+INSERT INTO `sys_oper_log` VALUES (112, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2009,\"menuName\":\"【设备】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:manage:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:38:55', 128);
+INSERT INTO `sys_oper_log` VALUES (113, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2010,\"menuName\":\"【设备】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:manage:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:39:03', 111);
+INSERT INTO `sys_oper_log` VALUES (114, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:44\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2011,\"menuName\":\"【设备】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:manage:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:39:10', 182);
+INSERT INTO `sys_oper_log` VALUES (115, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/device/index\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"documentation\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2006,\"menuName\":\"设备管理\",\"menuType\":\"C\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:manage:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:40:13', 195);
+INSERT INTO `sys_oper_log` VALUES (116, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/plant/index\",\"createTime\":\"2024-08-24 08:41:08\",\"icon\":\"chart\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2012,\"menuName\":\"植物管理\",\"menuType\":\"C\",\"orderNum\":7,\"params\":{},\"parentId\":3,\"path\":\"manage\",\"perms\":\"system:manage:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:42:31', 123);
+INSERT INTO `sys_oper_log` VALUES (117, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/plant/index\",\"createTime\":\"2024-08-24 08:41:08\",\"icon\":\"chart\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2012,\"menuName\":\"植物管理\",\"menuType\":\"C\",\"orderNum\":7,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:manage:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:43:04', 196);
+INSERT INTO `sys_oper_log` VALUES (118, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:09\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2013,\"menuName\":\"【植物】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:manage:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:43:24', 174);
+INSERT INTO `sys_oper_log` VALUES (119, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2014,\"menuName\":\"【植物】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:manage:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:43:31', 118);
+INSERT INTO `sys_oper_log` VALUES (120, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2015,\"menuName\":\"【植物】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:manage:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:43:37', 175);
+INSERT INTO `sys_oper_log` VALUES (121, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2016,\"menuName\":\"【植物】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:manage:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:43:45', 116);
+INSERT INTO `sys_oper_log` VALUES (122, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2017,\"menuName\":\"【植物】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:manage:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:43:53', 135);
+INSERT INTO `sys_oper_log` VALUES (123, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/record/index\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2018,\"menuName\":\"监控数据\",\"menuType\":\"C\",\"orderNum\":8,\"params\":{},\"parentId\":0,\"path\":\"record\",\"perms\":\"system:record:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:45:35', 185);
+INSERT INTO `sys_oper_log` VALUES (124, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/record/index\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"monitor\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2018,\"menuName\":\"监控数据\",\"menuType\":\"C\",\"orderNum\":8,\"params\":{},\"parentId\":0,\"path\":\"record\",\"perms\":\"system:record:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:46:33', 129);
+INSERT INTO `sys_oper_log` VALUES (125, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2019,\"menuName\":\"【数据】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2018,\"path\":\"#\",\"perms\":\"system:record:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:46:50', 135);
+INSERT INTO `sys_oper_log` VALUES (126, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2020,\"menuName\":\"【数据】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2018,\"path\":\"#\",\"perms\":\"system:record:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:46:55', 162);
+INSERT INTO `sys_oper_log` VALUES (127, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2021,\"menuName\":\"【数据】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2018,\"path\":\"#\",\"perms\":\"system:record:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:47:03', 128);
+INSERT INTO `sys_oper_log` VALUES (128, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2022,\"menuName\":\"【数据】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2018,\"path\":\"#\",\"perms\":\"system:record:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:47:09', 177);
+INSERT INTO `sys_oper_log` VALUES (129, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2023,\"menuName\":\"【数据】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2018,\"path\":\"#\",\"perms\":\"system:record:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:47:16', 190);
+INSERT INTO `sys_oper_log` VALUES (130, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/area/index\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"build\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"场地管理\",\"menuType\":\"C\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:area:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:48:14', 169);
+INSERT INTO `sys_oper_log` VALUES (131, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2001,\"menuName\":\"【 场地】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:area:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:48:27', 144);
+INSERT INTO `sys_oper_log` VALUES (132, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2002,\"menuName\":\"【场地】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:area:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:48:35', 103);
+INSERT INTO `sys_oper_log` VALUES (133, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2003,\"menuName\":\"【场地】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:area:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:48:42', 190);
+INSERT INTO `sys_oper_log` VALUES (134, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2004,\"menuName\":\"【场地】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:area:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:48:52', 108);
+INSERT INTO `sys_oper_log` VALUES (135, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2005,\"menuName\":\"【场地】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2000,\"path\":\"#\",\"perms\":\"system:area:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:49:03', 190);
+INSERT INTO `sys_oper_log` VALUES (136, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/device/index\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"documentation\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2006,\"menuName\":\"设备管理\",\"menuType\":\"C\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:device:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:49:20', 180);
+INSERT INTO `sys_oper_log` VALUES (137, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2007,\"menuName\":\"【设备】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:device:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:49:34', 130);
+INSERT INTO `sys_oper_log` VALUES (138, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2008,\"menuName\":\"【设备】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:device:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:49:44', 181);
+INSERT INTO `sys_oper_log` VALUES (139, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2009,\"menuName\":\"【设备】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:device:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:49:52', 172);
+INSERT INTO `sys_oper_log` VALUES (140, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2010,\"menuName\":\"【设备】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:device:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:50:00', 124);
+INSERT INTO `sys_oper_log` VALUES (141, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2010,\"menuName\":\"【设备】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:device:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:50:09', 176);
+INSERT INTO `sys_oper_log` VALUES (142, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:44\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2011,\"menuName\":\"【设备】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2006,\"path\":\"#\",\"perms\":\"system:device:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:50:20', 180);
+INSERT INTO `sys_oper_log` VALUES (143, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/plant/index\",\"createTime\":\"2024-08-24 08:41:08\",\"icon\":\"chart\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2012,\"menuName\":\"植物管理\",\"menuType\":\"C\",\"orderNum\":7,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:plant:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:51:07', 133);
+INSERT INTO `sys_oper_log` VALUES (144, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:09\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2013,\"menuName\":\"【植物】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:plant:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:51:16', 155);
+INSERT INTO `sys_oper_log` VALUES (145, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2014,\"menuName\":\"【植物】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:plant:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:51:24', 178);
+INSERT INTO `sys_oper_log` VALUES (146, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2015,\"menuName\":\"【植物】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:plant:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:51:32', 186);
+INSERT INTO `sys_oper_log` VALUES (147, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2016,\"menuName\":\"【植物】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:plant:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:51:39', 55);
+INSERT INTO `sys_oper_log` VALUES (148, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2017,\"menuName\":\"【植物】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2012,\"path\":\"#\",\"perms\":\"system:plant:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 08:51:47', 130);
+INSERT INTO `sys_oper_log` VALUES (149, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"监控记录\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2018,\"path\":\"record\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:01:02', 217);
+INSERT INTO `sys_oper_log` VALUES (150, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/record/index\",\"createTime\":\"2024-08-24 09:01:01\",\"icon\":\"chart\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2024,\"menuName\":\"监控记录\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2018,\"path\":\"record\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:01:58', 97);
+INSERT INTO `sys_oper_log` VALUES (151, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/record/index\",\"createTime\":\"2024-08-24 09:01:01\",\"icon\":\"chart\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2024,\"menuName\":\"监控记录\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2018,\"path\":\"record\",\"perms\":\"system:record:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:02:29', 107);
+INSERT INTO `sys_oper_log` VALUES (152, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2019,\"menuName\":\"【数据】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2024,\"path\":\"#\",\"perms\":\"system:record:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:02:50', 168);
+INSERT INTO `sys_oper_log` VALUES (153, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2020,\"menuName\":\"【数据】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"path\":\"#\",\"perms\":\"system:record:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:03:11', 97);
+INSERT INTO `sys_oper_log` VALUES (154, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2020,\"menuName\":\"【数据】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2024,\"path\":\"#\",\"perms\":\"system:record:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:03:27', 133);
+INSERT INTO `sys_oper_log` VALUES (155, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2021,\"menuName\":\"【数据】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2024,\"path\":\"#\",\"perms\":\"system:record:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:03:37', 126);
+INSERT INTO `sys_oper_log` VALUES (156, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2022,\"menuName\":\"【数据】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2024,\"path\":\"#\",\"perms\":\"system:record:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:03:46', 174);
+INSERT INTO `sys_oper_log` VALUES (157, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2023,\"menuName\":\"【数据】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2024,\"path\":\"#\",\"perms\":\"system:record:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:03:53', 116);
+INSERT INTO `sys_oper_log` VALUES (158, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"icon\":\"monitor\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"大屏显示\",\"menuType\":\"M\",\"orderNum\":2,\"params\":{},\"parentId\":2018,\"path\":\"contro\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:04:33', 174);
+INSERT INTO `sys_oper_log` VALUES (159, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/control/index\",\"createTime\":\"2024-08-24 09:04:33\",\"icon\":\"monitor\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2025,\"menuName\":\"大屏显示\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2018,\"path\":\"contro\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:05:34', 174);
+INSERT INTO `sys_oper_log` VALUES (160, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"monitor\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2018,\"menuName\":\"监控数据\",\"menuType\":\"C\",\"orderNum\":8,\"params\":{},\"parentId\":0,\"path\":\"record\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:07:10', 142);
+INSERT INTO `sys_oper_log` VALUES (161, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:44:49\",\"icon\":\"monitor\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2018,\"menuName\":\"监控数据\",\"menuType\":\"M\",\"orderNum\":8,\"params\":{},\"parentId\":0,\"path\":\"record\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:07:58', 140);
+INSERT INTO `sys_oper_log` VALUES (162, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/area/index\",\"createBy\":\"admin\",\"icon\":\"international\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"场地管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2000,\"path\":\"area\",\"perms\":\"system:area:index\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:13:33', 187);
+INSERT INTO `sys_oper_log` VALUES (163, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/area/index\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"build\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"场地管理\",\"menuType\":\"M\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"system:area:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:13:44', 175);
+INSERT INTO `sys_oper_log` VALUES (164, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2001,\"menuName\":\"【 场地】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2026,\"path\":\"#\",\"perms\":\"system:area:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:14:06', 85);
+INSERT INTO `sys_oper_log` VALUES (165, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2002,\"menuName\":\"【场地】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2026,\"path\":\"#\",\"perms\":\"system:area:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:14:24', 137);
+INSERT INTO `sys_oper_log` VALUES (166, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2003,\"menuName\":\"【场地】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2026,\"path\":\"#\",\"perms\":\"system:area:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:14:34', 131);
+INSERT INTO `sys_oper_log` VALUES (167, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2004,\"menuName\":\"【场地】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2026,\"path\":\"#\",\"perms\":\"system:area:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:14:46', 463);
+INSERT INTO `sys_oper_log` VALUES (168, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2005,\"menuName\":\"【场地】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2026,\"path\":\"#\",\"perms\":\"system:area:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:14:54', 181);
+INSERT INTO `sys_oper_log` VALUES (169, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"build\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"场地管理\",\"menuType\":\"M\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:16:05', 181);
+INSERT INTO `sys_oper_log` VALUES (170, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/device/index\",\"createBy\":\"admin\",\"icon\":\"dict\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"设备管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2006,\"path\":\"device\",\"perms\":\"system:device:index\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:17:49', 189);
+INSERT INTO `sys_oper_log` VALUES (171, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"documentation\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2006,\"menuName\":\"设备管理\",\"menuType\":\"M\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"manage\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:18:03', 138);
+INSERT INTO `sys_oper_log` VALUES (172, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2007,\"menuName\":\"【设备】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2027,\"path\":\"#\",\"perms\":\"system:device:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:18:23', 140);
+INSERT INTO `sys_oper_log` VALUES (173, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2008,\"menuName\":\"【设备】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2027,\"path\":\"#\",\"perms\":\"system:device:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:18:34', 171);
+INSERT INTO `sys_oper_log` VALUES (174, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2009,\"menuName\":\"【设备】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2027,\"path\":\"#\",\"perms\":\"system:device:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:18:42', 106);
+INSERT INTO `sys_oper_log` VALUES (175, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2010,\"menuName\":\"【设备】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2027,\"path\":\"#\",\"perms\":\"system:device:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:18:49', 171);
+INSERT INTO `sys_oper_log` VALUES (176, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:44\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2011,\"menuName\":\"【设备】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2027,\"path\":\"#\",\"perms\":\"system:device:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:18:56', 188);
+INSERT INTO `sys_oper_log` VALUES (177, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"build\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"场地管理\",\"menuType\":\"M\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"area\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:20:28', 136);
+INSERT INTO `sys_oper_log` VALUES (178, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:36:43\",\"icon\":\"documentation\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2006,\"menuName\":\"设备管理\",\"menuType\":\"M\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"device\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:20:44', 143);
+INSERT INTO `sys_oper_log` VALUES (179, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/plant/index\",\"createBy\":\"admin\",\"icon\":\"list\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"植物管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2012,\"path\":\"plant\",\"perms\":\"system:plant:index\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:22:10', 168);
+INSERT INTO `sys_oper_log` VALUES (180, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:08\",\"icon\":\"chart\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2012,\"menuName\":\"植物管理\",\"menuType\":\"M\",\"orderNum\":7,\"params\":{},\"parentId\":0,\"path\":\"plant\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:22:27', 38);
+INSERT INTO `sys_oper_log` VALUES (181, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:09\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2013,\"menuName\":\"【植物】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2028,\"path\":\"#\",\"perms\":\"system:plant:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:22:39', 88);
+INSERT INTO `sys_oper_log` VALUES (182, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2014,\"menuName\":\"【植物】新增\",\"menuType\":\"F\",\"orderNum\":2,\"params\":{},\"parentId\":2028,\"path\":\"#\",\"perms\":\"system:plant:add\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:22:53', 149);
+INSERT INTO `sys_oper_log` VALUES (183, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2016,\"menuName\":\"【植物】删除\",\"menuType\":\"F\",\"orderNum\":4,\"params\":{},\"parentId\":2028,\"path\":\"#\",\"perms\":\"system:plant:remove\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:23:00', 141);
+INSERT INTO `sys_oper_log` VALUES (184, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2015,\"menuName\":\"【植物】修改\",\"menuType\":\"F\",\"orderNum\":3,\"params\":{},\"parentId\":2028,\"path\":\"#\",\"perms\":\"system:plant:edit\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:23:06', 82);
+INSERT INTO `sys_oper_log` VALUES (185, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:41:10\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2017,\"menuName\":\"【植物】导出\",\"menuType\":\"F\",\"orderNum\":5,\"params\":{},\"parentId\":2028,\"path\":\"#\",\"perms\":\"system:plant:export\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:23:14', 189);
+INSERT INTO `sys_oper_log` VALUES (186, '角色管理', 1, 'com.ruoyi.web.controller.system.SysRoleController.add()', 'POST', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptCheckStrictly\":true,\"deptIds\":[],\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2026,2001,2002,2003,2004,2005,2006,2027,2007,2008,2009,2010,2011,2012,2028,2013,2014,2015,2016,2017,2018,2024,2019,2020,2021,2022,2023,2025],\"params\":{},\"roleId\":100,\"roleKey\":\"strawberry\",\"roleName\":\"草莓经理\",\"roleSort\":3,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:31:21', 156);
+INSERT INTO `sys_oper_log` VALUES (187, '角色管理', 1, 'com.ruoyi.web.controller.system.SysRoleController.add()', 'POST', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptCheckStrictly\":true,\"deptIds\":[],\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2026,2001,2002,2003,2004,2005,2006,2027,2007,2008,2009,2010,2011,2012,2028,2013,2014,2015,2016,2017,2018,2024,2019,2020,2021,2022,2023,2025],\"params\":{},\"roleId\":101,\"roleKey\":\"mushroom\",\"roleName\":\"菌类经理\",\"roleSort\":0,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:32:07', 170);
+INSERT INTO `sys_oper_log` VALUES (188, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createTime\":\"2024-08-24 09:32:07\",\"dataScope\":\"1\",\"delFlag\":\"0\",\"deptCheckStrictly\":true,\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[2000,2026,2001,2002,2003,2004,2005,2006,2027,2007,2008,2009,2010,2011,2012,2028,2013,2014,2015,2016,2017,2018,2024,2019,2020,2021,2022,2023,2025],\"params\":{},\"roleId\":101,\"roleKey\":\"mushroom\",\"roleName\":\"菌类经理\",\"roleSort\":4,\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:32:27', 145);
+INSERT INTO `sys_oper_log` VALUES (189, '部门管理', 3, 'com.ruoyi.web.controller.system.SysDeptController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/dept/109', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:33:39', 184);
+INSERT INTO `sys_oper_log` VALUES (190, '部门管理', 3, 'com.ruoyi.web.controller.system.SysDeptController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/dept/108', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:33:41', 108);
+INSERT INTO `sys_oper_log` VALUES (191, '部门管理', 2, 'com.ruoyi.web.controller.system.SysDeptController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/dept', '127.0.0.1', '内网IP', '{\"ancestors\":\"0,100\",\"children\":[],\"deptId\":102,\"deptName\":\"东软物联网\",\"email\":\"zhangyong@neusoft.edu.cn\",\"leader\":\"张永\",\"orderNum\":2,\"params\":{},\"parentId\":100,\"parentName\":\"若依科技\",\"phone\":\"18504245638\",\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:35:13', 433);
+INSERT INTO `sys_oper_log` VALUES (192, '部门管理', 1, 'com.ruoyi.web.controller.system.SysDeptController.add()', 'POST', 1, 'admin', '研发部门', '/system/dept', '127.0.0.1', '内网IP', '{\"ancestors\":\"0,100,102\",\"children\":[],\"createBy\":\"admin\",\"deptName\":\"长春草莓种植基地\",\"leader\":\"曲韧涛\",\"orderNum\":1,\"params\":{},\"parentId\":102,\"phone\":\"18943949110\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:36:31', 136);
+INSERT INTO `sys_oper_log` VALUES (193, '部门管理', 1, 'com.ruoyi.web.controller.system.SysDeptController.add()', 'POST', 1, 'admin', '研发部门', '/system/dept', '127.0.0.1', '内网IP', '{\"ancestors\":\"0,100,102\",\"children\":[],\"createBy\":\"admin\",\"deptName\":\"朝阳羊肚菌种植基地\",\"leader\":\"郑松涛\",\"orderNum\":2,\"params\":{},\"parentId\":102,\"phone\":\"15389888766\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:37:48', 108);
+INSERT INTO `sys_oper_log` VALUES (194, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.add()', 'POST', 1, 'admin', '研发部门', '/system/user', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptId\":200,\"nickName\":\"曲经理\",\"params\":{},\"postIds\":[2],\"roleIds\":[100],\"sex\":\"0\",\"status\":\"0\",\"userId\":100,\"userName\":\"changchun\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:39:27', 194);
+INSERT INTO `sys_oper_log` VALUES (195, '用户管理', 1, 'com.ruoyi.web.controller.system.SysUserController.add()', 'POST', 1, 'admin', '研发部门', '/system/user', '127.0.0.1', '内网IP', '{\"admin\":false,\"createBy\":\"admin\",\"deptId\":201,\"nickName\":\"郑经理\",\"params\":{},\"postIds\":[2],\"roleIds\":[101],\"sex\":\"0\",\"status\":\"0\",\"userId\":101,\"userName\":\"chaoyang\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:39:57', 289);
+INSERT INTO `sys_oper_log` VALUES (196, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/area/index\",\"createTime\":\"2024-08-24 09:13:33\",\"icon\":\"international\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2026,\"menuName\":\"场地管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2000,\"path\":\"area\",\"perms\":\"system:area:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:53:02', 172);
+INSERT INTO `sys_oper_log` VALUES (197, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/device/index\",\"createTime\":\"2024-08-24 09:17:49\",\"icon\":\"dict\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2027,\"menuName\":\"设备管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2006,\"path\":\"device\",\"perms\":\"system:device:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:53:23', 186);
+INSERT INTO `sys_oper_log` VALUES (198, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/plant/index\",\"createTime\":\"2024-08-24 09:22:09\",\"icon\":\"list\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2028,\"menuName\":\"植物管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2012,\"path\":\"plant\",\"perms\":\"system:plant:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-24 09:53:35', 115);
+INSERT INTO `sys_oper_log` VALUES (199, '代码生成', 6, 'com.ruoyi.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"area_manage\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 09:31:35', 275);
+INSERT INTO `sys_oper_log` VALUES (200, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"area_manage\"}', NULL, 0, NULL, '2024-08-27 09:33:18', 794);
+INSERT INTO `sys_oper_log` VALUES (201, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-27 14:54:28\",\"icon\":\"cascader\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2029,\"menuName\":\"场地管理\",\"menuType\":\"M\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"area\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"修改菜单\'场地管理\'失败，菜单名称已存在\",\"code\":500}', 0, NULL, '2024-08-27 15:11:32', 21);
+INSERT INTO `sys_oper_log` VALUES (202, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-27 14:54:28\",\"icon\":\"cascader\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2029,\"menuName\":\"场地管理1\",\"menuType\":\"M\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"area\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:11:40', 75);
+INSERT INTO `sys_oper_log` VALUES (203, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/area/index\",\"createTime\":\"2024-08-27 14:54:28\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2030,\"menuName\":\"【场地】查询\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2029,\"path\":\"area\",\"perms\":\"system:area:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:24:57', 122);
+INSERT INTO `sys_oper_log` VALUES (204, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/area/index\",\"createTime\":\"2024-08-27 14:54:28\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2030,\"menuName\":\"【场地】查询\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2029,\"path\":\"area\",\"perms\":\"system:area:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:27:56', 136);
+INSERT INTO `sys_oper_log` VALUES (205, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2031', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:28:03', 188);
+INSERT INTO `sys_oper_log` VALUES (206, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2032', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:28:06', 120);
+INSERT INTO `sys_oper_log` VALUES (207, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2033', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:28:11', 445);
+INSERT INTO `sys_oper_log` VALUES (208, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2034', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:28:14', 44);
+INSERT INTO `sys_oper_log` VALUES (209, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2030', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:28:18', 43);
+INSERT INTO `sys_oper_log` VALUES (210, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2029', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:28:23', 120);
+INSERT INTO `sys_oper_log` VALUES (211, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createTime\":\"2024-08-24 08:21:11\",\"icon\":\"#\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2001,\"menuName\":\"【 场地】查询\",\"menuType\":\"F\",\"orderNum\":1,\"params\":{},\"parentId\":2026,\"path\":\"#\",\"perms\":\"system:area:query\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2024-08-27 15:42:46', 134);
+INSERT INTO `sys_oper_log` VALUES (212, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/4', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"菜单已分配,不允许删除\",\"code\":601}', 0, NULL, '2025-06-24 15:36:31', 222);
+INSERT INTO `sys_oper_log` VALUES (213, '角色管理', 2, 'com.ruoyi.web.controller.system.SysRoleController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/role', '127.0.0.1', '内网IP', '{\"admin\":false,\"createTime\":\"2024-08-24 08:16:41\",\"dataScope\":\"2\",\"delFlag\":\"0\",\"deptCheckStrictly\":true,\"flag\":false,\"menuCheckStrictly\":true,\"menuIds\":[1,100,1000,1001,1002,1003,1004,1005,1006,101,1007,1008,1009,1010,1011,102,1012,1013,1014,1015,103,1016,1017,1018,1019,104,1020,1021,1022,1023,1024,105,1025,1026,1027,1028,1029,106,1030,1031,1032,1033,1034,107,1035,1036,1037,1038,108,500,1039,1040,1041,501,1042,1043,1044,1045,2,109,1046,1047,1048,110,1049,1050,1051,1052,1053,1054,111,112,113,114,3,115,116,1055,1056,1057,1058,1059,1060,117],\"params\":{},\"remark\":\"普通角色\",\"roleId\":2,\"roleKey\":\"common\",\"roleName\":\"普通角色\",\"roleSort\":2,\"status\":\"0\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-24 15:37:11', 362);
+INSERT INTO `sys_oper_log` VALUES (214, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/4', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-06-24 15:37:28', 686);
+INSERT INTO `sys_oper_log` VALUES (215, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/pets/index\",\"createBy\":\"admin\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"病虫预防\",\"menuType\":\"C\",\"orderNum\":9,\"params\":{},\"parentId\":0,\"path\":\"pets\",\"perms\":\"system:pets:list\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-06 19:31:25', 239);
+INSERT INTO `sys_oper_log` VALUES (216, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/pets/index\",\"createTime\":\"2025-07-06 19:31:23\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2035,\"menuName\":\"病虫预防\",\"menuType\":\"C\",\"orderNum\":9,\"params\":{},\"parentId\":0,\"path\":\"pets\",\"perms\":\"system:pets:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-06 19:31:40', 123);
+INSERT INTO `sys_oper_log` VALUES (217, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"病虫预防\",\"menuType\":\"M\",\"orderNum\":9,\"params\":{},\"parentId\":0,\"path\":\"pets\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"新增菜单\'病虫预防\'失败，菜单名称已存在\",\"code\":500}', 0, NULL, '2025-07-06 20:05:11', 4);
+INSERT INTO `sys_oper_log` VALUES (218, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/pets/index\",\"createTime\":\"2025-07-06 19:31:23\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2035,\"menuName\":\"病虫预防\",\"menuType\":\"C\",\"orderNum\":10,\"params\":{},\"parentId\":0,\"path\":\"pets\",\"perms\":\"system:pets:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-06 20:05:33', 197);
+INSERT INTO `sys_oper_log` VALUES (219, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"病虫预防\",\"menuType\":\"M\",\"orderNum\":9,\"params\":{},\"parentId\":0,\"path\":\"pets\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"新增菜单\'病虫预防\'失败，菜单名称已存在\",\"code\":500}', 0, NULL, '2025-07-06 20:05:53', 4);
+INSERT INTO `sys_oper_log` VALUES (220, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"icon\":\"drag\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"疾病预防\",\"menuType\":\"M\",\"orderNum\":9,\"params\":{},\"parentId\":0,\"path\":\"disease\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-06 20:06:57', 448);
+INSERT INTO `sys_oper_log` VALUES (221, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/pets/index\",\"createTime\":\"2025-07-06 19:31:23\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2035,\"menuName\":\"病虫预防\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2036,\"path\":\"pets\",\"perms\":\"system:pets:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-06 20:07:14', 285);
+INSERT INTO `sys_oper_log` VALUES (222, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/elementAnalsis/index\",\"createBy\":\"admin\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"元素分析\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2036,\"path\":\"elementAnalsis\",\"perms\":\"system:elementAnalsis:list\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-25 09:58:23', 219);
+INSERT INTO `sys_oper_log` VALUES (223, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/elementAnalsis/index\",\"createTime\":\"2025-07-25 09:58:22\",\"icon\":\"redis-list\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2037,\"menuName\":\"元素分析\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2036,\"path\":\"elementAnalsis\",\"perms\":\"system:elementAnalsis:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-25 10:42:52', 65);
+INSERT INTO `sys_oper_log` VALUES (224, '【修改植物】', 2, 'com.ruoyi.web.controller.system.PlantManageController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/plant', '127.0.0.1', '内网IP', '{\"areaId\":2,\"createBy\":\"admin\",\"createDate\":\"2023-12-21\",\"delFlag\":0,\"params\":{},\"plantId\":1,\"plantLifecycle\":3,\"plantName\":\"草莓\",\"plantType\":\"水果\",\"userId\":0}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-25 15:58:01', 166);
+INSERT INTO `sys_oper_log` VALUES (225, '【修改植物】', 2, 'com.ruoyi.web.controller.system.PlantManageController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/plant', '127.0.0.1', '内网IP', '{\"areaId\":1,\"createBy\":\"admin\",\"createDate\":\"2024-01-25\",\"delFlag\":0,\"params\":{},\"plantId\":2,\"plantLifecycle\":3,\"plantName\":\"羊肚菌\",\"plantType\":\"菌类\",\"userId\":0}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-07-25 15:58:18', 450);
+INSERT INTO `sys_oper_log` VALUES (226, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1303', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:25:57', 141);
+INSERT INTO `sys_oper_log` VALUES (227, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1302', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:26:02', 131);
+INSERT INTO `sys_oper_log` VALUES (228, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1301', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:26:04', 172);
+INSERT INTO `sys_oper_log` VALUES (229, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1300', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:26:08', 76);
+INSERT INTO `sys_oper_log` VALUES (230, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1224', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:26:47', 149);
+INSERT INTO `sys_oper_log` VALUES (231, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1223', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:26:51', 1064);
+INSERT INTO `sys_oper_log` VALUES (232, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1222', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:26:58', 105);
+INSERT INTO `sys_oper_log` VALUES (233, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1226,1225,1221,1220,1219,1218,1217', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:27:12', 130);
+INSERT INTO `sys_oper_log` VALUES (234, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1216,1215,1214,1213,1212,1211,1210', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:27:25', 81);
+INSERT INTO `sys_oper_log` VALUES (235, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1209,1208,1207,1206,1205,1204,1203', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:27:38', 84);
+INSERT INTO `sys_oper_log` VALUES (236, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1202,1201,1200,1199,1198,1197,1196', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-02 08:27:50', 319);
+INSERT INTO `sys_oper_log` VALUES (237, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"数字员工\",\"menuType\":\"M\",\"orderNum\":10,\"params\":{},\"parentId\":0,\"path\":\"dagitalMan\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-05 15:13:53', 176);
+INSERT INTO `sys_oper_log` VALUES (238, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2025-08-05 15:13:53\",\"icon\":\"qq\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2038,\"menuName\":\"数字员工\",\"menuType\":\"M\",\"orderNum\":10,\"params\":{},\"parentId\":0,\"path\":\"dagitalMan\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-05 15:14:36', 93);
+INSERT INTO `sys_oper_log` VALUES (239, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/digitalMan/index\",\"createBy\":\"admin\",\"icon\":\"peoples\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"数字员工\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2038,\"path\":\"digitalMan\",\"perms\":\"system:digitalMan:list\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-05 15:16:39', 225);
+INSERT INTO `sys_oper_log` VALUES (240, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2039', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-06 10:23:27', 414);
+INSERT INTO `sys_oper_log` VALUES (241, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2038', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-06 10:23:32', 926);
+INSERT INTO `sys_oper_log` VALUES (242, '【修改植物】', 2, 'com.ruoyi.web.controller.system.PlantManageController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/plant', '127.0.0.1', '内网IP', '{\"areaId\":2,\"createBy\":\"admin\",\"createDate\":\"2024-01-25\",\"delFlag\":0,\"params\":{},\"plantId\":2,\"plantLifecycle\":3,\"plantName\":\"草莓\",\"plantType\":\"水果\",\"updateDate\":\"2025-08-14\",\"userId\":0}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-14 09:59:23', 426);
+INSERT INTO `sys_oper_log` VALUES (243, '【修改植物】', 2, 'com.ruoyi.web.controller.system.PlantManageController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/plant', '127.0.0.1', '内网IP', '{\"areaId\":1,\"createBy\":\"admin\",\"createDate\":\"2023-12-21\",\"delFlag\":0,\"params\":{},\"plantId\":1,\"plantLifecycle\":3,\"plantName\":\"羊肚菌\",\"plantType\":\"菌类\",\"updateDate\":\"2025-08-13\",\"userId\":0}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-14 09:59:48', 177);
+INSERT INTO `sys_oper_log` VALUES (244, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"icon\":\"druid\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"分析\",\"menuType\":\"M\",\"orderNum\":10,\"params\":{},\"parentId\":0,\"path\":\"analysis\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-18 10:25:07', 106);
+INSERT INTO `sys_oper_log` VALUES (245, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2025-08-18 10:25:07\",\"icon\":\"druid\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2040,\"menuName\":\"智能分析\",\"menuType\":\"M\",\"orderNum\":10,\"params\":{},\"parentId\":0,\"path\":\"analysis\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-18 10:25:21', 89);
+INSERT INTO `sys_oper_log` VALUES (246, '代码生成', 6, 'com.ruoyi.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"strawberry_pest_disease,strawberry_cluster\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-18 10:25:43', 989);
+INSERT INTO `sys_oper_log` VALUES (247, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"starryCluster\",\"className\":\"StrawberryCluster\",\"columns\":[{\"capJavaField\":\"Id\",\"columnId\":15,\"columnName\":\"id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-08-18 10:25:42\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":false,\"isIncrement\":\"1\",\"isInsert\":\"0\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":2,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"ClusterId\",\"columnComment\":\"草莓簇/区域唯一ID\",\"columnId\":16,\"columnName\":\"cluster_id\",\"columnType\":\"varchar(100)\",\"createBy\":\"admin\",\"createTime\":\"2025-08-18 10:25:43\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"clusterId\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":2,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"ClusterName\",\"columnComment\":\"区域/地块名称（例如：温室A北区）\",\"columnId\":17,\"columnName\":\"cluster_name\",\"columnType\":\"varchar(100)\",\"createBy\":\"admin\",\"createTime\":\"2025-08-18 10:25:43\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"0\",\"javaField\":\"clusterName\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"LIKE\",\"required\":false,\"sort\":3,\"superColumn\":false,\"tableId\":2,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"TotalCount\",\"columnComment\":\"簇内草莓总数\",\"columnId\":18,\"columnName\":\"total_count\",\"columnType\":\"int\",\"createBy\":\"admin\",\"createTime\":\"2025-08-18 10:25:43\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\"', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-18 10:27:34', 162);
+INSERT INTO `sys_oper_log` VALUES (248, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"disease\",\"className\":\"StrawberryPestDisease\",\"columns\":[{\"capJavaField\":\"Id\",\"columnId\":28,\"columnName\":\"id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-08-18 10:25:43\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":false,\"isIncrement\":\"1\",\"isInsert\":\"0\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"id\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":3,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"ClusterId\",\"columnComment\":\"对应草莓簇/区域ID\",\"columnId\":29,\"columnName\":\"cluster_id\",\"columnType\":\"varchar(100)\",\"createBy\":\"admin\",\"createTime\":\"2025-08-18 10:25:43\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"clusterId\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":3,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"ObjectType\",\"columnComment\":\"检测对象类型：leaf（叶子）/ fruit（果实）/ stem（茎）\",\"columnId\":30,\"columnName\":\"object_type\",\"columnType\":\"varchar(50)\",\"createBy\":\"admin\",\"createTime\":\"2025-08-18 10:25:43\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"select\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"0\",\"javaField\":\"objectType\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":false,\"sort\":3,\"superColumn\":false,\"tableId\":3,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"BboxXMin\",\"columnComment\":\"边界框最小X坐标（目标检测框左上角X）\",\"columnId\":31,\"columnName\":\"bbox_x_min\",\"columnType\":\"float\",\"createBy\":\"admin\",\"createTime\":\"2025-08-18 10:25:43\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-18 10:33:01', 240);
+INSERT INTO `sys_oper_log` VALUES (249, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"strawberry_cluster\"}', NULL, 0, NULL, '2025-08-18 10:33:05', 733);
+INSERT INTO `sys_oper_log` VALUES (250, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"strawberry_pest_disease\"}', NULL, 0, NULL, '2025-08-18 14:06:08', 322);
+INSERT INTO `sys_oper_log` VALUES (251, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/chat/index\",\"createBy\":\"admin\",\"icon\":\"qq\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"智能专家交互\",\"menuType\":\"C\",\"orderNum\":0,\"params\":{},\"parentId\":2040,\"path\":\"Chat\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-19 09:32:28', 33);
+INSERT INTO `sys_oper_log` VALUES (252, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"\",\"createBy\":\"admin\",\"icon\":\"pdf\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"专家知识库管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2040,\"path\":\"Professional\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-19 09:34:31', 12);
+INSERT INTO `sys_oper_log` VALUES (253, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/professional/index\",\"createTime\":\"2025-08-19 09:34:31\",\"icon\":\"pdf\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2054,\"menuName\":\"专家知识库管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2040,\"path\":\"Professional\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-19 09:35:17', 12);
+INSERT INTO `sys_oper_log` VALUES (254, '产量预期', 3, 'com.ruoyi.web.controller.system.StrawberryClusterController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/starryCluster/1', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-19 10:01:27', 14);
+INSERT INTO `sys_oper_log` VALUES (255, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/professional/index\",\"createTime\":\"2025-08-19 09:34:31\",\"icon\":\"pdf\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2054,\"menuName\":\"专家知识库管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2040,\"path\":\"professional\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-19 11:04:57', 16);
+INSERT INTO `sys_oper_log` VALUES (256, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"avg_size_mm\":25,\"clusterId\":\"1\",\"half_ripe_count\":0,\"id\":4,\"lastUpdate\":\"2025-08-18\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\",\"ripe_count\":2,\"total_count\":3,\"unripe_count\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-21 14:15:21', 30);
+INSERT INTO `sys_oper_log` VALUES (257, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"avg_size_mm\":25,\"clusterId\":\"1\",\"half_ripe_count\":0,\"id\":5,\"lastUpdate\":\"2025-08-18\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\",\"ripe_count\":2,\"total_count\":3,\"unripe_count\":1}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'strawberry_cluster.cluster_id\'\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\StrawberryClusterMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.StrawberryClusterMapper.updateStrawberryCluster-Inline\r\n### The error occurred while setting parameters\r\n### SQL: update strawberry_cluster          SET cluster_id = ?,                          total_count = ?,             ripe_count = ?,             half_ripe_count = ?,             unripe_count = ?,             avg_size_mm = ?,                          latitude = ?,             longitude = ?,             recommendation = ?,             last_update = ?          where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'1\' for key \'strawberry_cluster.cluster_id\'\n; Duplicate entry \'1\' for key \'strawberry_cluster.cluster_id\'', '2025-08-21 14:15:25', 223);
+INSERT INTO `sys_oper_log` VALUES (258, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"avg_size_mm\":25,\"clusterName\":\"1\",\"cluster_id\":\"1\",\"half_ripe_count\":0,\"id\":4,\"lastUpdate\":\"2025-08-21\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\",\"ripe_count\":2,\"total_count\":3,\"unripe_count\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-25 10:35:06', 66);
+INSERT INTO `sys_oper_log` VALUES (259, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"avg_size_mm\":25,\"clusterName\":\"1\",\"cluster_id\":\"2\",\"half_ripe_count\":0,\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\",\"ripe_count\":2,\"total_count\":3,\"unripe_count\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 10:57:42', 32);
+INSERT INTO `sys_oper_log` VALUES (260, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"avg_size_mm\":25,\"clusterName\":\"1\",\"cluster_id\":\"2\",\"half_ripe_count\":0,\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\",\"ripe_count\":2,\"total_count\":3,\"unripe_count\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:07:43', 6);
+INSERT INTO `sys_oper_log` VALUES (261, '病虫害分析', 2, 'com.ruoyi.web.controller.system.StrawberryPestDiseaseController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/disease', '127.0.0.1', '内网IP', '{\"bbox_x_max\":399.003,\"bbox_x_min\":285.035,\"bbox_y_max\":422.491,\"bbox_y_min\":242.215,\"clusterId\":\"1\",\"confidence\":0.84,\"detectedTime\":\"2025-08-18\",\"id\":1,\"object_type\":\"Leaf\",\"params\":{},\"pest_disease_class\":\"anthracnose\",\"recommendation\":\"中度炭疽病，用咪鲜胺\",\"severity_level\":\"medium\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:13:05', 19);
+INSERT INTO `sys_oper_log` VALUES (262, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"avg_size_mm\":25,\"clusterName\":\"1\",\"cluster_id\":\"2\",\"half_ripe_count\":0,\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\",\"ripe_count\":2,\"total_count\":3,\"unripe_count\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:21:06', 6);
+INSERT INTO `sys_oper_log` VALUES (263, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"avg_size_mm\":25,\"clusterName\":\"1\",\"cluster_id\":\"2\",\"half_ripe_count\":0,\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\",\"ripe_count\":2,\"total_count\":3,\"unripe_count\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:24:03', 5);
+INSERT INTO `sys_oper_log` VALUES (264, '病虫害分析', 2, 'com.ruoyi.web.controller.system.StrawberryPestDiseaseController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/disease', '127.0.0.1', '内网IP', '{\"bbox_x_max\":399.003,\"bbox_x_min\":285.035,\"bbox_y_max\":422.491,\"bbox_y_min\":242.215,\"clusterId\":\"12\",\"confidence\":0.84,\"detectedTime\":\"2025-08-18\",\"id\":1,\"object_type\":\"Leaf\",\"params\":{},\"pest_disease_class\":\"anthracnose\",\"recommendation\":\"中度炭疽病，用咪鲜胺\",\"severity_level\":\"medium\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:26:29', 8);
+INSERT INTO `sys_oper_log` VALUES (265, '病虫害分析', 2, 'com.ruoyi.web.controller.system.StrawberryPestDiseaseController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/disease', '127.0.0.1', '内网IP', '{\"bbox_x_max\":399.003,\"bbox_x_min\":285.035,\"bbox_y_max\":422.491,\"bbox_y_min\":242.215,\"clusterId\":\"12\",\"confidence\":0.84,\"detectedTime\":\"2025-08-18\",\"id\":1,\"object_type\":\"Leaf\",\"params\":{},\"pest_disease_class\":\"anthracnose\",\"recommendation\":\"中度炭疽病，用咪鲜胺\",\"severity_level\":\"medium\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:29:45', 6);
+INSERT INTO `sys_oper_log` VALUES (266, '病虫害分析', 2, 'com.ruoyi.web.controller.system.StrawberryPestDiseaseController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/disease', '127.0.0.1', '内网IP', '{\"bbox_x_max\":399.003,\"bbox_x_min\":285.035,\"bbox_y_max\":422.491,\"bbox_y_min\":242.215,\"clusterId\":\"1\",\"confidence\":0.84,\"detectedTime\":\"2025-08-18\",\"id\":1,\"object_type\":\"Leaf\",\"params\":{},\"pest_disease_class\":\"anthracnose\",\"recommendation\":\"中度炭疽病，用咪鲜胺\",\"severity_level\":\"medium\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:31:45', 6);
+INSERT INTO `sys_oper_log` VALUES (267, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"clusterName\":\"1\",\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:31:53', 5);
+INSERT INTO `sys_oper_log` VALUES (268, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"clusterName\":\"1\",\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:32:41', 3);
+INSERT INTO `sys_oper_log` VALUES (269, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"clusterName\":\"1\",\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:35:33', 4);
+INSERT INTO `sys_oper_log` VALUES (270, '病虫害分析', 2, 'com.ruoyi.web.controller.system.StrawberryPestDiseaseController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/disease', '127.0.0.1', '内网IP', '{\"bbox_x_max\":399.003,\"bbox_x_min\":285.035,\"bbox_y_max\":422.491,\"bbox_y_min\":242.215,\"clusterId\":\"2\",\"confidence\":0.84,\"detectedTime\":\"2025-08-18\",\"id\":1,\"object_type\":\"Leaf\",\"params\":{},\"pest_disease_class\":\"anthracnose\",\"recommendation\":\"中度炭疽病，用咪鲜胺\",\"severity_level\":\"medium\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:36:21', 7);
+INSERT INTO `sys_oper_log` VALUES (271, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"clusterName\":\"1\",\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:36:43', 4);
+INSERT INTO `sys_oper_log` VALUES (272, '产量预期', 2, 'com.ruoyi.web.controller.system.StrawberryClusterController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/starryCluster', '127.0.0.1', '内网IP', '{\"clusterId\":\"1\",\"clusterName\":\"1\",\"id\":4,\"lastUpdate\":\"2025-08-25\",\"latitude\":30,\"longitude\":120,\"params\":{},\"recommendation\":\"2颗成熟草莓建议1-2天内采摘；\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-27 11:38:29', 31);
+INSERT INTO `sys_oper_log` VALUES (273, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/955', '127.0.0.1', '内网IP', '[955]', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\MonitorRecordMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.MonitorRecordMapper.deleteMonitorRecordByRecordIds\r\n### The error occurred while executing an update\r\n### SQL: update monitor_record set del_flag=1 where record_id in --         delete from monitor_record where record_id in          (               ?          )\r\n### Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\n; uncategorized SQLException; SQL state [null]; error code [0]; sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )', '2025-08-27 12:02:32', 171);
+INSERT INTO `sys_oper_log` VALUES (274, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/956', '127.0.0.1', '内网IP', '[956]', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\MonitorRecordMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.MonitorRecordMapper.deleteMonitorRecordByRecordIds\r\n### The error occurred while executing an update\r\n### SQL: update monitor_record set del_flag=1 where record_id in --         delete from monitor_record where record_id in          (               ?          )\r\n### Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\n; uncategorized SQLException; SQL state [null]; error code [0]; sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )', '2025-08-27 12:02:35', 2);
+INSERT INTO `sys_oper_log` VALUES (275, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1328', '127.0.0.1', '内网IP', '[1328]', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\MonitorRecordMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.MonitorRecordMapper.deleteMonitorRecordByRecordIds\r\n### The error occurred while executing an update\r\n### SQL: update monitor_record set del_flag=1 where record_id in --         delete from monitor_record where record_id in          (               ?          )\r\n### Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\n; uncategorized SQLException; SQL state [null]; error code [0]; sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )', '2025-08-27 12:31:12', 134);
+INSERT INTO `sys_oper_log` VALUES (276, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1328', '127.0.0.1', '内网IP', '[1328]', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\MonitorRecordMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.MonitorRecordMapper.deleteMonitorRecordByRecordIds\r\n### The error occurred while executing an update\r\n### SQL: update monitor_record set del_flag=1 where record_id in --         delete from monitor_record where record_id in          (               ?          )\r\n### Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\n; uncategorized SQLException; SQL state [null]; error code [0]; sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )', '2025-08-27 12:31:48', 2);
+INSERT INTO `sys_oper_log` VALUES (277, '【新增植物】', 1, 'com.ruoyi.web.controller.system.PlantManageController.add()', 'POST', 1, 'admin', '研发部门', '/system/plant', '127.0.0.1', '内网IP', '{\"areaId\":4,\"createDate\":\"2025-08-04\",\"delFlag\":0,\"params\":{},\"plantLifecycle\":11,\"plantName\":\"1\",\"plantType\":\"1\",\"updateDate\":\"2025-08-05\",\"userId\":1}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\PlantManageMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.PlantManageMapper.insertPlantManage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into plant_manage          ( plant_name,             plant_type,             plant_lifeCycle,             area_id,             create_date,                          update_date,                          del_flag )           values ( ?,             ?,             ?,             ?,             ?,                          ?,                          ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value', '2025-08-27 12:40:30', 44);
+INSERT INTO `sys_oper_log` VALUES (278, '【新增植物】', 1, 'com.ruoyi.web.controller.system.PlantManageController.add()', 'POST', 1, 'admin', '研发部门', '/system/plant', '127.0.0.1', '内网IP', '{\"areaId\":4,\"createDate\":\"2025-08-04\",\"delFlag\":0,\"params\":{},\"plantLifecycle\":11,\"plantName\":\"1\",\"plantType\":\"1\",\"updateDate\":\"2025-08-05\",\"userId\":1}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\PlantManageMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.PlantManageMapper.insertPlantManage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into plant_manage          ( plant_name,             plant_type,             plant_lifeCycle,             area_id,             create_date,                          update_date,                          del_flag )           values ( ?,             ?,             ?,             ?,             ?,                          ?,                          ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value', '2025-08-27 12:40:41', 5);
+INSERT INTO `sys_oper_log` VALUES (279, '【新增植物】', 1, 'com.ruoyi.web.controller.system.PlantManageController.add()', 'POST', 1, 'changchun', '长春草莓种植基地', '/system/plant', '127.0.0.1', '内网IP', '{\"areaId\":2,\"createDate\":\"2025-07-29\",\"delFlag\":0,\"params\":{},\"plantLifecycle\":1,\"plantName\":\"1\",\"plantType\":\"1\",\"updateDate\":\"2025-08-19\",\"userId\":100}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\PlantManageMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.PlantManageMapper.insertPlantManage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into plant_manage          ( plant_name,             plant_type,             plant_lifeCycle,             area_id,             create_date,                          update_date,                          del_flag )           values ( ?,             ?,             ?,             ?,             ?,                          ?,                          ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value', '2025-08-27 12:45:54', 6);
+INSERT INTO `sys_oper_log` VALUES (280, '【删除监控记录】', 3, 'com.ruoyi.web.controller.system.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/1349', '127.0.0.1', '内网IP', '[1349]', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\RuoYi-Vue-master-LoRa\\ruoyi-system\\target\\classes\\mapper\\system\\MonitorRecordMapper.xml]\r\n### The error may involve com.ruoyi.system.mapper.MonitorRecordMapper.deleteMonitorRecordByRecordIds\r\n### The error occurred while executing an update\r\n### SQL: update monitor_record set del_flag=1 where record_id in --         delete from monitor_record where record_id in          (               ?          )\r\n### Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\n; uncategorized SQLException; SQL state [null]; error code [0]; sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )', '2025-08-27 13:24:08', 146);
+INSERT INTO `sys_oper_log` VALUES (281, '【新增场地】', 1, 'com.strawberry.controller.sys.AreaManageController.add()', 'POST', 1, 'admin', '研发部门', '/system/area', '127.0.0.1', '内网IP', '{\"areaAddress\":\"北京市朝阳区XX街道XX号\",\"areaId\":123456,\"areaLeader\":\"张三\",\"areaName\":\"示例场地\",\"areaPhone\":\"13800138000\",\"areaSquare\":50,\"areaState\":\"正常\",\"areaType\":\"农业用地\",\"createDate\":\"2023-09-15\",\"delFlag\":0,\"params\":{},\"startCreateDate\":\"2023-09-01\",\"stopCreateDate\":\"2023-09-30\",\"updateDate\":\"2023-09-16\",\"userId\":1}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Column count doesn\'t match value count at row 1\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\Smart-Strawberry\\Strawberry-system\\target\\classes\\mapper\\system\\AreaManageMapper.xml]\r\n### The error may involve com.strawberry.mapper.AreaManageMapper.insertAreaManage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into area_manage          ( area_id,             area_name,             area_address,             area_type,             area_square,             area_state,             area_leader,             area_phone,             create_date,                          update_date )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,                          ? )\r\n### Cause: java.sql.SQLException: Column count doesn\'t match value count at row 1\n; bad SQL grammar []', '2025-08-30 18:22:06', 304);
+INSERT INTO `sys_oper_log` VALUES (282, '【新增场地】', 1, 'com.strawberry.controller.sys.AreaManageController.add()', 'POST', 1, 'admin', '研发部门', '/system/area', '127.0.0.1', '内网IP', '{\"areaAddress\":\"北京市朝阳区XX街道XX号\",\"areaId\":123456,\"areaLeader\":\"张三\",\"areaName\":\"示例场地\",\"areaPhone\":\"13800138000\",\"areaSquare\":50,\"areaState\":\"正常\",\"areaType\":\"农业用地\",\"createDate\":\"2023-09-15\",\"delFlag\":0,\"params\":{},\"startCreateDate\":\"2023-09-01\",\"stopCreateDate\":\"2023-09-30\",\"userId\":1}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Column count doesn\'t match value count at row 1\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\Smart-Strawberry\\Strawberry-system\\target\\classes\\mapper\\system\\AreaManageMapper.xml]\r\n### The error may involve com.strawberry.mapper.AreaManageMapper.insertAreaManage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into area_manage          ( area_id,             area_name,             area_address,             area_type,             area_square,             area_state,             area_leader,             area_phone,             create_date )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLException: Column count doesn\'t match value count at row 1\n; bad SQL grammar []', '2025-08-30 18:22:49', 6);
+INSERT INTO `sys_oper_log` VALUES (283, '【新增场地】', 1, 'com.strawberry.controller.sys.AreaManageController.add()', 'POST', 1, 'admin', '研发部门', '/system/area', '127.0.0.1', '内网IP', '{\"areaAddress\":\"北京市朝阳区XX街道XX号\",\"areaId\":123456,\"areaLeader\":\"张三\",\"areaName\":\"示例场地\",\"areaPhone\":\"13800138000\",\"areaSquare\":50,\"areaState\":\"正常\",\"areaType\":\"农业用地\",\"createDate\":\"2023-09-15\",\"delFlag\":0,\"params\":{},\"startCreateDate\":\"2023-09-01\",\"stopCreateDate\":\"2023-09-30\",\"userId\":1}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Column count doesn\'t match value count at row 1\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\Smart-Strawberry\\Strawberry-system\\target\\classes\\mapper\\system\\AreaManageMapper.xml]\r\n### The error may involve com.strawberry.mapper.AreaManageMapper.insertAreaManage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into area_manage          ( area_id,             area_name,             area_address,             area_type,             area_square,             area_state,             area_leader,             area_phone,             create_date )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLException: Column count doesn\'t match value count at row 1\n; bad SQL grammar []', '2025-08-30 18:23:01', 6);
+INSERT INTO `sys_oper_log` VALUES (284, '【新增场地】', 1, 'com.strawberry.controller.sys.AreaManageController.add()', 'POST', 1, 'admin', '研发部门', '/system/area', '127.0.0.1', '内网IP', '{\"areaAddress\":\"北京市朝阳区XX街道XX号\",\"areaId\":6,\"areaLeader\":\"张三\",\"areaName\":\"示例场地\",\"areaPhone\":\"13800138000\",\"areaSquare\":50,\"areaState\":\"正常\",\"areaType\":\"农业用地\",\"createDate\":\"2023-09-15\",\"delFlag\":0,\"params\":{},\"startCreateDate\":\"2023-09-01\",\"stopCreateDate\":\"2023-09-30\",\"updateDate\":\"2023-09-16\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-08-30 18:25:26', 171);
+INSERT INTO `sys_oper_log` VALUES (285, '菜单管理', 1, 'com.strawberry.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"智能生长控制\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2040,\"path\":\"1\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-01 16:39:30', 31);
+INSERT INTO `sys_oper_log` VALUES (286, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/disease/index\",\"createTime\":\"2025-08-18 14:09:32\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2047,\"menuName\":\"病虫害分析\",\"menuType\":\"C\",\"orderNum\":3,\"params\":{},\"parentId\":2040,\"path\":\"disease\",\"perms\":\"system:disease:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-01 20:04:02', 25);
+INSERT INTO `sys_oper_log` VALUES (287, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2025-09-01 16:39:30\",\"icon\":\"fullscreen\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2056,\"menuName\":\"智能生长控制\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2040,\"path\":\"1\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-01 20:04:42', 19);
+INSERT INTO `sys_oper_log` VALUES (288, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/starryCluster/index\",\"createTime\":\"2025-08-18 10:36:51\",\"icon\":\"form\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2041,\"menuName\":\"草莓产量预期\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2040,\"path\":\"starryCluster\",\"perms\":\"system:starryCluster:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-01 20:05:00', 16);
+INSERT INTO `sys_oper_log` VALUES (289, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/control/index\",\"createTime\":\"2025-09-01 16:39:30\",\"icon\":\"fullscreen\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2056,\"menuName\":\"智能生长控制\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2040,\"path\":\"1\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-01 20:06:01', 30);
+INSERT INTO `sys_oper_log` VALUES (290, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/controll/index\",\"createTime\":\"2025-09-01 16:39:30\",\"icon\":\"fullscreen\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2056,\"menuName\":\"智能生长控制\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2040,\"path\":\"1\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-01 20:06:57', 16);
+INSERT INTO `sys_oper_log` VALUES (291, '菜单管理', 1, 'com.strawberry.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/smartContro/index\",\"createBy\":\"admin\",\"icon\":\"time\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"实时监控智控\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2040,\"path\":\"2\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-01 23:28:43', 171);
+INSERT INTO `sys_oper_log` VALUES (292, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/professional/index\",\"createTime\":\"2025-08-19 09:34:31\",\"icon\":\"pdf\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2054,\"menuName\":\"专家知识库管理\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2040,\"path\":\"professional\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:38:40', 36);
+INSERT INTO `sys_oper_log` VALUES (293, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/starryCluster/index\",\"createTime\":\"2025-08-18 10:36:51\",\"icon\":\"form\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2041,\"menuName\":\"草莓产量预期\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2040,\"path\":\"starryCluster\",\"perms\":\"system:starryCluster:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:38:49', 10);
+INSERT INTO `sys_oper_log` VALUES (294, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/professional/index\",\"createTime\":\"2025-08-19 09:34:31\",\"icon\":\"pdf\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2054,\"menuName\":\"专家知识库管理\",\"menuType\":\"C\",\"orderNum\":0,\"params\":{},\"parentId\":2040,\"path\":\"professional\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:38:58', 12);
+INSERT INTO `sys_oper_log` VALUES (295, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/chat/index\",\"createTime\":\"2025-08-19 09:32:28\",\"icon\":\"qq\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2053,\"menuName\":\"智能专家交互\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2040,\"path\":\"Chat\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:39:06', 10);
+INSERT INTO `sys_oper_log` VALUES (296, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/smartContro/index\",\"createTime\":\"2025-09-01 23:28:43\",\"icon\":\"time\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2057,\"menuName\":\"精准生长智控\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2040,\"path\":\"2\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:39:43', 11);
+INSERT INTO `sys_oper_log` VALUES (297, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/controll/index\",\"createTime\":\"2025-09-01 16:39:30\",\"icon\":\"fullscreen\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2056,\"menuName\":\"智能生长模型管理\",\"menuType\":\"C\",\"orderNum\":3,\"params\":{},\"parentId\":2040,\"path\":\"1\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:40:17', 12);
+INSERT INTO `sys_oper_log` VALUES (298, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/controll/index\",\"createTime\":\"2025-09-01 16:39:30\",\"icon\":\"fullscreen\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2056,\"menuName\":\"生长模型管理\",\"menuType\":\"C\",\"orderNum\":3,\"params\":{},\"parentId\":2040,\"path\":\"1\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:40:44', 12);
+INSERT INTO `sys_oper_log` VALUES (299, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/starryCluster/index\",\"createTime\":\"2025-08-18 10:36:51\",\"icon\":\"form\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2041,\"menuName\":\"草莓产量预期\",\"menuType\":\"C\",\"orderNum\":6,\"params\":{},\"parentId\":2040,\"path\":\"starryCluster\",\"perms\":\"system:starryCluster:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:41:06', 14);
+INSERT INTO `sys_oper_log` VALUES (300, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/strawBerry/index\",\"createTime\":\"2025-08-26 08:39:23\",\"icon\":\"monitor\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2055,\"menuName\":\"草莓产量总览\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2040,\"path\":\"strawBerry\",\"perms\":\"system:strawBerry:index\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:41:18', 10);
+INSERT INTO `sys_oper_log` VALUES (301, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/disease/index\",\"createTime\":\"2025-08-18 14:09:32\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2047,\"menuName\":\"病虫害分析\",\"menuType\":\"C\",\"orderNum\":6,\"params\":{},\"parentId\":2040,\"path\":\"disease\",\"perms\":\"system:disease:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:41:29', 14);
+INSERT INTO `sys_oper_log` VALUES (302, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/smartContro/index\",\"createTime\":\"2025-09-01 23:28:43\",\"icon\":\"time\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2057,\"menuName\":\"精准生长智控\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":2040,\"path\":\"2\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:41:56', 8);
+INSERT INTO `sys_oper_log` VALUES (303, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/starryCluster/index\",\"createTime\":\"2025-08-18 10:36:51\",\"icon\":\"form\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2041,\"menuName\":\"草莓产量预测\",\"menuType\":\"C\",\"orderNum\":6,\"params\":{},\"parentId\":2040,\"path\":\"starryCluster\",\"perms\":\"system:starryCluster:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 08:43:01', 11);
+INSERT INTO `sys_oper_log` VALUES (304, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/smartContro/index\",\"createTime\":\"2025-09-01 23:28:43\",\"icon\":\"time\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2057,\"menuName\":\"精准生长智控\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":2040,\"path\":\"smartContro\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 09:50:00', 21);
+INSERT INTO `sys_oper_log` VALUES (305, '菜单管理', 2, 'com.strawberry.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/controll/index\",\"createTime\":\"2025-09-01 16:39:30\",\"icon\":\"fullscreen\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2056,\"menuName\":\"生长模型管理\",\"menuType\":\"C\",\"orderNum\":3,\"params\":{},\"parentId\":2040,\"path\":\"controll\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-02 09:50:14', 10);
+INSERT INTO `sys_oper_log` VALUES (306, '【删除监控记录】', 3, 'com.strawberry.controller.sys.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/961', '127.0.0.1', '内网IP', '[961]', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\Smart-Strawberry\\Strawberry-system\\target\\classes\\mapper\\system\\MonitorRecordMapper.xml]\r\n### The error may involve com.strawberry.mapper.MonitorRecordMapper.deleteMonitorRecordByRecordIds\r\n### The error occurred while executing an update\r\n### SQL: update monitor_record set del_flag=1 where record_id in --         delete from monitor_record where record_id in          (               ?          )\r\n### Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\n; uncategorized SQLException; SQL state [null]; error code [0]; sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )', '2025-09-02 18:57:26', 233);
+INSERT INTO `sys_oper_log` VALUES (307, '【删除监控记录】', 3, 'com.strawberry.controller.sys.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/961', '127.0.0.1', '内网IP', '[961]', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\Smart-Strawberry\\Strawberry-system\\target\\classes\\mapper\\system\\MonitorRecordMapper.xml]\r\n### The error may involve com.strawberry.mapper.MonitorRecordMapper.deleteMonitorRecordByRecordIds\r\n### The error occurred while executing an update\r\n### SQL: update monitor_record set del_flag=1 where record_id in --         delete from monitor_record where record_id in          (               ?          )\r\n### Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\n; uncategorized SQLException; SQL state [null]; error code [0]; sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )', '2025-09-02 18:57:26', 3);
+INSERT INTO `sys_oper_log` VALUES (308, '【删除监控记录】', 3, 'com.strawberry.controller.sys.MonitorRecordController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/record/3111', '127.0.0.1', '内网IP', '[3111]', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\r\n### The error may exist in file [D:\\Desktop\\郑州智慧农业\\new\\Smart-Strawberry\\Strawberry-system\\target\\classes\\mapper\\system\\MonitorRecordMapper.xml]\r\n### The error may involve com.strawberry.mapper.MonitorRecordMapper.deleteMonitorRecordByRecordIds\r\n### The error occurred while executing an update\r\n### SQL: update monitor_record set del_flag=1 where record_id in --         delete from monitor_record where record_id in          (               ?          )\r\n### Cause: java.sql.SQLException: sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )\n; uncategorized SQLException; SQL state [null]; error code [0]; sql injection violation, dbType mysql, druid-version 1.2.23, comment not allow : update monitor_record set del_flag=1 where record_id in\n--         delete from monitor_record where record_id in\n         (  \n            ?\n         )', '2025-09-02 22:40:54', 177);
+
+-- ----------------------------
+-- Table structure for sys_post
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_post`;
+CREATE TABLE `sys_post`  (
+  `post_id` bigint NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
+  `post_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '岗位编码',
+  `post_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '岗位名称',
+  `post_sort` int NOT NULL COMMENT '显示顺序',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`post_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '岗位信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_post
+-- ----------------------------
+INSERT INTO `sys_post` VALUES (1, 'ceo', '董事长', 1, '0', 'admin', '2024-08-24 08:16:40', '', NULL, '');
+INSERT INTO `sys_post` VALUES (2, 'se', '项目经理', 2, '0', 'admin', '2024-08-24 08:16:40', '', NULL, '');
+INSERT INTO `sys_post` VALUES (3, 'hr', '人力资源', 3, '0', 'admin', '2024-08-24 08:16:40', '', NULL, '');
+INSERT INTO `sys_post` VALUES (4, 'user', '普通员工', 4, '0', 'admin', '2024-08-24 08:16:40', '', NULL, '');
+
+-- ----------------------------
+-- Table structure for sys_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role`  (
+  `role_id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `role_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '角色名称',
+  `role_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '角色权限字符串',
+  `role_sort` int NOT NULL COMMENT '显示顺序',
+  `data_scope` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
+  `menu_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '菜单树选择项是否关联显示',
+  `dept_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '部门树选择项是否关联显示',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '角色状态（0正常 1停用）',
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`role_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+INSERT INTO `sys_role` VALUES (1, '超级管理员', 'admin', 1, '1', 1, 1, '0', '0', 'admin', '2024-08-24 08:16:41', '', NULL, '超级管理员');
+INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', 1, 1, '0', '0', 'admin', '2024-08-24 08:16:41', 'admin', '2025-06-24 15:37:11', '普通角色');
+INSERT INTO `sys_role` VALUES (100, '草莓经理', 'strawberry', 3, '1', 1, 1, '0', '0', 'admin', '2024-08-24 09:31:21', '', NULL, NULL);
+INSERT INTO `sys_role` VALUES (101, '菌类经理', 'mushroom', 4, '1', 1, 1, '0', '0', 'admin', '2024-08-24 09:32:07', 'admin', '2024-08-24 09:32:27', NULL);
+
+-- ----------------------------
+-- Table structure for sys_role_dept
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role_dept`;
+CREATE TABLE `sys_role_dept`  (
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `dept_id` bigint NOT NULL COMMENT '部门ID',
+  PRIMARY KEY (`role_id`, `dept_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '角色和部门关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_role_dept
+-- ----------------------------
+INSERT INTO `sys_role_dept` VALUES (2, 100);
+INSERT INTO `sys_role_dept` VALUES (2, 101);
+INSERT INTO `sys_role_dept` VALUES (2, 105);
+
+-- ----------------------------
+-- Table structure for sys_role_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role_menu`;
+CREATE TABLE `sys_role_menu`  (
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `menu_id` bigint NOT NULL COMMENT '菜单ID',
+  PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_role_menu
+-- ----------------------------
+INSERT INTO `sys_role_menu` VALUES (2, 1);
+INSERT INTO `sys_role_menu` VALUES (2, 2);
+INSERT INTO `sys_role_menu` VALUES (2, 3);
+INSERT INTO `sys_role_menu` VALUES (2, 100);
+INSERT INTO `sys_role_menu` VALUES (2, 101);
+INSERT INTO `sys_role_menu` VALUES (2, 102);
+INSERT INTO `sys_role_menu` VALUES (2, 103);
+INSERT INTO `sys_role_menu` VALUES (2, 104);
+INSERT INTO `sys_role_menu` VALUES (2, 105);
+INSERT INTO `sys_role_menu` VALUES (2, 106);
+INSERT INTO `sys_role_menu` VALUES (2, 107);
+INSERT INTO `sys_role_menu` VALUES (2, 108);
+INSERT INTO `sys_role_menu` VALUES (2, 109);
+INSERT INTO `sys_role_menu` VALUES (2, 110);
+INSERT INTO `sys_role_menu` VALUES (2, 111);
+INSERT INTO `sys_role_menu` VALUES (2, 112);
+INSERT INTO `sys_role_menu` VALUES (2, 113);
+INSERT INTO `sys_role_menu` VALUES (2, 114);
+INSERT INTO `sys_role_menu` VALUES (2, 115);
+INSERT INTO `sys_role_menu` VALUES (2, 116);
+INSERT INTO `sys_role_menu` VALUES (2, 117);
+INSERT INTO `sys_role_menu` VALUES (2, 500);
+INSERT INTO `sys_role_menu` VALUES (2, 501);
+INSERT INTO `sys_role_menu` VALUES (2, 1000);
+INSERT INTO `sys_role_menu` VALUES (2, 1001);
+INSERT INTO `sys_role_menu` VALUES (2, 1002);
+INSERT INTO `sys_role_menu` VALUES (2, 1003);
+INSERT INTO `sys_role_menu` VALUES (2, 1004);
+INSERT INTO `sys_role_menu` VALUES (2, 1005);
+INSERT INTO `sys_role_menu` VALUES (2, 1006);
+INSERT INTO `sys_role_menu` VALUES (2, 1007);
+INSERT INTO `sys_role_menu` VALUES (2, 1008);
+INSERT INTO `sys_role_menu` VALUES (2, 1009);
+INSERT INTO `sys_role_menu` VALUES (2, 1010);
+INSERT INTO `sys_role_menu` VALUES (2, 1011);
+INSERT INTO `sys_role_menu` VALUES (2, 1012);
+INSERT INTO `sys_role_menu` VALUES (2, 1013);
+INSERT INTO `sys_role_menu` VALUES (2, 1014);
+INSERT INTO `sys_role_menu` VALUES (2, 1015);
+INSERT INTO `sys_role_menu` VALUES (2, 1016);
+INSERT INTO `sys_role_menu` VALUES (2, 1017);
+INSERT INTO `sys_role_menu` VALUES (2, 1018);
+INSERT INTO `sys_role_menu` VALUES (2, 1019);
+INSERT INTO `sys_role_menu` VALUES (2, 1020);
+INSERT INTO `sys_role_menu` VALUES (2, 1021);
+INSERT INTO `sys_role_menu` VALUES (2, 1022);
+INSERT INTO `sys_role_menu` VALUES (2, 1023);
+INSERT INTO `sys_role_menu` VALUES (2, 1024);
+INSERT INTO `sys_role_menu` VALUES (2, 1025);
+INSERT INTO `sys_role_menu` VALUES (2, 1026);
+INSERT INTO `sys_role_menu` VALUES (2, 1027);
+INSERT INTO `sys_role_menu` VALUES (2, 1028);
+INSERT INTO `sys_role_menu` VALUES (2, 1029);
+INSERT INTO `sys_role_menu` VALUES (2, 1030);
+INSERT INTO `sys_role_menu` VALUES (2, 1031);
+INSERT INTO `sys_role_menu` VALUES (2, 1032);
+INSERT INTO `sys_role_menu` VALUES (2, 1033);
+INSERT INTO `sys_role_menu` VALUES (2, 1034);
+INSERT INTO `sys_role_menu` VALUES (2, 1035);
+INSERT INTO `sys_role_menu` VALUES (2, 1036);
+INSERT INTO `sys_role_menu` VALUES (2, 1037);
+INSERT INTO `sys_role_menu` VALUES (2, 1038);
+INSERT INTO `sys_role_menu` VALUES (2, 1039);
+INSERT INTO `sys_role_menu` VALUES (2, 1040);
+INSERT INTO `sys_role_menu` VALUES (2, 1041);
+INSERT INTO `sys_role_menu` VALUES (2, 1042);
+INSERT INTO `sys_role_menu` VALUES (2, 1043);
+INSERT INTO `sys_role_menu` VALUES (2, 1044);
+INSERT INTO `sys_role_menu` VALUES (2, 1045);
+INSERT INTO `sys_role_menu` VALUES (2, 1046);
+INSERT INTO `sys_role_menu` VALUES (2, 1047);
+INSERT INTO `sys_role_menu` VALUES (2, 1048);
+INSERT INTO `sys_role_menu` VALUES (2, 1049);
+INSERT INTO `sys_role_menu` VALUES (2, 1050);
+INSERT INTO `sys_role_menu` VALUES (2, 1051);
+INSERT INTO `sys_role_menu` VALUES (2, 1052);
+INSERT INTO `sys_role_menu` VALUES (2, 1053);
+INSERT INTO `sys_role_menu` VALUES (2, 1054);
+INSERT INTO `sys_role_menu` VALUES (2, 1055);
+INSERT INTO `sys_role_menu` VALUES (2, 1056);
+INSERT INTO `sys_role_menu` VALUES (2, 1057);
+INSERT INTO `sys_role_menu` VALUES (2, 1058);
+INSERT INTO `sys_role_menu` VALUES (2, 1059);
+INSERT INTO `sys_role_menu` VALUES (2, 1060);
+INSERT INTO `sys_role_menu` VALUES (100, 2000);
+INSERT INTO `sys_role_menu` VALUES (100, 2001);
+INSERT INTO `sys_role_menu` VALUES (100, 2002);
+INSERT INTO `sys_role_menu` VALUES (100, 2003);
+INSERT INTO `sys_role_menu` VALUES (100, 2004);
+INSERT INTO `sys_role_menu` VALUES (100, 2005);
+INSERT INTO `sys_role_menu` VALUES (100, 2006);
+INSERT INTO `sys_role_menu` VALUES (100, 2007);
+INSERT INTO `sys_role_menu` VALUES (100, 2008);
+INSERT INTO `sys_role_menu` VALUES (100, 2009);
+INSERT INTO `sys_role_menu` VALUES (100, 2010);
+INSERT INTO `sys_role_menu` VALUES (100, 2011);
+INSERT INTO `sys_role_menu` VALUES (100, 2012);
+INSERT INTO `sys_role_menu` VALUES (100, 2013);
+INSERT INTO `sys_role_menu` VALUES (100, 2014);
+INSERT INTO `sys_role_menu` VALUES (100, 2015);
+INSERT INTO `sys_role_menu` VALUES (100, 2016);
+INSERT INTO `sys_role_menu` VALUES (100, 2017);
+INSERT INTO `sys_role_menu` VALUES (100, 2018);
+INSERT INTO `sys_role_menu` VALUES (100, 2019);
+INSERT INTO `sys_role_menu` VALUES (100, 2020);
+INSERT INTO `sys_role_menu` VALUES (100, 2021);
+INSERT INTO `sys_role_menu` VALUES (100, 2022);
+INSERT INTO `sys_role_menu` VALUES (100, 2023);
+INSERT INTO `sys_role_menu` VALUES (100, 2024);
+INSERT INTO `sys_role_menu` VALUES (100, 2025);
+INSERT INTO `sys_role_menu` VALUES (100, 2026);
+INSERT INTO `sys_role_menu` VALUES (100, 2027);
+INSERT INTO `sys_role_menu` VALUES (100, 2028);
+INSERT INTO `sys_role_menu` VALUES (101, 2000);
+INSERT INTO `sys_role_menu` VALUES (101, 2001);
+INSERT INTO `sys_role_menu` VALUES (101, 2002);
+INSERT INTO `sys_role_menu` VALUES (101, 2003);
+INSERT INTO `sys_role_menu` VALUES (101, 2004);
+INSERT INTO `sys_role_menu` VALUES (101, 2005);
+INSERT INTO `sys_role_menu` VALUES (101, 2006);
+INSERT INTO `sys_role_menu` VALUES (101, 2007);
+INSERT INTO `sys_role_menu` VALUES (101, 2008);
+INSERT INTO `sys_role_menu` VALUES (101, 2009);
+INSERT INTO `sys_role_menu` VALUES (101, 2010);
+INSERT INTO `sys_role_menu` VALUES (101, 2011);
+INSERT INTO `sys_role_menu` VALUES (101, 2012);
+INSERT INTO `sys_role_menu` VALUES (101, 2013);
+INSERT INTO `sys_role_menu` VALUES (101, 2014);
+INSERT INTO `sys_role_menu` VALUES (101, 2015);
+INSERT INTO `sys_role_menu` VALUES (101, 2016);
+INSERT INTO `sys_role_menu` VALUES (101, 2017);
+INSERT INTO `sys_role_menu` VALUES (101, 2018);
+INSERT INTO `sys_role_menu` VALUES (101, 2019);
+INSERT INTO `sys_role_menu` VALUES (101, 2020);
+INSERT INTO `sys_role_menu` VALUES (101, 2021);
+INSERT INTO `sys_role_menu` VALUES (101, 2022);
+INSERT INTO `sys_role_menu` VALUES (101, 2023);
+INSERT INTO `sys_role_menu` VALUES (101, 2024);
+INSERT INTO `sys_role_menu` VALUES (101, 2025);
+INSERT INTO `sys_role_menu` VALUES (101, 2026);
+INSERT INTO `sys_role_menu` VALUES (101, 2027);
+INSERT INTO `sys_role_menu` VALUES (101, 2028);
+
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user`  (
+  `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `dept_id` bigint NULL DEFAULT NULL COMMENT '部门ID',
+  `user_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '用户账号',
+  `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NOT NULL COMMENT '用户昵称',
+  `user_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '00' COMMENT '用户类型（00系统用户）',
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '用户邮箱',
+  `phonenumber` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '手机号码',
+  `sex` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
+  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '头像地址',
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '密码',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `login_ip` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '最后登录IP',
+  `login_date` datetime NULL DEFAULT NULL COMMENT '最后登录时间',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_is_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`user_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-09-04 22:30:07', 'admin', '2024-08-24 08:16:40', '', '2025-09-04 22:30:07', '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-08-24 08:16:40', 'admin', '2024-08-24 08:16:40', '', NULL, '测试员');
+INSERT INTO `sys_user` VALUES (100, 200, 'changchun', '曲经理', '00', '', '', '0', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-08-27 12:48:36', 'admin', '2024-08-24 09:39:27', '', '2025-08-27 12:48:36', NULL);
+INSERT INTO `sys_user` VALUES (101, 201, 'chaoyang', '郑经理', '00', '', '', '0', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2024-08-24 10:04:25', 'admin', '2024-08-24 09:39:57', '', '2024-08-24 10:04:24', NULL);
+
+-- ----------------------------
+-- Table structure for sys_user_post
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_post`;
+CREATE TABLE `sys_user_post`  (
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `post_id` bigint NOT NULL COMMENT '岗位ID',
+  PRIMARY KEY (`user_id`, `post_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '用户与岗位关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_user_post
+-- ----------------------------
+INSERT INTO `sys_user_post` VALUES (1, 1);
+INSERT INTO `sys_user_post` VALUES (2, 2);
+INSERT INTO `sys_user_post` VALUES (100, 2);
+INSERT INTO `sys_user_post` VALUES (101, 2);
+
+-- ----------------------------
+-- Table structure for sys_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_role`;
+CREATE TABLE `sys_user_role`  (
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  PRIMARY KEY (`user_id`, `role_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_is_0900_ai_ci COMMENT = '用户和角色关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_user_role
+-- ----------------------------
+INSERT INTO `sys_user_role` VALUES (1, 1);
+INSERT INTO `sys_user_role` VALUES (2, 2);
+INSERT INTO `sys_user_role` VALUES (100, 100);
+INSERT INTO `sys_user_role` VALUES (101, 101);
+
+SET FOREIGN_KEY_CHECKS = 1;

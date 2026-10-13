@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enokimushroom.mapper.DeviceManageMapper">
+    
+    <resultMap type="DeviceManage" id="DeviceManageResult">
+        <result property="deviceId"    column="device_id"    />
+        <result property="deviceNumber"    column="device_number"    />
+        <result property="deviceType"    column="device_type"    />
+        <result property="plantId"    column="plant_id"    />
+        <result property="plantName"    column="plant_name"    />
+        <result property="areaId"    column="area_id"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="deviceState"    column="device_state"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <resultMap type="DeviceManageVo" id="DeviceManageResultVo">
+        <result property="totalDevices"    column="totalDevices"    />
+        <result property="activeDevices"    column="activeDevices"    />
+        <result property="usageRate"    column="usageRate"    />
+    </resultMap>
+
+    <sql id="selectDeviceManageVo">
+        select device_id, device_number, device_type, plant_id, area_id, device_state, device_name, create_date, create_by, update_date, update_by, del_flag from device_manage
+    </sql>
+
+    <select id="selectDeviceManageList" parameterType="DeviceManage" resultMap="DeviceManageResult">
+        select dm.device_id, dm.device_number, dm.device_type, dm.plant_id, dm.area_id,
+        dm.device_state, dm.device_name,dm.create_date, dm.create_by, dm.update_date,
+        dm.update_by, dm.del_flag,am.area_name,pm.plant_name from device_manage dm
+        left join  area_manage am on am.area_id = dm.area_id
+        left join plant_manage pm on pm.plant_id = dm.plant_id
+        <where>  
+            <if test="deviceNumber != null  and deviceNumber != ''"> and dm.device_number = #{deviceNumber}</if>
+            <if test="deviceType != null  and deviceType != ''"> and dm.device_type = #{deviceType}</if>
+            <if test="plantId != null "> and dm.plant_id = #{plantId}</if>
+<!--            <if test="areaId != null "> and area_id = #{areaId}</if>-->
+            <if test="deviceState != null "> and dm.device_state = #{deviceState}</if>
+            <if test="deviceName != null  and deviceName != ''"> and dm.device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="startCreateDate != null and stopCreateDate != null"> and dm.create_date between #{startCreateDate} and #{stopCreateDate}</if>
+            <if test="updateDate != null "> and dm.update_date = #{updateDate}</if>
+            <if test="delFlag = null or delFlag = ''" > and dm.del_flag =0 </if>
+            <if test="userId != null and userId != 1 "> and dm.user_id = #{userId}</if>
+        </where>
+        order by dm.create_date DESC
+    </select>
+
+    <select id="selectDeviceManageListByCount"  resultMap="DeviceManageResultVo">
+        SELECT
+            COUNT(*) AS totalDevices,
+            SUM(CASE WHEN device_state = 1 THEN 1 ELSE 0 END) AS activeDevices
+            FROM device_manage
+        WHERE del_flag = 0;
+    </select>
+
+    <select id="selectDeviceManageByDeviceId" parameterType="Long" resultMap="DeviceManageResult">
+        <include refid="selectDeviceManageVo"/>
+        where device_id = #{deviceId} and del_flag =0
+    </select>
+
+    <insert id="insertDeviceManage" parameterType="DeviceManage" useGeneratedKeys="true" keyProperty="deviceId">
+        insert into device_manage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceNumber != null">device_number,</if>
+            <if test="deviceType != null">device_type,</if>
+            <if test="plantId != null">plant_id,</if>
+            <if test="areaId != null">area_id,</if>
+            <if test="deviceState != null">device_state,</if>
+            <if test="deviceName != null">device_name,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceNumber != null">#{deviceNumber},</if>
+            <if test="deviceType != null">#{deviceType},</if>
+            <if test="plantId != null">#{plantId},</if>
+            <if test="areaId != null">#{areaId},</if>
+            <if test="deviceState != null">#{deviceState},</if>
+            <if test="deviceName != null">#{deviceName},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDeviceManage" parameterType="DeviceManage">
+        update device_manage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceNumber != null">device_number = #{deviceNumber},</if>
+            <if test="deviceType != null">device_type = #{deviceType},</if>
+            <if test="plantId != null">plant_id = #{plantId},</if>
+            <if test="areaId != null">area_id = #{areaId},</if>
+            <if test="deviceState != null">device_state = #{deviceState},</if>
+            <if test="deviceName != null">device_name = #{deviceName},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where device_id = #{deviceId}
+    </update>
+
+    <delete id="deleteDeviceManageByDeviceId" parameterType="Long">
+        delete from device_manage where device_id = #{deviceId} and del_flag =0
+    </delete>
+
+    <delete id="deleteDeviceManageByDeviceIds" parameterType="String">
+--         delete from device_manage where device_id in
+        update device_manage set del_flag=1 where device_id in
+        <foreach item="deviceId" collection="array" open="(" separator="," close=")">
+            #{deviceId}
+        </foreach>
+    </delete>
+</mapper>

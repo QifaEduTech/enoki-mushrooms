@@ -1,0 +1,354 @@
+// ==================== 大屏全局样式 ====================
+// 深蓝科技风主题
+
+$primary-blue: #0072ff;
+$cyan: #00eaff;
+$accent-blue: #01aaff;
+$bg-dark: #0a0e27;
+$bg-card: rgba(6, 30, 65, 0.65);
+$border-glow: rgba(0, 234, 255, 0.15);
+$text-primary: #e8f0fe;
+$text-secondary: rgba(255, 255, 255, 0.65);
+$glass-bg: rgba(10, 30, 60, 0.55);
+$glass-border: rgba(0, 114, 255, 0.2);
+
+#index {
+    color: $text-primary;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+
+    &.pageisScale {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: left top;
+    }
+
+    .bg {
+        width: 100%;
+        height: 100%;
+        padding: 12px 14px 10px 14px;
+        box-sizing: border-box;
+        background: linear-gradient(180deg, #040b1e 0%, #0a1a3d 30%, #0d2252 60%, #061230 100%);
+        background-size: cover;
+        position: relative;
+        overflow: hidden;
+
+        // 背景网格线
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0, 114, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 114, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        // 背景光晕效果
+        &::after {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1200px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(0, 114, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+    }
+
+    .host-body {
+        height: 100%;
+        position: relative;
+        z-index: 1;
+
+        // ==================== 顶部标题栏 ====================
+        .title_wrap {
+            height: 70px;
+            position: relative;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(0, 114, 255, 0.12) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(0, 234, 255, 0.1);
+            border-radius: 2px;
+
+            // 标题栏底部光效
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 10%;
+                right: 10%;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, $cyan, transparent);
+                opacity: 0.5;
+            }
+
+            .guang {
+                position: absolute;
+                bottom: -30px;
+                background-image: url("../../assets/bigScreen/img/guang.png");
+                background-position: 80px center;
+                width: 100%;
+                height: 56px;
+                opacity: 0.4;
+                animation: pulse-glow 4s ease-in-out infinite;
+            }
+
+            .zuojuxing,
+            .youjuxing {
+                position: absolute;
+                top: -2px;
+                width: 140px;
+                height: 6px;
+                background-image: url("../../assets/bigScreen/img/headers/juxing1.png");
+                opacity: 0.7;
+            }
+
+            .zuojuxing {
+                left: 11%;
+            }
+
+            .youjuxing {
+                right: 11%;
+                transform: rotate(180deg);
+            }
+
+            .timers {
+                position: absolute;
+                right: 24px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                color: rgba(0, 234, 255, 0.8);
+                letter-spacing: 1px;
+                font-variant-numeric: tabular-nums;
+
+                .blq-icon-shezhi02 {
+                    cursor: pointer;
+                    margin-left: 12px;
+                    font-size: 18px;
+                    opacity: 0.6;
+                    transition: all 0.3s;
+
+                    &:hover {
+                        opacity: 1;
+                        transform: rotate(90deg);
+                        color: $cyan;
+                    }
+                }
+            }
+        }
+
+        // ==================== 标题文字 ====================
+        .title {
+            position: relative;
+            text-align: center;
+            height: 70px;
+            line-height: 56px;
+
+            .title-text {
+                font-size: 36px;
+                font-weight: 800;
+                letter-spacing: 10px;
+                background: linear-gradient(92deg, #4da4ff 0%, #00eaff 45%, #01aaff 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: none;
+                position: relative;
+
+                // 标题下方装饰线
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 4px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 60%;
+                    height: 2px;
+                    background: linear-gradient(90deg, transparent, rgba(0, 234, 255, 0.3), transparent);
+                }
+            }
+        }
+    }
+}
+
+// ==================== 外层容器 ====================
+.index_home {
+    width: 100vw;
+    height: 100vh;
+    background-color: #03050C;
+
+    .pagetab {
+        position: absolute;
+        top: -35px;
+        display: flex;
+
+        .item {
+            width: 130px;
+            height: 36px;
+            color: #00FBF8;
+            text-indent: 5px;
+            line-height: 36px;
+            font-size: 16px;
+        }
+    }
+}
+
+// ==================== 设置面板 ====================
+.setting {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    top: 0;
+    left: 0;
+
+    .left_shu {
+        color: #000;
+        font-weight: 900;
+        position: relative;
+        text-indent: 10px;
+        padding: 16px 0 10px 0;
+
+        &::before {
+            display: block;
+            content: " ";
+            height: 16px;
+            width: 4px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, $primary-blue, $cyan);
+            position: absolute;
+            left: 0px;
+        }
+    }
+
+    .setting_dislog {
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        right: 0;
+        top: 0;
+    }
+
+    .setting_inner {
+        box-sizing: border-box;
+        background: linear-gradient(180deg, #f8faff, #eef2f9);
+        width: 340px;
+        height: 100%;
+        position: absolute;
+        right: 0px;
+        top: 0;
+        z-index: 1;
+        color: #1a2a4a;
+        box-shadow: -8px 0 32px rgba(0, 0, 0, 0.3);
+        border-left: 1px solid rgba(0, 114, 255, 0.1);
+
+        .setting_header {
+            font-size: 20px;
+            color: #1a2a4a;
+            font-weight: 800;
+            text-align: center;
+            line-height: 50px;
+            background: linear-gradient(180deg, rgba(0, 114, 255, 0.08), transparent);
+            border-bottom: 1px solid rgba(0, 114, 255, 0.1);
+        }
+
+        .setting_body {
+            padding: 0px 16px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .setting_item {
+            font-size: 14px;
+            line-height: 1.5;
+
+            .setting_label {
+                color: #555454;
+            }
+
+            .setting_label_tip {
+                font-size: 12px;
+                color: #838282;
+            }
+        }
+    }
+
+    .setting_inner {
+        animation: rtl-drawer-out .3s;
+    }
+}
+
+.settingShow {
+    .setting_inner {
+        animation: rtl-drawer-in .3s 1ms;
+    }
+}
+
+.yh-setting-fade-enter-active {
+    animation: yh-setting-fade-in .3s;
+}
+
+.yh-setting-fade-leave-active {
+    animation: yh-setting-fade-out .3s;
+}
+
+@keyframes yh-setting-fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes yh-setting-fade-out {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes rtl-drawer-in {
+    0% { transform: translate(100%, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes rtl-drawer-out {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(100%, 0); }
+}
+
+// ==================== 动画 ====================
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+@keyframes border-flow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}

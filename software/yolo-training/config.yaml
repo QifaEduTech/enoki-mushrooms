@@ -1,0 +1,25 @@
+# ============================================
+# 金针菇病虫害 YOLOv8 数据集配置
+# ============================================
+
+# 数据集根目录
+path: ./data
+
+# 子目录
+train: train/images
+val: val/images
+test: test/images
+
+# 类别数量
+nc: 8
+
+# 类别名称（与 yolo-service/config.py 保持一致）
+names:
+  0: powdery_mildew    # 金针菇白粉病
+  1: gray_mold          # 金针菇灰霉病
+  2: anthracnose        # 金针菇炭疽病
+  3: fusarium_wilt      # 金针菇枯萎病
+  4: leaf_spot          # 金针菇叶斑病
+  5: spider_mite        # 金针菇红蜘蛛
+  6: aphid              # 金针菇蚜虫
+  7: healthy            # 健康金针菇

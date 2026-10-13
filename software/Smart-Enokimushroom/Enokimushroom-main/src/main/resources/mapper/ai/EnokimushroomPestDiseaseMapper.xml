@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enokimushroom.mapper.EnokimushroomPestDiseaseMapper">
+    
+    <resultMap type="EnokimushroomPestDisease" id="EnokimushroomPestDiseaseResult">
+        <result property="id"    column="id"    />
+        <result property="clusterId"    column="cluster_id"    />
+        <result property="objectType"    column="object_type"    />
+        <result property="bboxXMin"    column="bbox_x_min"    />
+        <result property="bboxYMin"    column="bbox_y_min"    />
+        <result property="bboxXMax"    column="bbox_x_max"    />
+        <result property="bboxYMax"    column="bbox_y_max"    />
+        <result property="confidence"    column="confidence"    />
+        <result property="pestDiseaseClass"    column="pest_disease_class"    />
+        <result property="severityLevel"    column="severity_level"    />
+        <result property="recommendation"    column="recommendation"    />
+        <result property="detectedTime"    column="detected_time"    />
+    </resultMap>
+
+    <sql id="selectEnokimushroomPestDiseaseVo">
+        select id, cluster_id, object_type, bbox_x_min, bbox_y_min, bbox_x_max, bbox_y_max, confidence, pest_disease_class, severity_level, recommendation, detected_time from enokimushroom_pest_disease
+    </sql>
+
+    <select id="selectEnokimushroomPestDiseaseList" parameterType="EnokimushroomPestDisease" resultMap="EnokimushroomPestDiseaseResult">
+        <include refid="selectEnokimushroomPestDiseaseVo"/>
+        <where>  
+            <if test="clusterId != null  and clusterId != ''"> and cluster_id = #{clusterId}</if>
+            <if test="objectType != null  and objectType != ''"> and object_type = #{objectType}</if>
+            <if test="bboxXMin != null "> and bbox_x_min = #{bboxXMin}</if>
+            <if test="bboxYMin != null "> and bbox_y_min = #{bboxYMin}</if>
+            <if test="bboxXMax != null "> and bbox_x_max = #{bboxXMax}</if>
+            <if test="bboxYMax != null "> and bbox_y_max = #{bboxYMax}</if>
+            <if test="confidence != null "> and confidence = #{confidence}</if>
+            <if test="pestDiseaseClass != null  and pestDiseaseClass != ''"> and pest_disease_class = #{pestDiseaseClass}</if>
+            <if test="severityLevel != null  and severityLevel != ''"> and severity_level = #{severityLevel}</if>
+            <if test="recommendation != null  and recommendation != ''"> and recommendation = #{recommendation}</if>
+            <if test="detectedTime != null "> and detected_time = #{detectedTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectEnokimushroomPestDiseaseById" parameterType="Long" resultMap="EnokimushroomPestDiseaseResult">
+        <include refid="selectEnokimushroomPestDiseaseVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEnokimushroomPestDisease" parameterType="EnokimushroomPestDisease" useGeneratedKeys="true" keyProperty="id">
+        insert into enokimushroom_pest_disease
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clusterId != null and clusterId != ''">cluster_id,</if>
+            <if test="objectType != null">object_type,</if>
+            <if test="bboxXMin != null">bbox_x_min,</if>
+            <if test="bboxYMin != null">bbox_y_min,</if>
+            <if test="bboxXMax != null">bbox_x_max,</if>
+            <if test="bboxYMax != null">bbox_y_max,</if>
+            <if test="confidence != null">confidence,</if>
+            <if test="pestDiseaseClass != null">pest_disease_class,</if>
+            <if test="severityLevel != null">severity_level,</if>
+            <if test="recommendation != null">recommendation,</if>
+            <if test="detectedTime != null">detected_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clusterId != null and clusterId != ''">#{clusterId},</if>
+            <if test="objectType != null">#{objectType},</if>
+            <if test="bboxXMin != null">#{bboxXMin},</if>
+            <if test="bboxYMin != null">#{bboxYMin},</if>
+            <if test="bboxXMax != null">#{bboxXMax},</if>
+            <if test="bboxYMax != null">#{bboxYMax},</if>
+            <if test="confidence != null">#{confidence},</if>
+            <if test="pestDiseaseClass != null">#{pestDiseaseClass},</if>
+            <if test="severityLevel != null">#{severityLevel},</if>
+            <if test="recommendation != null">#{recommendation},</if>
+            <if test="detectedTime != null">#{detectedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEnokimushroomPestDisease" parameterType="EnokimushroomPestDisease">
+        update enokimushroom_pest_disease
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clusterId != null and clusterId != ''">cluster_id = #{clusterId},</if>
+            <if test="objectType != null">object_type = #{objectType},</if>
+            <if test="bboxXMin != null">bbox_x_min = #{bboxXMin},</if>
+            <if test="bboxYMin != null">bbox_y_min = #{bboxYMin},</if>
+            <if test="bboxXMax != null">bbox_x_max = #{bboxXMax},</if>
+            <if test="bboxYMax != null">bbox_y_max = #{bboxYMax},</if>
+            <if test="confidence != null">confidence = #{confidence},</if>
+            <if test="pestDiseaseClass != null">pest_disease_class = #{pestDiseaseClass},</if>
+            <if test="severityLevel != null">severity_level = #{severityLevel},</if>
+            <if test="recommendation != null">recommendation = #{recommendation},</if>
+            <if test="detectedTime != null">detected_time = #{detectedTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEnokimushroomPestDiseaseById" parameterType="Long">
+        delete from enokimushroom_pest_disease where id = #{id}
+    </delete>
+
+    <delete id="deleteEnokimushroomPestDiseaseByIds" parameterType="String">
+        delete from enokimushroom_pest_disease where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectEnokimushroomPestDiseaseByClusterId" parameterType="String" resultMap="EnokimushroomPestDiseaseResult">
+        <include refid="selectEnokimushroomPestDiseaseVo"/>
+        where cluster_id = #{clusterId}
+    </select>
+</mapper>

@@ -1,0 +1,41 @@
+# 依赖
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 构建产物
+dist/
+build/
+*.log
+
+# 编辑器/系统
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Universal Git Uploader defaults
+target/
+.env
+
+# 本机运行状态与敏感配置
+runtime/
+logs/
+端口和账号信息.txt
+*.db
+server-port.txt
+trace-qr.png
+trace-qr-url.txt
+server.out.log
+server.err.log
+
+# 历史/重复副本
+_old/
+Smart-Enokimushroom/Smart-Enokimushroom/

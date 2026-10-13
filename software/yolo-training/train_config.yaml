@@ -1,0 +1,59 @@
+# ============================================
+# 金针菇病虫害 YOLOv8 训练配置
+# ============================================
+
+# 模型选择（推荐从小到大测试）
+# yolov8n.pt - Nano (最快，适合边缘设备)
+# yolov8s.pt - Small (平衡)
+# yolov8m.pt - Medium (较准)
+# yolov8l.pt - Large (高精度)
+# yolov8x.pt - XLarge (最高精度，最慢)
+model: yolov8n.pt
+
+# 数据集配置
+data: config.yaml
+
+# 训练参数
+epochs: 100              # 训练轮数（建议 100-300）
+imgsz: 640               # 输入图片尺寸（640 或 1280）
+batch: 16                # 批次大小（根据 GPU 显存调整）
+device: '0'              # GPU 编号，'cpu' 表示使用 CPU
+workers: 8               # 数据加载线程数
+
+# 早停策略
+patience: 50             # 如果 50 个 epoch 没有提升则停止
+
+# 保存策略
+save: true
+save_period: 10          # 每 10 个 epoch 保存一次检查点
+
+# 优化器
+optimizer: AdamW         # 可选: SGD, Adam, AdamW, NAdam, RAdam, RMSProp
+lr0: 0.001               # 初始学习率
+lrf: 0.01                # 最终学习率 = lr0 * lrf
+momentum: 0.937          # SGD 动量
+weight_decay: 0.0005     # 权重衰减
+
+# 预热
+warmup_epochs: 3         # 预热轮数
+warmup_momentum: 0.8     # 预热动量
+warmup_bias_lr: 0.1      # 预热偏置学习率
+
+# 数据增强（推荐保持默认）
+augment: true
+hsv_h: 0.015             # HSV 色调增强
+hsv_s: 0.7               # HSV 饱和度增强
+hsv_v: 0.4               # HSV 明度增强
+degrees: 0.0             # 旋转角度
+translate: 0.1           # 平移
+scale: 0.5               # 缩放
+shear: 0.0               # 剪切
+perspective: 0.0         # 透视
+flipud: 0.0              # 上下翻转概率
+fliplr: 0.5              # 左右翻转概率
+mosaic: 1.0              # Mosaic 增强概率
+mixup: 0.0               # MixUp 增强概率
+copy_paste: 0.0          # 复制粘贴增强概率
+
+# 实验名称（会自动添加时间戳）
+name: jzg_disease

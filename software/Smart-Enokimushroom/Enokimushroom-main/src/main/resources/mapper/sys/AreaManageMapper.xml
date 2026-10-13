@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enokimushroom.mapper.AreaManageMapper">
+
+    <resultMap type="AreaManage" id="AreaManageResult">
+        <result property="areaId"    column="area_id"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="areaAddress"    column="area_address"    />
+        <result property="areaType"    column="area_type"    />
+        <result property="areaSquare"    column="area_square"    />
+        <result property="areaState"    column="area_state"    />
+        <result property="areaLeader"    column="area_leader"    />
+        <result property="areaPhone"    column="area_phone"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <resultMap type="AreaManageVo" id="AreaManageVoResultVo">
+        <result property="totalArea"    column="totalArea"    />
+        <result property="normalArea"    column="normalArea"    />
+    </resultMap>
+
+    <sql id="selectAreaManageVo">
+        select area_id, area_name, area_address, area_type, area_square, area_state, area_leader, area_phone, create_date, create_by, update_date, update_by, del_flag from area_manage
+    </sql>
+
+    <select id="selectAreaManageList" parameterType="AreaManage" resultMap="AreaManageResult">
+        <include refid="selectAreaManageVo"/>
+        <where>
+            <if test="areaName != null  and areaName != ''"> and area_name like concat('%', #{areaName}, '%')</if>
+            <if test="areaAddress != null  and areaAddress != ''"> and area_address = #{areaAddress}</if>
+            <if test="areaType != null  and areaType != ''"> and area_type = #{areaType}</if>
+            <if test="areaSquare != null "> and area_square = #{areaSquare}</if>
+            <if test="areaState != null  and areaState != ''"> and area_state = #{areaState}</if>
+            <if test="areaLeader != null  and areaLeader != ''"> and area_leader = #{areaLeader}</if>
+            <if test="areaPhone != null  and areaPhone != ''"> and area_phone = #{areaPhone}</if>
+            <if test="startCreateDate != null and stopCreateDate != null"> and create_date between #{startCreateDate} and #{stopCreateDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            <if test="delFlag = null or delFlag = ''" > and del_flag =0 </if>
+            <if test="userId != null and userId != 1 "> and user_id = #{userId}</if>
+        </where>
+        order by create_date DESC
+    </select>
+
+    <select id="selectAreaManageListByCount"  resultMap="AreaManageVoResultVo">
+        SELECT
+            SUM(area_square) AS totalArea,
+            SUM(CASE WHEN area_state = '正常' THEN area_square ELSE 0 END) AS normalArea
+        FROM area_manage
+        WHERE del_flag = 0;
+    </select>
+
+    <select id="selectAreaManageByAreaId" parameterType="Long" resultMap="AreaManageResult">
+        <include refid="selectAreaManageVo"/>
+        where area_id = #{areaId} and del_flag =0
+    </select>
+
+    <insert id="insertAreaManage" parameterType="AreaManage" useGeneratedKeys="true" keyProperty="areaId">
+        insert into area_manage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="areaName != null">area_name,</if>
+            <if test="areaAddress != null">area_address,</if>
+            <if test="areaType != null">area_type,</if>
+            <if test="areaSquare != null">area_square,</if>
+            <if test="areaState != null">area_state,</if>
+            <if test="areaLeader != null">area_leader,</if>
+            <if test="areaPhone != null">area_phone,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="areaName != null">#{areaName},</if>
+            <if test="areaAddress != null">#{areaAddress},</if>
+            <if test="areaType != null">#{areaType},</if>
+            <if test="areaSquare != null">#{areaSquare},</if>
+            <if test="areaState != null">#{areaState},</if>
+            <if test="areaLeader != null">#{areaLeader},</if>
+            <if test="areaPhone != null">#{areaPhone},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAreaManage" parameterType="AreaManage">
+        update area_manage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="areaName != null">area_name = #{areaName},</if>
+            <if test="areaAddress != null">area_address = #{areaAddress},</if>
+            <if test="areaType != null">area_type = #{areaType},</if>
+            <if test="areaSquare != null">area_square = #{areaSquare},</if>
+            <if test="areaState != null">area_state = #{areaState},</if>
+            <if test="areaLeader != null">area_leader = #{areaLeader},</if>
+            <if test="areaPhone != null">area_phone = #{areaPhone},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+        </trim>
+        where area_id = #{areaId}
+    </update>
+
+    <delete id="deleteAreaManageByAreaId" parameterType="Long">
+        delete from area_manage where area_id = #{areaId} and del_flag =0
+    </delete>
+
+    <delete id="deleteAreaManageByAreaIds" parameterType="String">
+        --         delete from area_manage where area_id in
+        update area_manage set del_flag=1 where area_id in
+        <foreach item="areaId" collection="array" open="(" separator="," close=")">
+            #{areaId}
+        </foreach>
+    </delete>
+</mapper>

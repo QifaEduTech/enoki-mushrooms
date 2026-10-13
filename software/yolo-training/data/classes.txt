@@ -1,0 +1,8 @@
+powdery_mildew
+gray_mold
+anthracnose
+fusarium_wilt
+leaf_spot
+spider_mite
+aphid
+healthy

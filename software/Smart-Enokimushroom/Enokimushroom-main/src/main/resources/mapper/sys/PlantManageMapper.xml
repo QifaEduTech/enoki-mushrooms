@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enokimushroom.mapper.PlantManageMapper">
+    
+    <resultMap type="PlantManage" id="PlantManageResult">
+        <result property="plantId"    column="plant_id"    />
+        <result property="plantName"    column="plant_name"    />
+        <result property="plantType"    column="plant_type"    />
+        <result property="plantLifecycle"    column="plant_lifeCycle"    />
+        <result property="areaId"    column="area_id"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <resultMap type="PlantManageVo" id="PlantManageResultVo">
+        <result property="plantName"    column="plantName"    />
+        <result property="count"    column="count"    />
+        <result property="ratio"    column="ratio"    />
+    </resultMap>
+
+    <sql id="selectPlantManageVo">
+        select plant_id, plant_name, plant_type, plant_lifeCycle, area_id, create_date, create_by, update_date, update_by, del_flag from plant_manage
+    </sql>
+
+    <select id="selectPlantManageList" parameterType="PlantManage" resultMap="PlantManageResult">
+        select plant_manage.plant_id, plant_manage.plant_name, plant_manage.plant_type, plant_manage.plant_lifeCycle, plant_manage.area_id, plant_manage.create_date,
+               plant_manage.create_by, plant_manage.update_date, plant_manage.update_by, plant_manage.del_flag,area_manage.area_name from plant_manage
+        left join area_manage on area_manage.area_id = plant_manage.area_id
+        <where>  
+            <if test="plantName != null  and plantName != ''"> and plant_manage.plant_name like concat('%', #{plantName}, '%')</if>
+            <if test="plantType != null  and plantType != ''"> and plant_manage.plant_type = #{plantType}</if>
+            <if test="plantLifecycle != null "> and plant_manage.plant_lifeCycle = #{plantLifecycle}</if>
+<!--            <if test="areaId != null "> and area_id = #{areaId}</if>-->
+            <if test="startCreateDate != null and stopCreateDate != null"> and plant_manage.create_date between #{startCreateDate} and #{stopCreateDate}</if>
+            <if test="updateDate != null "> and plant_manage.update_date = #{updateDate}</if>
+            <if test="delFlag = null or delFlag = ''" > and plant_manage.del_flag =0 </if>
+            <if test="userId != null and userId != 1 "> and plant_manage.user_id = #{userId}</if>
+        </where>
+        order by plant_manage.create_date DESC
+    </select>
+
+    <select id="selectPlantManageListByCount"  resultMap="PlantManageResultVo">
+    SELECT
+        plant_name AS plantName,
+        COUNT(*) AS count,
+        ROUND(
+        (COUNT(*) * 100.0) / SUM(COUNT(*)) OVER (),
+        2
+        ) AS ratio
+        FROM plant_manage
+        WHERE del_flag = 0
+        GROUP BY plant_name
+        ORDER BY count DESC;
+    </select>
+    
+    <select id="selectPlantManageByPlantId" parameterType="Long" resultMap="PlantManageResult">
+        <include refid="selectPlantManageVo"/>
+        where plant_id = #{plantId} and del_flag =0
+    </select>
+
+    <insert id="insertPlantManage" parameterType="PlantManage" useGeneratedKeys="true" keyProperty="plantId">
+        insert into plant_manage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="plantName != null">plant_name,</if>
+            <if test="plantType != null">plant_type,</if>
+            <if test="plantLifecycle != null">plant_lifeCycle,</if>
+            <if test="areaId != null">area_id,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="plantName != null">#{plantName},</if>
+            <if test="plantType != null">#{plantType},</if>
+            <if test="plantLifecycle != null">#{plantLifecycle},</if>
+            <if test="areaId != null">#{areaId},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePlantManage" parameterType="PlantManage">
+        update plant_manage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="plantName != null">plant_name = #{plantName},</if>
+            <if test="plantType != null">plant_type = #{plantType},</if>
+            <if test="plantLifecycle != null">plant_lifeCycle = #{plantLifecycle},</if>
+            <if test="areaId != null">area_id = #{areaId},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where plant_id = #{plantId}
+    </update>
+
+    <delete id="deletePlantManageByPlantId" parameterType="Long">
+        delete from plant_manage where plant_id = #{plantId} and del_flag =0
+    </delete>
+
+    <delete id="deletePlantManageByPlantIds" parameterType="String">
+--         delete from plant_manage where plant_id in
+        update plant_manage set del_flag=1 where plant_id in
+        <foreach item="plantId" collection="array" open="(" separator="," close=")">
+            #{plantId}
+        </foreach>
+    </delete>
+</mapper>

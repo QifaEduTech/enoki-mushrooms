@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enokimushroom.mapper.MonitorRecordMapper">
+    
+    <resultMap type="MonitorRecord" id="MonitorRecordResult">
+        <result property="addressId"    column="address_id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="airTemperature"    column="air_temperature"    />
+        <result property="airHumidity"    column="air_humidity"    />
+        <result property="lightLux"    column="light_lux"    />
+        <result property="airCo2"    column="air_co2"    />
+        <result property="soilTemperature"    column="soil_temperature"    />
+        <result property="soilHumidity"    column="soil_humidity"    />
+        <result property="soilConductivity"    column="soil_conductivity"    />
+        <result property="soilPh"    column="soil_PH"    />
+        <result property="soilN"    column="soil_N"    />
+        <result property="soilP"    column="soil_P"    />
+        <result property="soilK"    column="soil_K"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="plantId"    column="plant_id"    />
+        <result property="plantName"    column="plant_name"    />
+        <result property="areaId"    column="area_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectMonitorRecordVo">
+        select address_id,record_id, air_temperature, air_humidity, light_lux, air_co2, soil_temperature, soil_humidity, soil_conductivity, soil_PH, soil_N, soil_P, soil_K, create_date, plant_id, area_id, create_by, update_date, update_by, del_flag from monitor_record
+    </sql>
+
+<!--    <select id="selectMonitorRecordList" parameterType="MonitorRecord" resultMap="MonitorRecordResult">-->
+<!--        select mr.address_id,mr.record_id, mr.air_temperature, mr.air_humidity, mr.light_lux, mr.air_co2, mr.soil_temperature, mr.soil_humidity, mr.soil_conductivity,-->
+<!--        mr.soil_PH, mr.soil_N, mr.soil_P, mr.soil_K, mr.create_date, mr.plant_id, mr.area_id, mr.create_by, mr.update_date, mr.update_by, mr.del_flag,-->
+<!--        am.area_name,pm.plant_name from monitor_record mr-->
+<!--        left join  area_manage am on am.area_id = mr.area_id-->
+<!--        left join plant_manage pm on pm.plant_id = mr.plant_id-->
+<!--        <where>  -->
+<!--            <if test="airTemperature != null "> and mr.air_temperature = #{airTemperature}</if>-->
+<!--            <if test="airHumidity != null "> and mr.air_humidity = #{airHumidity}</if>-->
+<!--            <if test="lightLux != null "> and mr.light_lux = #{lightLux}</if>-->
+<!--            <if test="airCo2 != null "> and mr.air_co2 = #{airCo2}</if>-->
+<!--            <if test="soilTemperature != null "> and mr.soil_temperature = #{soilTemperature}</if>-->
+<!--            <if test="soilHumidity != null "> and mr.soil_humidity = #{soilHumidity}</if>-->
+<!--            <if test="soilConductivity != null "> and mr.soil_conductivity = #{soilConductivity}</if>-->
+<!--            <if test="soilPh != null "> and mr.soil_PH = #{soilPh}</if>-->
+<!--            <if test="soilN != null "> and mr.soil_N = #{soilN}</if>-->
+<!--            <if test="soilP != null "> and mr.soil_P = #{soilP}</if>-->
+<!--            <if test="soilK != null "> and mr.soil_K = #{soilK}</if>-->
+<!--            <if test="startCreateDate != null and stopCreateDate != null"> and mr.create_date between #{startCreateDate} and #{stopCreateDate}</if>-->
+<!--            <if test="plantId != null "> and mr.plant_id = #{plantId}</if>-->
+<!--            <if test="areaId != null "> and mr.area_id = #{areaId}</if>-->
+<!--            <if test="updateDate != null "> and mr.update_date = #{updateDate}</if>-->
+<!--            <if test="delFlag = null or delFlag = ''" > and mr.del_flag =0 </if>-->
+<!--            <if test="userId != null and userId != 1 "> and mr.user_id = #{userId}</if>-->
+<!--            <if test="addressId != null and addressId != 1 "> and mr.address_id = #{addressId}</if>-->
+<!--        </where>-->
+<!--        order by mr.record_id DESC-->
+<!--    </select>-->
+    <select id="selectMonitorRecordList" parameterType="MonitorRecord" resultMap="MonitorRecordResult">
+        select mr.address_id,mr.record_id, mr.air_temperature, mr.air_humidity, mr.light_lux, mr.air_co2, mr.soil_temperature, mr.soil_humidity, mr.soil_conductivity,
+        mr.soil_PH, mr.soil_N, mr.soil_P, mr.soil_K, mr.create_date, mr.plant_id, mr.area_id, mr.create_by, mr.update_date, mr.update_by, mr.del_flag,
+        am.area_name,pm.plant_name from monitor_record mr
+        left join  area_manage am on am.area_id = mr.area_id
+        left join plant_manage pm on pm.plant_id = mr.plant_id
+        <where>
+            <if test="airTemperature != null "> and mr.air_temperature = #{airTemperature}</if>
+            <if test="airHumidity != null "> and mr.air_humidity = #{airHumidity}</if>
+            <if test="lightLux != null "> and mr.light_lux = #{lightLux}</if>
+            <if test="airCo2 != null "> and mr.air_co2 = #{airCo2}</if>
+            <if test="soilTemperature != null "> and mr.soil_temperature = #{soilTemperature}</if>
+            <if test="soilHumidity != null "> and mr.soil_humidity = #{soilHumidity}</if>
+            <if test="soilConductivity != null "> and mr.soil_conductivity = #{soilConductivity}</if>
+            <if test="soilPh != null "> and mr.soil_PH = #{soilPh}</if>
+            <if test="soilN != null "> and mr.soil_N = #{soilN}</if>
+            <if test="soilP != null "> and mr.soil_P = #{soilP}</if>
+            <if test="soilK != null "> and mr.soil_K = #{soilK}</if>
+            <if test="startCreateDate != null and stopCreateDate != null"> and mr.create_date between #{startCreateDate} and #{stopCreateDate}</if>
+            <if test="plantId != null "> and mr.plant_id = #{plantId}</if>
+            <if test="areaId != null "> and mr.area_id = #{areaId}</if>
+            <if test="updateDate != null "> and mr.update_date = #{updateDate}</if>
+            <if test="delFlag = null or delFlag = ''" > and mr.del_flag =0 </if>
+            <if test="userId != null and userId != 1 "> and mr.user_id = #{userId}</if>
+            <if test="addressId != null and addressId != 1 "> and mr.address_id = #{addressId}</if>
+        </where>
+        order by mr.create_date DESC, mr.record_id DESC
+    </select>
+    
+    <select id="selectMonitorRecordByRecordId" parameterType="Long" resultMap="MonitorRecordResult">
+        <include refid="selectMonitorRecordVo"/>
+        where record_id = #{recordId} and del_flag =0
+    </select>
+
+    <insert id="insertMonitorRecord" parameterType="MonitorRecord" useGeneratedKeys="true" keyProperty="recordId">
+        insert into monitor_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="addressId != null">address_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="airTemperature != null">air_temperature,</if>
+            <if test="airHumidity != null">air_humidity,</if>
+            <if test="lightLux != null">light_lux,</if>
+            <if test="airCo2 != null">air_co2,</if>
+            <if test="soilTemperature != null">soil_temperature,</if>
+            <if test="soilHumidity != null">soil_humidity,</if>
+            <if test="soilConductivity != null">soil_conductivity,</if>
+            <if test="soilPh != null">soil_PH,</if>
+            <if test="soilN != null">soil_N,</if>
+            <if test="soilP != null">soil_P,</if>
+            <if test="soilK != null">soil_K,</if>
+            <if test="createDate == null">create_date,</if>
+            <if test="plantId != null">plant_id,</if>
+            <if test="areaId != null">area_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="addressId != null">#{addressId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="airTemperature != null">#{airTemperature},</if>
+            <if test="airHumidity != null">#{airHumidity},</if>
+            <if test="lightLux != null">#{lightLux},</if>
+            <if test="airCo2 != null">#{airCo2},</if>
+            <if test="soilTemperature != null">#{soilTemperature},</if>
+            <if test="soilHumidity != null">#{soilHumidity},</if>
+            <if test="soilConductivity != null">#{soilConductivity},</if>
+            <if test="soilPh != null">#{soilPh},</if>
+            <if test="soilN != null">#{soilN},</if>
+            <if test="soilP != null">#{soilP},</if>
+            <if test="soilK != null">#{soilK},</if>
+            <if test="createDate == null">NOW(),</if>
+            <if test="plantId != null">#{plantId},</if>
+            <if test="areaId != null">#{areaId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMonitorRecord" parameterType="MonitorRecord">
+        update monitor_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="airTemperature != null">air_temperature = #{airTemperature},</if>
+            <if test="airHumidity != null">air_humidity = #{airHumidity},</if>
+            <if test="lightLux != null">light_lux = #{lightLux},</if>
+            <if test="airCo2 != null">air_co2 = #{airCo2},</if>
+            <if test="soilTemperature != null">soil_temperature = #{soilTemperature},</if>
+            <if test="soilHumidity != null">soil_humidity = #{soilHumidity},</if>
+            <if test="soilConductivity != null">soil_conductivity = #{soilConductivity},</if>
+            <if test="soilPh != null">soil_PH = #{soilPh},</if>
+            <if test="soilN != null">soil_N = #{soilN},</if>
+            <if test="soilP != null">soil_P = #{soilP},</if>
+            <if test="soilK != null">soil_K = #{soilK},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="plantId != null">plant_id = #{plantId},</if>
+            <if test="areaId != null">area_id = #{areaId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteMonitorRecordByRecordId" parameterType="Long">
+        delete from monitor_record where record_id = #{recordId} and del_flag =0
+    </delete>
+
+    <delete id="deleteMonitorRecordByRecordIds" parameterType="String">
+        update monitor_record set del_flag=1 where record_id in
+--         delete from monitor_record where record_id in
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>

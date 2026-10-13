@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enokimushroom.mapper.EnokimushroomClusterMapper">
+    
+    <resultMap type="EnokimushroomCluster" id="EnokimushroomClusterResult">
+        <result property="id"    column="id"    />
+        <result property="clusterId"    column="cluster_id"    />
+        <result property="clusterName"    column="cluster_name"    />
+        <result property="totalCount"    column="total_count"    />
+        <result property="ripeCount"    column="ripe_count"    />
+        <result property="halfRipeCount"    column="half_ripe_count"    />
+        <result property="unripeCount"    column="unripe_count"    />
+        <result property="avgSizeMm"    column="avg_size_mm"    />
+        <result property="locationArea"    column="location_area"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="recommendation"    column="recommendation"    />
+        <result property="lastUpdate"    column="last_update"    />
+    </resultMap>
+
+    <sql id="selectEnokimushroomClusterVo">
+        select id, cluster_id, cluster_name, total_count, ripe_count, half_ripe_count, unripe_count, avg_size_mm, location_area, latitude, longitude, recommendation, last_update from enokimushroom_cluster
+    </sql>
+
+    <select id="selectEnokimushroomClusterList" parameterType="EnokimushroomCluster" resultMap="EnokimushroomClusterResult">
+        <include refid="selectEnokimushroomClusterVo"/>
+        <where>  
+            <if test="clusterId != null  and clusterId != ''"> and cluster_id = #{clusterId}</if>
+            <if test="clusterName != null  and clusterName != ''"> and cluster_name like concat('%', #{clusterName}, '%')</if>
+            <if test="totalCount != null "> and total_count = #{totalCount}</if>
+            <if test="ripeCount != null "> and ripe_count = #{ripeCount}</if>
+            <if test="halfRipeCount != null "> and half_ripe_count = #{halfRipeCount}</if>
+            <if test="unripeCount != null "> and unripe_count = #{unripeCount}</if>
+            <if test="avgSizeMm != null "> and avg_size_mm = #{avgSizeMm}</if>
+            <if test="locationArea != null  and locationArea != ''"> and location_area = #{locationArea}</if>
+            <if test="latitude != null "> and latitude = #{latitude}</if>
+            <if test="longitude != null "> and longitude = #{longitude}</if>
+            <if test="recommendation != null  and recommendation != ''"> and recommendation = #{recommendation}</if>
+            <if test="lastUpdate != null "> and last_update = #{lastUpdate}</if>
+        </where>
+    </select>
+    
+    <select id="selectEnokimushroomClusterById" parameterType="Long" resultMap="EnokimushroomClusterResult">
+        <include refid="selectEnokimushroomClusterVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEnokimushroomCluster" parameterType="EnokimushroomCluster" useGeneratedKeys="true" keyProperty="id">
+        insert into enokimushroom_cluster
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clusterId != null and clusterId != ''">cluster_id,</if>
+            <if test="clusterName != null">cluster_name,</if>
+            <if test="totalCount != null">total_count,</if>
+            <if test="ripeCount != null">ripe_count,</if>
+            <if test="halfRipeCount != null">half_ripe_count,</if>
+            <if test="unripeCount != null">unripe_count,</if>
+            <if test="avgSizeMm != null">avg_size_mm,</if>
+            <if test="locationArea != null">location_area,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="longitude != null">longitude,</if>
+            <if test="recommendation != null">recommendation,</if>
+            <if test="lastUpdate != null">last_update,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clusterId != null and clusterId != ''">#{clusterId},</if>
+            <if test="clusterName != null">#{clusterName},</if>
+            <if test="totalCount != null">#{totalCount},</if>
+            <if test="ripeCount != null">#{ripeCount},</if>
+            <if test="halfRipeCount != null">#{halfRipeCount},</if>
+            <if test="unripeCount != null">#{unripeCount},</if>
+            <if test="avgSizeMm != null">#{avgSizeMm},</if>
+            <if test="locationArea != null">#{locationArea},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="recommendation != null">#{recommendation},</if>
+            <if test="lastUpdate != null">#{lastUpdate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEnokimushroomCluster" parameterType="EnokimushroomCluster">
+        update enokimushroom_cluster
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clusterId != null and clusterId != ''">cluster_id = #{clusterId},</if>
+            <if test="clusterName != null">cluster_name = #{clusterName},</if>
+            <if test="totalCount != null">total_count = #{totalCount},</if>
+            <if test="ripeCount != null">ripe_count = #{ripeCount},</if>
+            <if test="halfRipeCount != null">half_ripe_count = #{halfRipeCount},</if>
+            <if test="unripeCount != null">unripe_count = #{unripeCount},</if>
+            <if test="avgSizeMm != null">avg_size_mm = #{avgSizeMm},</if>
+            <if test="locationArea != null">location_area = #{locationArea},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+            <if test="recommendation != null">recommendation = #{recommendation},</if>
+            <if test="lastUpdate != null">last_update = #{lastUpdate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEnokimushroomClusterById" parameterType="Long">
+        delete from enokimushroom_cluster where id = #{id}
+    </delete>
+
+    <delete id="deleteEnokimushroomClusterByIds" parameterType="String">
+        delete from enokimushroom_cluster where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectEnokimushroomClusterByClusterId" parameterType="String" resultMap="EnokimushroomClusterResult">
+        <include refid="selectEnokimushroomClusterVo"/>
+        where cluster_id = #{clusterId}
+    </select>
+</mapper>

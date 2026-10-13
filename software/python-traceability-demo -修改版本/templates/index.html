@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>追溯查询结果</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    background: #f5f6f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", Arial, sans-serif;
+    color: #333;
+    font-size: 14px;
+}
+.header {
+    height: 44px;
+    background: #8bc34a;
+    color: #fff;
+    text-align: center;
+    line-height: 44px;
+    font-size: 17px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.notice {
+    background: #fff;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    line-height: 1.8;
+}
+.check { color: #70b43c; font-weight: bold; }
+.summary-box {
+    background: #fff;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.title { font-size: 15px; font-weight: bold; margin-bottom: 8px; }
+.scan-count { color: #70b43c; font-weight: bold; }
+.product-meta {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+.thumb-img {
+    width: 85px;
+    height: 85px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #eef3ea;
+}
+.thumb-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.info-list { flex: 1; min-width: 0; }
+.info-list p { margin: 4px 0; line-height: 1.5; word-break: break-all; }
+.badge-red { color: #e53935; font-weight: bold; }
+.badge-green { color: #2e7d32; font-weight: bold; }
+.tabs-header {
+    display: flex;
+    background: #fff;
+    border-bottom: 2px solid #8bc34a;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+    padding: 12px 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: #666;
+    font-size: 14px;
+    flex: 1 0 auto;
+    min-width: 68px;
+}
+.tab-btn.active {
+    background: #fff;
+    border-color: #8bc34a;
+    border-bottom-color: #fff;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: -2px;
+}
+.tab-content-container {
+    background: #fff;
+    padding: 15px;
+    min-height: 260px;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.info-table { width: 100%; border-collapse: collapse; }
+.info-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    word-break: break-all;
+}
+.info-table td:first-child { color: #777; width: 30%; }
+.info-table select {
+    width: 100%;
+    max-width: 240px;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #c8d6b6;
+    border-radius: 4px;
+    background: #fbfdf9;
+    color: #333;
+    font-size: 14px;
+}
+.scene-box {
+    margin-bottom: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    line-height: 0;
+}
+.scene-box img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+.media-cell img.pack-img {
+    width: 100%;
+    max-width: 260px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+.media-cell img.qr-img {
+    width: 150px;
+    height: 150px;
+    display: block;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 4px;
+    background: #fff;
+}
+.timeline-group { border: 1px solid #e8e8e8; border-radius: 6px; overflow: hidden; }
+.timeline-item { border-bottom: 1px solid #eee; background: #fff; }
+.timeline-item:last-child { border-bottom: none; }
+.timeline-item summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 12px;
+    cursor: pointer;
+    min-height: 56px;
+    background: #fff;
+}
+.timeline-item summary::-webkit-details-marker { display: none; }
+.timeline-item summary:active { background: #f2f8ec; }
+.timeline-item .summary-left,
+.drop-block .summary-left {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+.timeline-item .name,
+.drop-block .name { font-weight: 700; font-size: 15px; }
+.timeline-item .date,
+.drop-block .date { color: #888; font-size: 13px; }
+.drop-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #eef6e6;
+    color: #5b8e2a;
+    border: 1px solid #cfe3bb;
+    border-radius: 14px;
+    padding: 6px 11px;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.drop-hint::after { content: "▾"; transition: transform .15s ease; }
+[open] > summary .drop-hint::after { content: "▴"; }
+.timeline-detail {
+    padding: 14px 12px 16px;
+    background: #fbfdf9;
+    border-top: 1px solid #eef2e9;
+}
+.timeline-detail .detail-table { width: 100%; border-collapse: collapse; }
+.timeline-detail .detail-table td {
+    padding: 9px 8px;
+    border-top: 1px dashed #e2e8dd;
+    vertical-align: top;
+    word-break: break-all;
+    line-height: 1.6;
+}
+.timeline-detail .detail-table td:first-child {
+    color: #777;
+    width: 96px;
+    white-space: nowrap;
+}
+.empty-row { color: #999; text-align: center; padding: 22px 0; }
+.drop-block {
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+}
+.drop-block > summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 12px;
+    cursor: pointer;
+    min-height: 56px;
+    background: #fff;
+}
+.drop-block > summary::-webkit-details-marker { display: none; }
+.drop-block > summary:active { background: #f2f8ec; }
+.drop-block .drop-body {
+    padding: 4px 12px 16px;
+    background: #fbfdf9;
+    border-top: 1px solid #eef2e9;
+}
+.quality-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    background: #f2f8ec;
+    border: 1px solid #dceacd;
+    border-radius: 6px;
+    padding: 10px 12px;
+    line-height: 1.6;
+}
+.quality-bar .qb-item { display: inline-flex; align-items: baseline; gap: 5px; }
+.quality-bar .qb-label { color: #777; }
+.quality-bar .qb-value { font-weight: 600; color: #2f5d20; }
+.quality-bar .qb-sep { color: #b9cf9f; }
+.credit-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: #f2f8ec;
+    border: 1px solid #dceacd;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 12px;
+}
+.credit-result .cr-label { color: #555; }
+.credit-result .cr-value { font-size: 16px; font-weight: 700; color: #2e7d32; }
+.credit-result.bad { background: #fdecea; border-color: #f3c1bd; }
+.credit-result.bad .cr-value { color: #c62828; }
+.rule-note {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f8faf6;
+    border: 1px dashed #d4e2c5;
+    border-radius: 6px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.7;
+}
+</style>
+</head>
+<body>
+    <div class="header">追溯查询结果</div>
+
+    <div class="notice">
+        <div class="check">☑ 我承诺销售的食用农产品：</div>
+        <div>☑ 未使用禁用的农药兽药及其他化合物</div>
+        <div>☑ 使用的常规农药、兽药残留不超标</div>
+    </div>
+
+    <div class="summary-box">
+        <div class="title">产品信息</div>
+        <div style="color: #666; font-size: 13px;">追溯码：<span id="traceCode">—</span></div>
+
+        <div class="product-meta">
+            <div class="thumb-img"><img id="thumbImg" src="/static/production.jpg" alt="生产实景"></div>
+            <div class="info-list">
+                <p><strong>产品名称：</strong><span id="productName">—</span></p>
+                <p><strong>生产日期：</strong><span id="produceDate">—</span></p>
+                <p><strong>生产企业：</strong><span id="company">—</span></p>
+                <p id="summaryCreditRow"><strong>信用信息：</strong><span id="summaryCredit" class="badge-green">—</span></p>
+                <p><strong>生产基地：</strong><span id="baseArea">—</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs-header">
+        <div class="tab-btn active" onclick="switchTab(0)">产品信息</div>
+        <div class="tab-btn" onclick="switchTab(1)">生产信息</div>
+        <div class="tab-btn" onclick="switchTab(2)">质量信息</div>
+        <div class="tab-btn" onclick="switchTab(3)">包装信息</div>
+        <div class="tab-btn" onclick="switchTab(4)">销售信息</div>
+        <div class="tab-btn" onclick="switchTab(5)">信用信息</div>
+    </div>
+
+    <div class="tab-content-container">
+        <div class="tab-panel active" id="panel-product">
+            <div class="scene-box"><img id="sceneImg" src="/static/production.jpg" alt="生产实景"></div>
+            <table class="info-table">
+                <tr><td>产品名称</td><td id="tabProductName">—</td></tr>
+                <tr><td>产品品种</td><td id="tabStrain">—</td></tr>
+                <tr><td>产地位置</td><td id="tabOrigin">—</td></tr>
+                <tr><td>生产者</td><td id="tabProducer">—</td></tr>
+                <tr><td>联系电话</td><td id="tabPhone">—</td></tr>
+            </table>
+        </div>
+        <div class="tab-panel" id="panel-production">
+            <div class="timeline-group" id="timeline"></div>
+        </div>
+        <div class="tab-panel" id="panel-quality">
+            <table class="info-table">
+                <tr id="qualityRow">
+                    <td>质检信息</td>
+                    <td><div class="quality-bar" id="qualityBar"></div></td>
+                </tr>
+                <tr><td>检验项目</td><td id="tabInspectItems">—</td></tr>
+                <tr><td>报告编号</td><td id="tabReportNo">—</td></tr>
+            </table>
+        </div>
+        <div class="tab-panel" id="panel-packaging">
+            <table class="info-table">
+                <tbody id="packagingBody"></tbody>
+            </table>
+        </div>
+        <div class="tab-panel" id="panel-sales">
+            <details class="drop-block" id="saleBlock">
+                <summary>
+                    <span class="summary-left"><span class="name">位置信息</span><span class="date">当前去向：<span id="saleCurrent">—</span></span></span>
+                    <span class="drop-hint">点击展开</span>
+                </summary>
+                <div class="drop-body">
+                    <table class="info-table">
+                        <tbody id="salesBody"></tbody>
+                    </table>
+                </div>
+            </details>
+            <div class="empty-row" id="saleEmpty" style="display:none;">暂无销售信息</div>
+        </div>
+        <div class="tab-panel" id="panel-credit">
+            <table class="info-table">
+                <tbody id="creditBody"></tbody>
+            </table>
+            <div class="credit-result" id="creditResult">
+                <span class="cr-label">综合信用判定</span>
+                <span class="cr-value" id="creditResultValue">—</span>
+            </div>
+            <div class="rule-note" id="creditRuleNote">判定规则：有失信记录、有行政处罚、有涉诉、3次以上投诉或抽检合格率低于95%时判为失信惩戒；无不良记录且抽检合格率≥98%、纳税信用A级时判为信用良好；其余情况判为守信示范。</div>
+            <div class="empty-row" id="creditEmpty" style="display:none;">暂无信用规则数据</div>
+        </div>
+    </div>
+
+<script>
+function switchTab(index) {
+    const btns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+    btns.forEach((btn, idx) => btn.classList.toggle('active', idx === index));
+    panels.forEach((panel, idx) => panel.classList.toggle('active', idx === index));
+}
+
+function has(value) {
+    return value !== null && value !== undefined && String(value).trim() !== "";
+}
+
+function esc(value) {
+    return String(value === null || value === undefined ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function text(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = has(value) ? value : "—";
+}
+
+function summaryText(id, value) {
+    const el = document.getElementById(id);
+    if (!el) return false;
+    const row = el.closest("p");
+    if (!has(value)) {
+        if (row) row.style.display = "none";
+        el.textContent = "";
+        return false;
+    }
+    el.textContent = value;
+    if (row) row.style.display = "";
+    return true;
+}
+
+function setRow(id, value) {
+    const el = document.getElementById(id);
+    if (!el) return false;
+    const tr = el.closest("tr");
+    if (!has(value)) {
+        if (tr) tr.style.display = "none";
+        el.textContent = "";
+        return false;
+    }
+    el.textContent = value;
+    if (tr) tr.style.display = "";
+    return true;
+}
+
+function rowHtml(label, value) {
+    return has(value) ? "<tr><td>" + esc(label) + "</td><td>" + esc(value) + "</td></tr>" : "";
+}
+
+function selectHtml(id, options, value) {
+    const allOptions = options.includes(value) ? options : options.concat([value]);
+    const optionsHtml = allOptions.map(option =>
+        '<option value="' + esc(option) + '"' + (option === value ? " selected" : "") + ">" + esc(option) + "</option>"
+    ).join("");
+    return '<select id="' + id + '">' + optionsHtml + "</select>";
+}
+
+const params = new URLSearchParams(location.search);
+const bagCode = params.get("bag_code") || "JGf85ba05a";
+
+fetch("/api/status?bag_code=" + encodeURIComponent(bagCode))
+    .then(r => r.json())
+    .then(data => {
+        const s = data.snapshot;
+        if (!s) {
+            text("productName", data.source_error || "主系统未查询到该植物档案");
+            text("traceCode", data.bag_code || bagCode);
+            return;
+        }
+        const p = data.profile || {};
+        const bag = s.bag || {};
+        const material = s.material || {};
+        const harvest = s.harvest || [];
+        const sales = s.sales || [];
+        const verification = data.verification || {};
+        const harvestDates = harvest.map(h => h.harvest_date).filter(Boolean).sort();
+        const produceDate = harvestDates.length ? harvestDates[harvestDates.length - 1] : bag.inoculation_date;
+        const totalWeight = harvest.reduce((sum, h) => sum + Number(h.weight || 0), 0);
+
+        text("traceCode", s.bag_code);
+        summaryText("productName", p.product_name || bag.strain_name);
+        summaryText("produceDate", p.produce_date || produceDate);
+        summaryText("company", p.company || material.supplier);
+        summaryText("baseArea", p.base_area);
+
+        setRow("tabProductName", p.product_name || bag.strain_name);
+        setRow("tabStrain", p.strain_name || bag.strain_name);
+        setRow("tabOrigin", p.origin);
+        setRow("tabProducer", p.producer || material.supplier);
+        setRow("tabPhone", p.phone);
+
+        const timelineItems = p.timeline || [];
+        let timelineHtml = "";
+        timelineItems.forEach(item => {
+            const dateLabel = [
+                item.date,
+                has(item.start_time) && has(item.end_time) ? item.start_time + " 至 " + item.end_time : ""
+            ].filter(Boolean).join(" · ");
+            const detailRows = [
+                ["开始时间", item.start_time],
+                ["结束时间", item.end_time],
+                ["操作人", item.operator],
+                ["操作区域/设备", item.area],
+                ["其它说明", item.notes]
+            ].filter(pair => has(pair[1]))
+             .map(pair => "<tr><td>" + esc(pair[0]) + "</td><td>" + esc(pair[1]) + "</td></tr>")
+             .join("");
+            const detailHtml = detailRows
+                ? '<table class="detail-table">' + detailRows + "</table>"
+                : '<div class="empty-row">暂无更多记录</div>';
+            timelineHtml +=
+                '<details class="timeline-item">' +
+                '<summary><span class="summary-left"><span class="name">' + esc(item.name || "—") + "</span>" +
+                '<span class="date">' + esc(dateLabel || "—") + "</span></span>" +
+                '<span class="drop-hint">点击展开</span></summary>' +
+                '<div class="timeline-detail">' + detailHtml + "</div></details>";
+        });
+
+        if (has(p.environment_monitor)) {
+            const envRows = (s.environment || []).map(e =>
+                "<tr><td>" + esc(e.collect_time) + "</td><td>" +
+                esc((has(e.temp) ? e.temp + "℃" : "") + "，湿度 " + (has(e.humidity) ? e.humidity + "%" : "") +
+                "，CO₂ " + (has(e.co2) ? e.co2 + "ppm" : "")) + "</td></tr>"
+            ).join("");
+            const detailHtml = envRows
+                ? '<table class="detail-table"><tr><td>采集时间</td><td>环境数据</td></tr>' + envRows + "</table>"
+                : '<div class="empty-row">暂无更多记录</div>';
+            timelineHtml +=
+                '<details class="timeline-item">' +
+                '<summary><span class="summary-left"><span class="name">环境监测</span>' +
+                '<span class="date">' + esc(p.environment_monitor) + "</span></span>" +
+                '<span class="drop-hint">点击展开</span></summary>' +
+                '<div class="timeline-detail">' + detailHtml + "</div></details>";
+        }
+        document.getElementById("timeline").innerHTML = timelineHtml
+            || '<div class="empty-row">暂无生产记录</div>';
+
+        const inspector = p.inspector || (harvest.length ? harvest[harvest.length - 1].inspector : null);
+        const inspectDate = p.inspect_date || (harvest.length ? harvest[harvest.length - 1].harvest_date : null);
+        const report = p.report || (verification.certified ? (verification.trusted ? "已出具合格报告" : "数据异常") : null);
+        const qualityParts = [];
+        if (has(inspector)) qualityParts.push(["送检人", inspector]);
+        if (has(inspectDate)) qualityParts.push(["送检日期", inspectDate]);
+        if (has(report)) qualityParts.push(["检测结果", report]);
+        const qualityHtml = qualityParts.map((part, idx) =>
+            (idx ? '<span class="qb-sep">｜</span>' : "") +
+            '<span class="qb-item"><span class="qb-label">' + esc(part[0]) + "</span>" +
+            '<span class="qb-value">' + esc(part[1]) + "</span></span>"
+        ).join("");
+        document.getElementById("qualityBar").innerHTML = qualityHtml;
+        document.getElementById("qualityRow").style.display = qualityParts.length ? "" : "none";
+        setRow("tabInspectItems", p.inspection_items);
+        setRow("tabReportNo", p.report_no);
+
+        const packRows = [];
+        packRows.push(rowHtml("包装日期", p.pack_date || produceDate));
+        packRows.push(rowHtml("包装数量", p.pack_qty));
+        packRows.push(rowHtml("总重量", p.pack_weight || (totalWeight ? totalWeight.toFixed(2) + " 公斤" : "")));
+        if (has(p.packaging_image)) {
+            packRows.push('<tr><td>包装图片</td><td class="media-cell"><img class="pack-img" src="' + esc(p.packaging_image) + '" alt="包装实景"></td></tr>');
+        }
+        if (has(p.qr_image)) {
+            packRows.push('<tr><td>二维码显示</td><td class="media-cell"><img class="qr-img" src="' + esc(p.qr_image) + '" alt="追溯二维码"></td></tr>');
+        }
+        document.getElementById("packagingBody").innerHTML = packRows.length
+            ? packRows.join("")
+            : '<tr><td colspan="2" class="empty-row">暂无包装信息</td></tr>';
+
+        const sale = p.sale || (sales.length ? {
+            customer: sales[0].distributor,
+            sale_date: sales[0].sale_date,
+            quantity: totalWeight ? totalWeight.toFixed(2) + " 公斤" : null,
+            total_weight: totalWeight ? totalWeight.toFixed(2) + " 公斤" : null,
+            recorder: null,
+            sale_note: sales[0].store_name ? "销售门店：" + sales[0].store_name : null
+        } : null);
+        if (sale) {
+            const saleLocationValue = sale.location || "—";
+            const saleCustomer = sale.customer || "—";
+            const saleRows = [];
+            saleRows.push(rowHtml("销售去向", saleLocationValue));
+            saleRows.push(rowHtml("客户单位", saleCustomer));
+            saleRows.push(rowHtml("销售日期", sale.sale_date));
+            saleRows.push(rowHtml("销售数量", sale.quantity));
+            saleRows.push(rowHtml("总重", sale.total_weight));
+            saleRows.push(rowHtml("记录人员", sale.recorder));
+            saleRows.push(rowHtml("其它说明", sale.sale_note));
+            document.getElementById("salesBody").innerHTML = saleRows.join("");
+            text("saleCurrent", saleLocationValue);
+        } else {
+            document.getElementById("saleBlock").style.display = "none";
+            document.getElementById("saleEmpty").style.display = "";
+        }
+
+        const creditRows = [];
+        if (has(p.credit_level)) creditRows.push('<tr><td>信用等级</td><td>' + selectHtml("creditLevel", ["信用良好", "守信示范", "失信惩戒"], p.credit_level) + "</td></tr>");
+        if (has(p.credit_record)) creditRows.push('<tr><td>信用状态</td><td>' + selectHtml("creditRecord", ["无失信记录", "有失信记录"], p.credit_record) + "</td></tr>");
+        if (has(p.credit_sample)) creditRows.push('<tr><td>抽检合格率</td><td>' + selectHtml("creditSample", ["≥98%", "95%～98%", "<95%"], p.credit_sample) + "</td></tr>");
+        if (has(p.credit_complaint)) creditRows.push('<tr><td>投诉记录</td><td>' + selectHtml("creditComplaint", ["无投诉", "1～2次投诉", "3次以上投诉"], p.credit_complaint) + "</td></tr>");
+        if (has(p.credit_penalty)) creditRows.push('<tr><td>行政处罚</td><td>' + selectHtml("creditPenalty", ["无", "有"], p.credit_penalty) + "</td></tr>");
+        if (has(p.credit_lawsuit)) creditRows.push('<tr><td>涉诉情况</td><td>' + selectHtml("creditLawsuit", ["无", "有"], p.credit_lawsuit) + "</td></tr>");
+        if (has(p.credit_tax)) creditRows.push('<tr><td>纳税信用</td><td>' + selectHtml("creditTax", ["A级", "B级", "C级", "D级"], p.credit_tax) + "</td></tr>");
+        document.getElementById("creditBody").innerHTML = creditRows.join("");
+        document.getElementById("creditEmpty").style.display = creditRows.length ? "none" : "";
+        document.getElementById("creditResult").style.display = creditRows.length ? "" : "none";
+        document.getElementById("creditRuleNote").style.display = creditRows.length ? "" : "none";
+        document.getElementById("summaryCreditRow").style.display = creditRows.length ? "" : "none";
+
+        function refreshCredit() {
+            const summaryCredit = document.getElementById("summaryCredit");
+            const creditResult = document.getElementById("creditResult");
+            const creditResultValue = document.getElementById("creditResultValue");
+            const getVal = id => {
+                const el = document.getElementById(id);
+                return el ? el.value : "";
+            };
+            const record = getVal("creditRecord");
+            const sample = getVal("creditSample");
+            const complaint = getVal("creditComplaint");
+            const penalty = getVal("creditPenalty");
+            const lawsuit = getVal("creditLawsuit");
+            const tax = getVal("creditTax");
+            let verdict = has(p.credit_level) ? p.credit_level : "信用良好";
+            if (record || sample || complaint || penalty || lawsuit || tax) {
+                if (record === "有失信记录" || penalty === "有" || lawsuit === "有" || complaint === "3次以上投诉" || sample === "<95%") {
+                    verdict = "失信惩戒";
+                } else if (sample === "≥98%" && complaint === "无投诉" && tax === "A级") {
+                    verdict = "信用良好";
+                } else {
+                    verdict = "守信示范";
+                }
+            }
+            summaryCredit.textContent = verdict;
+            summaryCredit.className = verdict === "失信惩戒" ? "badge-red" : "badge-green";
+            creditResultValue.textContent = verdict;
+            creditResult.className = "credit-result" + (verdict === "失信惩戒" ? " bad" : "");
+        }
+        document.querySelectorAll("#panel-credit select").forEach(el => el.addEventListener("change", refreshCredit));
+        refreshCredit();
+    })
+    .catch(() => text("productName", "数据加载失败"));
+</script>
+</body>
+</html>

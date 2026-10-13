@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.enokimushroom.mapper.ChatHistoryMapper">
+    
+    <resultMap type="com.enokimushroom.entity.ChatTypeHistory" id="ChatTypeHistoryResult">
+        <result property="id"           column="id"           />
+        <result property="type"         column="type"         />
+        <result property="chatId"       column="chat_id"      />
+        <result property="title"        column="title"        />
+        <result property="createTime"   column="create_time"  />
+        <result property="editTime"     column="edit_time"    />
+        <result property="status"       column="status"       />
+    </resultMap>
+    
+    <sql id="selectChatTypeHistoryVo">
+        select id, type, chat_id, title, create_time, edit_time, status from d_chat_type_history
+    </sql>
+    
+    <select id="selectList" resultMap="ChatTypeHistoryResult">
+        <include refid="selectChatTypeHistoryVo"/>
+        <where>
+            <if test="ew != null and ew.sqlSegment != null and ew.sqlSegment != ''">
+                ${ew.sqlSegment}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectPage" resultMap="ChatTypeHistoryResult">
+        <include refid="selectChatTypeHistoryVo"/>
+        <where>
+            <if test="ew != null and ew.sqlSegment != null and ew.sqlSegment != ''">
+                ${ew.sqlSegment}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectById" parameterType="Long" resultMap="ChatTypeHistoryResult">
+        <include refid="selectChatTypeHistoryVo"/>
+        where id = #{id}
+    </select>
+    
+    <insert id="insert" parameterType="com.enokimushroom.entity.ChatTypeHistory" useGeneratedKeys="true" keyProperty="id">
+        insert into d_chat_type_history (
+            type, chat_id, title, create_time, edit_time, status
+        ) values (
+            #{type}, #{chatId}, #{title}, #{createTime}, #{editTime}, #{status}
+        )
+    </insert>
+    
+    <update id="updateById" parameterType="com.enokimushroom.entity.ChatTypeHistory">
+        update d_chat_type_history
+        <set>
+            <if test="type != null">type = #{type},</if>
+            <if test="chatId != null">chat_id = #{chatId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="editTime != null">edit_time = #{editTime},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="Long">
+        delete from d_chat_type_history where id = #{id}
+    </delete>
+    
+    <delete id="deleteBatchIds" parameterType="java.util.List">
+        delete from d_chat_type_history where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

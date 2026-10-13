@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>追溯查询结果（新页面示例）</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    background: #f5f6f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", Arial, sans-serif;
+    color: #333;
+    font-size: 14px;
+}
+.header {
+    height: 44px;
+    background: #8bc34a;
+    color: #fff;
+    text-align: center;
+    line-height: 44px;
+    font-size: 17px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.notice {
+    background: #fff;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    line-height: 1.8;
+}
+.check { color: #70b43c; font-weight: bold; }
+.summary-box {
+    background: #fff;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.title { font-size: 15px; font-weight: bold; margin-bottom: 8px; }
+.scan-count { color: #70b43c; font-weight: bold; }
+.product-meta {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+.thumb-img {
+    width: 85px;
+    height: 85px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #eef3ea;
+}
+.thumb-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.info-list { flex: 1; min-width: 0; }
+.info-list p { margin: 4px 0; line-height: 1.5; word-break: break-all; }
+.badge-red { color: #e53935; font-weight: bold; }
+.badge-green { color: #2e7d32; font-weight: bold; }
+.tabs-header {
+    display: flex;
+    background: #fff;
+    border-bottom: 2px solid #8bc34a;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.tab-btn {
+    padding: 12px 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: #666;
+    font-size: 14px;
+    flex: 1 0 auto;
+    min-width: 68px;
+}
+.tab-btn.active {
+    background: #fff;
+    border-color: #8bc34a;
+    border-bottom-color: #fff;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: -2px;
+}
+.tab-content-container {
+    background: #fff;
+    padding: 15px;
+    min-height: 260px;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.info-table { width: 100%; border-collapse: collapse; }
+.info-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    word-break: break-all;
+}
+.info-table td:first-child { color: #777; width: 30%; }
+.info-table select {
+    width: 100%;
+    max-width: 240px;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #c8d6b6;
+    border-radius: 4px;
+    background: #fbfdf9;
+    color: #333;
+    font-size: 14px;
+}
+.media-cell img.pack-img {
+    width: 100%;
+    max-width: 260px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+.media-cell img.qr-img {
+    width: 150px;
+    height: 150px;
+    display: block;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 4px;
+    background: #fff;
+}
+.timeline-group { border: 1px solid #e8e8e8; border-radius: 6px; overflow: hidden; }
+.timeline-item { border-bottom: 1px solid #eee; background: #fff; }
+.timeline-item:last-child { border-bottom: none; }
+.timeline-item summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 12px;
+    cursor: pointer;
+    min-height: 56px;
+    background: #fff;
+}
+.timeline-item summary::-webkit-details-marker { display: none; }
+.timeline-item summary:active { background: #f2f8ec; }
+.timeline-item .summary-left,
+.drop-block .summary-left {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+.timeline-item .name,
+.drop-block .name { font-weight: 700; font-size: 15px; }
+.timeline-item .date,
+.drop-block .date { color: #888; font-size: 13px; }
+.drop-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #eef6e6;
+    color: #5b8e2a;
+    border: 1px solid #cfe3bb;
+    border-radius: 14px;
+    padding: 6px 11px;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.drop-hint::after { content: "▾"; transition: transform .15s ease; }
+[open] > summary .drop-hint::after { content: "▴"; }
+.timeline-detail {
+    padding: 14px 12px 16px;
+    background: #fbfdf9;
+    border-top: 1px solid #eef2e9;
+}
+.timeline-detail .detail-table { width: 100%; border-collapse: collapse; }
+.timeline-detail .detail-table td {
+    padding: 9px 8px;
+    border-top: 1px dashed #e2e8dd;
+    vertical-align: top;
+    word-break: break-all;
+    line-height: 1.6;
+}
+.timeline-detail .detail-table td:first-child {
+    color: #777;
+    width: 96px;
+    white-space: nowrap;
+}
+.empty-row { color: #999; text-align: center; padding: 22px 0; }
+.drop-block {
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+}
+.drop-block > summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 12px;
+    cursor: pointer;
+    min-height: 56px;
+    background: #fff;
+}
+.drop-block > summary::-webkit-details-marker { display: none; }
+.drop-block > summary:active { background: #f2f8ec; }
+.drop-block .drop-body {
+    padding: 4px 12px 16px;
+    background: #fbfdf9;
+    border-top: 1px solid #eef2e9;
+}
+.quality-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    background: #f2f8ec;
+    border: 1px solid #dceacd;
+    border-radius: 6px;
+    padding: 10px 12px;
+    line-height: 1.6;
+}
+.quality-bar .qb-item { display: inline-flex; align-items: baseline; gap: 5px; }
+.quality-bar .qb-label { color: #777; }
+.quality-bar .qb-value { font-weight: 600; color: #2f5d20; }
+.quality-bar .qb-sep { color: #b9cf9f; }
+.credit-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: #f2f8ec;
+    border: 1px solid #dceacd;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 12px;
+}
+.credit-result .cr-label { color: #555; }
+.credit-result .cr-value { font-size: 16px; font-weight: 700; color: #2e7d32; }
+.credit-result.bad { background: #fdecea; border-color: #f3c1bd; }
+.credit-result.bad .cr-value { color: #c62828; }
+.rule-note {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f8faf6;
+    border: 1px dashed #d4e2c5;
+    border-radius: 6px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.7;
+}
+</style>
+</head>
+<body>
+    <div class="header">追溯查询结果</div>
+
+    <div class="notice">
+        <div class="check">☑ 我承诺销售的食用农产品：</div>
+        <div>☑ 未使用禁用的农药兽药及其他化合物</div>
+        <div>☑ 使用的常规农药、兽药残留不超标</div>
+    </div>
+
+    <div class="summary-box">
+        <div class="title">产品信息（扫描次数：<span class="scan-count">17</span>）</div>
+        <div style="color: #666; font-size: 13px;">追溯码：bz1785830370528</div>
+
+        <div class="product-meta">
+            <div class="thumb-img"><img src="static/production.jpg" alt="生产实景"></div>
+            <div class="info-list">
+                <p><strong>产品名称：</strong>金针菇</p>
+                <p><strong>生产日期：</strong>2026-08-04</p>
+                <p><strong>生产企业：</strong>濮阳天耕农业科技有限公司</p>
+                <p><strong>信用信息：</strong><span id="summaryCredit" class="badge-green">信用良好</span></p>
+                <p><strong>生产基地：</strong>种植二区</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs-header">
+        <div class="tab-btn active" onclick="switchTab(0)">产品信息</div>
+        <div class="tab-btn" onclick="switchTab(1)">生产信息</div>
+        <div class="tab-btn" onclick="switchTab(2)">质量信息</div>
+        <div class="tab-btn" onclick="switchTab(3)">包装信息</div>
+        <div class="tab-btn" onclick="switchTab(4)">销售信息</div>
+        <div class="tab-btn" onclick="switchTab(5)">信用信息</div>
+    </div>
+
+    <div class="tab-content-container">
+        <div class="tab-panel active" id="panel-product">
+            <table class="info-table">
+                <tr><td>产品名称</td><td>金针菇</td></tr>
+                <tr><td>产品品种</td><td>金针菇F21</td></tr>
+                <tr><td>产地位置</td><td>吉林省长春市九台区龙嘉街道龙家堡村</td></tr>
+                <tr><td>生产者</td><td>金针菇种植基地</td></tr>
+                <tr><td>联系电话</td><td>18943949110</td></tr>
+            </table>
+        </div>
+
+        <div class="tab-panel" id="panel-production">
+            <div class="timeline-group">
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">拌料</span><span class="date">2026-06-01 08:00 至 16:30</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-01 08:00</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-01 16:30</td></tr>
+                            <tr><td>操作人</td><td>李强</td></tr>
+                            <tr><td>操作区域/设备</td><td>配料车间 · 双螺旋拌料机</td></tr>
+                            <tr><td>其它说明</td><td>棉籽壳复合培养基按 SOP-01 配比，混合均匀后送入制包车间。</td></tr>
+                        </table>
+                    </div>
+                </details>
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">制包</span><span class="date">2026-06-02 08:00 至 17:00</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-02 08:00</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-02 17:00</td></tr>
+                            <tr><td>操作人</td><td>王磊</td></tr>
+                            <tr><td>操作区域/设备</td><td>制包车间 · 自动装袋机组</td></tr>
+                            <tr><td>其它说明</td><td>菌包规格 1.2kg/包，当日完成 1200 包并抽检重量。</td></tr>
+                        </table>
+                    </div>
+                </details>
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">灭菌</span><span class="date">2026-06-02 18:00 至 06-03 06:00</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-02 18:00</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-03 06:00</td></tr>
+                            <tr><td>操作人</td><td>王磊</td></tr>
+                            <tr><td>操作区域/设备</td><td>灭菌区 · 高压灭菌柜（121℃）</td></tr>
+                            <tr><td>其它说明</td><td>121℃ 高压灭菌，灭菌曲线由设备自动记录并留存。</td></tr>
+                        </table>
+                    </div>
+                </details>
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">接种</span><span class="date">2026-06-03 08:30 至 12:00</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-03 08:30</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-03 12:00</td></tr>
+                            <tr><td>操作人</td><td>赵敏</td></tr>
+                            <tr><td>操作区域/设备</td><td>无菌接种室 · 超净工作台</td></tr>
+                            <tr><td>其它说明</td><td>无菌室接种，菌种为金针菇F21，接种后即时封口。</td></tr>
+                        </table>
+                    </div>
+                </details>
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">培养</span><span class="date">2026-06-04 00:00 至 06-10 08:00</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-04 00:00</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-10 08:00</td></tr>
+                            <tr><td>操作人</td><td>赵敏</td></tr>
+                            <tr><td>操作区域/设备</td><td>恒温培养室 · 智能温控系统</td></tr>
+                            <tr><td>其它说明</td><td>恒温暗光培养，菌丝长满后转入出菇区。</td></tr>
+                        </table>
+                    </div>
+                </details>
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">入库</span><span class="date">2026-06-10 08:00 至 17:00</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-10 08:00</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-10 17:00</td></tr>
+                            <tr><td>操作人</td><td>刘洋</td></tr>
+                            <tr><td>操作区域/设备</td><td>培养库房 · 条码扫码枪</td></tr>
+                            <tr><td>其它说明</td><td>培养室菌包按批次入库，并完成生长区分配。</td></tr>
+                        </table>
+                    </div>
+                </details>
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">生长管理</span><span class="date">2026-06-10 至 06-18</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-10 08:00</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-18 06:00</td></tr>
+                            <tr><td>操作人</td><td>刘洋</td></tr>
+                            <tr><td>操作区域/设备</td><td>出菇区 · 环境监测系统</td></tr>
+                            <tr><td>其它说明</td><td>温湿度、光照、CO₂ 实时监测，异常自动告警。</td></tr>
+                        </table>
+                    </div>
+                </details>
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">采收</span><span class="date">2026-06-18 06:00 至 11:00</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-18 06:00</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-18 11:00</td></tr>
+                            <tr><td>操作人</td><td>孙丽</td></tr>
+                            <tr><td>操作区域/设备</td><td>出菇区 · 专用采收工具</td></tr>
+                            <tr><td>其它说明</td><td>成熟度抽检合格后采收，采后 2 小时内进入预冷。</td></tr>
+                        </table>
+                    </div>
+                </details>
+                <details class="timeline-item">
+                    <summary>
+                        <span class="summary-left"><span class="name">包装</span><span class="date">2026-06-18 13:00 至 17:30</span></span>
+                        <span class="drop-hint">点击展开</span>
+                    </summary>
+                    <div class="timeline-detail">
+                        <table class="detail-table">
+                            <tr><td>开始时间</td><td>2026-06-18 13:00</td></tr>
+                            <tr><td>结束时间</td><td>2026-06-18 17:30</td></tr>
+                            <tr><td>操作人</td><td>周芳</td></tr>
+                            <tr><td>操作区域/设备</td><td>包装车间 · 自动称重贴标线</td></tr>
+                            <tr><td>其它说明</td><td>称重、贴标、装箱，包装信息同步写入追溯系统。</td></tr>
+                        </table>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="panel-quality">
+            <table class="info-table">
+                <tr>
+                    <td>质检信息</td>
+                    <td>
+                        <div class="quality-bar">
+                            <span class="qb-item"><span class="qb-label">送检人</span><span class="qb-value">王语</span></span>
+                            <span class="qb-sep">｜</span>
+                            <span class="qb-item"><span class="qb-label">送检日期</span><span class="qb-value">2026-08-04</span></span>
+                            <span class="qb-sep">｜</span>
+                            <span class="qb-item"><span class="qb-label">检测结果</span><span class="qb-value">已出具合格报告</span></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td>检验项目</td><td>农药残留、重金属、微生物指标</td></tr>
+                <tr><td>报告编号</td><td>ZJ-2026-0618</td></tr>
+            </table>
+        </div>
+
+        <div class="tab-panel" id="panel-packaging">
+            <table class="info-table">
+                <tr><td>包装日期</td><td>2026-08-04</td></tr>
+                <tr><td>包装数量</td><td>50 箱</td></tr>
+                <tr><td>总重量</td><td>1000 公斤</td></tr>
+                <tr><td>包装图片</td><td class="media-cell"><img class="pack-img" src="prototype-assets/packaging.jpg" alt="包装实景"></td></tr>
+                <tr><td>二维码显示</td><td class="media-cell"><img class="qr-img" src="trace-qr.png" alt="追溯二维码"></td></tr>
+            </table>
+        </div>
+
+        <div class="tab-panel" id="panel-sales">
+            <details class="drop-block">
+                <summary>
+                    <span class="summary-left"><span class="name">位置信息</span><span class="date">当前去向：<span id="saleCurrent">北京</span></span></span>
+                    <span class="drop-hint">点击展开</span>
+                </summary>
+                <div class="drop-body">
+                    <table class="info-table">
+                        <tr><td>销售去向</td><td>
+                            <select id="saleLocation">
+                                <option value="北京">北京</option>
+                                <option value="上海">上海</option>
+                                <option value="广州">广州</option>
+                                <option value="郑州">郑州</option>
+                                <option value="其它">其它</option>
+                            </select>
+                        </td></tr>
+                        <tr><td>客户单位</td><td id="saleCustomer">北京</td></tr>
+                        <tr><td>销售日期</td><td>2026-08-04</td></tr>
+                        <tr><td>销售数量</td><td>1000 公斤</td></tr>
+                        <tr><td>总重</td><td>1000 公斤</td></tr>
+                        <tr><td>记录人员</td><td>张秀宁</td></tr>
+                        <tr><td>其它说明</td><td>冷链配送，全程温度 2~8℃，随车附合格质检报告。</td></tr>
+                    </table>
+                </div>
+            </details>
+        </div>
+
+        <div class="tab-panel" id="panel-credit">
+            <table class="info-table">
+                <tr><td>信用等级</td><td>
+                    <select id="creditLevel">
+                        <option value="信用良好" selected>信用良好</option>
+                        <option value="守信示范">守信示范</option>
+                        <option value="失信惩戒">失信惩戒</option>
+                    </select>
+                </td></tr>
+                <tr><td>信用状态</td><td>
+                    <select id="creditRecord">
+                        <option value="无失信记录" selected>无失信记录</option>
+                        <option value="有失信记录">有失信记录</option>
+                    </select>
+                </td></tr>
+                <tr><td>抽检合格率</td><td>
+                    <select id="creditSample">
+                        <option value="≥98%" selected>≥98%</option>
+                        <option value="95%～98%">95%～98%</option>
+                        <option value="<95%">&lt;95%</option>
+                    </select>
+                </td></tr>
+                <tr><td>投诉记录</td><td>
+                    <select id="creditComplaint">
+                        <option value="无投诉" selected>无投诉</option>
+                        <option value="1～2次投诉">1～2次投诉</option>
+                        <option value="3次以上投诉">3次以上投诉</option>
+                    </select>
+                </td></tr>
+                <tr><td>行政处罚</td><td>
+                    <select id="creditPenalty">
+                        <option value="无" selected>无</option>
+                        <option value="有">有</option>
+                    </select>
+                </td></tr>
+                <tr><td>涉诉情况</td><td>
+                    <select id="creditLawsuit">
+                        <option value="无" selected>无</option>
+                        <option value="有">有</option>
+                    </select>
+                </td></tr>
+                <tr><td>纳税信用</td><td>
+                    <select id="creditTax">
+                        <option value="A级" selected>A级</option>
+                        <option value="B级">B级</option>
+                        <option value="C级">C级</option>
+                        <option value="D级">D级</option>
+                    </select>
+                </td></tr>
+            </table>
+            <div class="credit-result" id="creditResult">
+                <span class="cr-label">综合信用判定</span>
+                <span class="cr-value" id="creditResultValue">信用良好</span>
+            </div>
+            <div class="rule-note">判定规则：有失信记录、有行政处罚、有涉诉、3次以上投诉或抽检合格率低于95%时判为失信惩戒；无不良记录且抽检合格率≥98%、纳税信用A级时判为信用良好；其余情况判为守信示范。</div>
+        </div>
+    </div>
+
+<script>
+function switchTab(index) {
+    const btns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+    btns.forEach((btn, idx) => btn.classList.toggle('active', idx === index));
+    panels.forEach((panel, idx) => panel.classList.toggle('active', idx === index));
+}
+
+const saleLocation = document.getElementById('saleLocation');
+const saleCustomer = document.getElementById('saleCustomer');
+const saleCurrent = document.getElementById('saleCurrent');
+saleLocation.addEventListener('change', () => {
+    saleCustomer.textContent = saleLocation.value;
+    saleCurrent.textContent = saleLocation.value;
+});
+
+const summaryCredit = document.getElementById('summaryCredit');
+const creditResult = document.getElementById('creditResult');
+const creditResultValue = document.getElementById('creditResultValue');
+function refreshCredit() {
+    const record = document.getElementById('creditRecord').value;
+    const sample = document.getElementById('creditSample').value;
+    const complaint = document.getElementById('creditComplaint').value;
+    const penalty = document.getElementById('creditPenalty').value;
+    const lawsuit = document.getElementById('creditLawsuit').value;
+    const tax = document.getElementById('creditTax').value;
+    let verdict;
+    if (record === '有失信记录' || penalty === '有' || lawsuit === '有' || complaint === '3次以上投诉' || sample === '<95%') {
+        verdict = '失信惩戒';
+    } else if (sample === '≥98%' && complaint === '无投诉' && tax === 'A级') {
+        verdict = '信用良好';
+    } else {
+        verdict = '守信示范';
+    }
+    summaryCredit.textContent = verdict;
+    summaryCredit.className = verdict === '失信惩戒' ? 'badge-red' : 'badge-green';
+    creditResultValue.textContent = verdict;
+    creditResult.className = 'credit-result' + (verdict === '失信惩戒' ? ' bad' : '');
+}
+document.querySelectorAll('#panel-credit select').forEach((el) => el.addEventListener('change', refreshCredit));
+refreshCredit();
+</script>
+</body>
+</html>
